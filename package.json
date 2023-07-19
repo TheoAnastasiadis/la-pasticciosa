@@ -1,0 +1,23 @@
+{
+  "name": "la-pasticciosa",
+  "version": "2.0.0",
+  "description": "La Pasticciosa CRM",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheoAnastasiadis/la-pasticciosa.git"
+  },
+  "author": "Theo Anastasiadis <theoanastasiadis98@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheoAnastasiadis/la-pasticciosa/issues"
+  },
+  "homepage": "https://github.com/TheoAnastasiadis/la-pasticciosa#readme",
+  "devDependencies": {
+    "@types/node": "^20.4.2",
+    "typescript": "^5.1.6"
+  }
+}
