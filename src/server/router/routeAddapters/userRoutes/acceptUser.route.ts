@@ -1,7 +1,5 @@
 import { z } from "zod";
 import { publicProcedure } from "../../trpc";
-import { userRepo } from "../../../database/repos/user.repo";
-import { TRPCError } from "@trpc/server";
 import { acceptUser } from "../../../useCases/users/acceptUser";
 import { assertExists } from "../../helpers/assertExists";
 import { User } from "../../../entities/user.entity";
