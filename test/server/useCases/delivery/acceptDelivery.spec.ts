@@ -3,7 +3,7 @@ import { deliveryRepo } from "../../../../src/server/database/repos/delivery.rep
 import { DeliveryStatus } from "../../../../src/server/entities/delivery.entity";
 import { acceptDelivery } from "../../../../src/server/useCases/delivery/acceptDelivery";
 
-describe("Request Delivery", () => {
+describe("Accept Delivery", () => {
   beforeAll(async () => {
     await AppDataSource.initialize();
 
@@ -18,7 +18,7 @@ describe("Request Delivery", () => {
     await deliveryRepo.insert(delivery);
   });
 
-  test("creates a new delivery with status 'requested'", async () => {
+  test("changes delivery status to 'accepted'", async () => {
     const delivery = await deliveryRepo.findOneBy({ name: "Fancy Restaurant" });
     if (delivery == null) throw new Error("Test case error");
     await acceptDelivery(delivery);

@@ -2,7 +2,7 @@ import { AppDataSource } from "../../../../src/server/database/dataSource";
 import { deliveryRepo } from "../../../../src/server/database/repos/delivery.repo";
 import { removeDelivery } from "../../../../src/server/useCases/delivery/removeDelivery";
 
-describe("Request Delivery", () => {
+describe("Remove Delivery", () => {
   beforeAll(async () => {
     await AppDataSource.initialize();
 
@@ -17,7 +17,7 @@ describe("Request Delivery", () => {
     await deliveryRepo.insert(delivery);
   });
 
-  test("creates a new delivery with status 'requested'", async () => {
+  test("removes delivery from db", async () => {
     const delivery = await deliveryRepo.findOneBy({ name: "Fancy Restaurant" });
     if (delivery == null) throw new Error("Test case error");
     await removeDelivery(delivery);
