@@ -7,4 +7,4 @@ export const item = z.object({
   price: z.number(),
   image: z.string().url(),
   thumbnail: z.string().url(),
-});
+})

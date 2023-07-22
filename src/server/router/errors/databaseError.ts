@@ -1,6 +1,6 @@
 import { TRPCError } from "@trpc/server";
 
-export const databaseError = () =>
+export const databaseError: () => TRPCError = () =>
   new TRPCError({
     code: "INTERNAL_SERVER_ERROR",
     message:

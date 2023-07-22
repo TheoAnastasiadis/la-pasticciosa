@@ -1,7 +1,9 @@
 import { TRPCError } from "@trpc/server";
 
-export const notFoundError = (id?: string) =>
+export const notFoundError: (id?: string) => TRPCError = (id) =>
   new TRPCError({
     code: "NOT_FOUND",
-    message: `Entity${id ? " with id " + id : ""} could not ne found`,
+    message: `Entity${
+      id !== undefined ? " with id " + id : ""
+    } could not ne found`,
   });

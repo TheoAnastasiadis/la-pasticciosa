@@ -1,4 +1,7 @@
+import type { InsertResult } from "typeorm";
 import { userRepo } from "../../database/repos/user.repo";
-import { User } from "../../entities/user.entity";
+import type { User } from "../../entities/user.entity";
 
-export const requestUser = (user: Omit<User, "uuid">) => userRepo.insert(user);
+export const requestUser: (
+  user: Omit<User, "uuid">,
+) => Promise<InsertResult> = async (user) => await userRepo.insert(user);

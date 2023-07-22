@@ -1,4 +1,3 @@
-import { TRPCError } from "@trpc/server";
 import { item } from "../../../entities/decoders/item.decoder";
 import { Item } from "../../../entities/item.entity";
 import { createItem } from "../../../useCases/items/createItem";

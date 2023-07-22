@@ -14,4 +14,4 @@ export const order = z.object({
   ]),
   estimatedDelivery: z.optional(z.string().datetime()),
   createdAt: z.date(),
-});
+})

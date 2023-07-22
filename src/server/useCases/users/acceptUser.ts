@@ -1,6 +1,6 @@
-import { User, UserStatus } from "../../entities/user.entity";
+import { type User, UserStatus } from "../../entities/user.entity";
 
-export const acceptUser = (user: User) => {
+export const acceptUser: (user: User) => Promise<User> = async (user) => {
   user.status = UserStatus.ACCEPTED;
-  return user.save();
+  return await user.save();
 };

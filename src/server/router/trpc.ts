@@ -1,6 +1,6 @@
 import { initTRPC } from "@trpc/server";
-import { Context } from "./context";
-import { Meta } from "./meta";
+import { type Context } from "./context";
+import { type Meta } from "./meta";
 
 /**
  * Initialization of tRPC backend

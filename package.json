@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npx eslint . & tsc",
+    "lint": "npx eslint \"src/**\" --fix",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

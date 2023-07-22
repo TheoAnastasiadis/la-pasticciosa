@@ -1,10 +1,9 @@
-import { TRPCError } from "@trpc/server";
 import { viewAssignedItems } from "../../../useCases/items/viewAssignedItems";
 import { publicProcedure } from "../../trpc";
 import { z } from "zod";
 import { fetchUser } from "../../helpers/fetchUser";
 import { assertExists } from "../../helpers/assertExists";
-import { User } from "../../../entities/user.entity";
+import { type User } from "../../../entities/user.entity";
 import { throwDBError } from "../../helpers/throwDBError";
 
 export const viewAssignedItemsRoute = publicProcedure
@@ -13,5 +12,5 @@ export const viewAssignedItemsRoute = publicProcedure
   .query(async ({ input }) => {
     const user = fetchUser(input);
     assertExists<User>(user);
-    return viewAssignedItems(user).catch(throwDBError);
+    return await viewAssignedItems(user).catch(throwDBError);
   });

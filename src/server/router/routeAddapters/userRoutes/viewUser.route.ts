@@ -2,7 +2,7 @@ import { z } from "zod";
 import { publicProcedure } from "../../trpc";
 import { userRepo } from "../../../database/repos/user.repo";
 import { assertExists } from "../../helpers/assertExists";
-import { User } from "../../../entities/user.entity";
+import { type User } from "../../../entities/user.entity";
 import { throwDBError } from "../../helpers/throwDBError";
 
 export const viewUserRoute = publicProcedure

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { publicProcedure } from "../../trpc";
 import { acceptUser } from "../../../useCases/users/acceptUser";
 import { assertExists } from "../../helpers/assertExists";
-import { User } from "../../../entities/user.entity";
+import { type User } from "../../../entities/user.entity";
 import { fetchUser } from "../../helpers/fetchUser";
 import { throwDBError } from "../../helpers/throwDBError";
 

@@ -5,22 +5,22 @@ import { viewItemsRoute } from "./routeAddapters/itemRoutes/viewItems.route";
 import { viewAssignedItemsRoute } from "./routeAddapters/itemRoutes/viewAssignedItems.route";
 
 const appRouter = router({
-  //User Routes
+  // User Routes
   // requestUser: requestUserRoute,
   // acceptUser: acceptUserRoute,
   // viewUser: viewUserRoute,
   // viewUsers: viewUsersRoute,
-  //Items Routes
+  // Items Routes
   assignItems: assignItemsRoute,
   createItem: createItemRoute,
   viewItems: viewItemsRoute,
   viewAssignedItems: viewAssignedItemsRoute,
-  //Delivery Routes
+  // Delivery Routes
   // requestDelivery: ,
   // acceptDelivery: ,
   // viewDeliveries:,
   // viewAllDeliveries: ,
-  //Order Routes
+  // Order Routes
   // createOrder:,
   // updateOrder:,
   // setOrderState:,
