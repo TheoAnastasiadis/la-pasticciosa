@@ -34,12 +34,12 @@ describe("Assign Items", () => {
     const item = await itemRepo.findOneBy({ name: "Product" });
     const user = await userRepo.findOneBy({ userName: "John_Doe" });
 
-    if (!user || !item)
+    if (user == null || item == null)
       throw new Error("Database connection could no be established");
 
     await assignItem(item, user);
 
-    user.reload();
+    await user.reload();
     expect(user.catalogue).toHaveLength(1);
     expect(user.catalogue?.at(0)).toEqual(item);
   });

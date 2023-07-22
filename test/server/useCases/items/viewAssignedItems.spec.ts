@@ -33,7 +33,8 @@ describe("View Assigned Items", () => {
   test("assigns item to user", async () => {
     const user = await userRepo.findOneBy({ userName: "John_Doe" });
 
-    if (!user) throw new Error("Database connection could no be established");
+    if (user == null)
+      throw new Error("Database connection could no be established");
 
     const items = await viewAssignedItems(user);
 
