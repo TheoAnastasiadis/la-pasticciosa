@@ -12,7 +12,7 @@ import { User } from "./user.entity";
 import { Delivery } from "./delivery.entity";
 import { Item } from "./item.entity";
 
-enum orderStatus {
+export enum OrderStatus {
   PENDING = "pending",
   ACCEPTED = "accepted",
   PREPARATION = "in_preparation",
@@ -38,8 +38,8 @@ export class Order extends BaseEntity {
   @Column({ type: "numeric" })
   total!: number;
 
-  @Column({ type: "enum", enum: orderStatus, default: orderStatus.PENDING })
-  status!: orderStatus;
+  @Column({ type: "enum", enum: OrderStatus, default: OrderStatus.PENDING })
+  status!: OrderStatus;
 
   @Column({ nullable: true, type: "timestamp" })
   estimatedDelivery?: string;
