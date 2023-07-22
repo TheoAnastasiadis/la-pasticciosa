@@ -59,7 +59,8 @@ export class User extends BaseEntity {
   @AfterRecover()
   @AfterInsert()
   @AfterUpdate()
-  preventUndefined() {
-    if (!this.catalogue) this.catalogue = [];
-  }
+  preventUndefined: () => void = () => {
+    if (typeof this.catalogue === "undefined" || this.catalogue.length === 0)
+      this.catalogue = [];
+  };
 }

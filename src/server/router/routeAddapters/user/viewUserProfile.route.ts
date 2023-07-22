@@ -1,11 +1,11 @@
 import { z } from "zod";
 import { publicProcedure } from "../../trpc";
-import { viewUserController } from "../../../controllers/user/viewUser.controller";
+import { viewUserProfileController } from "../../../controllers/user/viewUserProfile.controller";
 
-export const viewUserRoute = publicProcedure
+export const viewUserProfileRoute = publicProcedure
   .input(z.string().optional())
   .meta({ requiresAuth: true, adminOnly: false })
   .query(async ({ input, ctx }) => {
     const uuid = typeof input !== "undefined" ? input : ctx.user.uuid;
-    return await viewUserController(uuid);
+    return await viewUserProfileController(uuid);
   });

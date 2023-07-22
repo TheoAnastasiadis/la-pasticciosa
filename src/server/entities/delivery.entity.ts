@@ -8,7 +8,7 @@ import {
 } from "typeorm";
 import { User } from "./user.entity";
 
-enum deliveryStatus {
+export enum DeliveryStatus {
   REQUESTED = "requested",
   ACCEPTED = "accepted",
 }
@@ -39,8 +39,8 @@ export class Delivery extends BaseEntity {
 
   @Column({
     type: "enum",
-    enum: deliveryStatus,
-    default: deliveryStatus.REQUESTED,
+    enum: DeliveryStatus,
+    default: DeliveryStatus.REQUESTED,
   })
-  sate!: deliveryStatus;
+  state!: DeliveryStatus;
 }

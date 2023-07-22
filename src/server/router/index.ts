@@ -1,8 +1,8 @@
 import { router } from "./trpc";
-import { assignItemsRoute } from "./routeAddapters/itemRoutes/assignItems.route";
-import { createItemRoute } from "./routeAddapters/itemRoutes/createItem.route";
-import { viewItemsRoute } from "./routeAddapters/itemRoutes/viewItems.route";
-import { viewAssignedItemsRoute } from "./routeAddapters/itemRoutes/viewAssignedItems.route";
+import { assignItemsRoute } from "./routeAddapters/item/assignItems.route";
+import { createItemRoute } from "./routeAddapters/item/createItem.route";
+import { viewItemsRoute } from "./routeAddapters/item/viewItems.route";
+import { viewAssignedItemsRoute } from "./routeAddapters/item/viewAssignedItems.route";
 
 const appRouter = router({
   // User Routes
@@ -11,6 +11,7 @@ const appRouter = router({
   // viewUser: viewUserRoute,
   // viewUsers: viewUsersRoute,
   // Items Routes
+  // viewUserProfile: viewUserProfileRoute
   assignItems: assignItemsRoute,
   createItem: createItemRoute,
   viewItems: viewItemsRoute,
