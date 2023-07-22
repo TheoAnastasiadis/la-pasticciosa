@@ -1,6 +1,6 @@
-import { viewUsers } from "../../../useCases/users/viewUsers";
+import { viewUsersController } from "../../../controllers/user/viewUsers.controller";
 import { publicProcedure } from "../../trpc";
 
 export const viewUsersRoute = publicProcedure
   .meta({ requiresAuth: true, adminOnly: true })
-  .query(viewUsers);
+  .query(viewUsersController);
