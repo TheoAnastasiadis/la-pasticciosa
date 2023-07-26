@@ -15,6 +15,8 @@ import { updateOrderStatusRoute } from "./routeAddapters/order/updateOrderStatus
 import { updateOrderEstimateRoute } from "./routeAddapters/order/updateOrderEstimate.route";
 import { acceptOrderRoute } from "./routeAddapters/order/acceptOrder.route";
 import { viewOrdersRoute } from "./routeAddapters/order/viewOrders.route";
+import { LoginUserRoute } from "./routeAddapters/user/loginUser.route";
+import { logOutRoute } from "./routeAddapters/user/logout.route";
 
 export const appRouter = router({
   // User Routes
@@ -22,6 +24,9 @@ export const appRouter = router({
   acceptUser: acceptUserRoute,
   viewUsers: viewUsersRoute,
   viewUserProfile: viewUserProfileRoute,
+  // User Routes -> Auth
+  logIn: LoginUserRoute,
+  logOut: logOutRoute,
   // Items Routes
   assignItems: assignItemsRoute,
   createItem: createItemRoute,

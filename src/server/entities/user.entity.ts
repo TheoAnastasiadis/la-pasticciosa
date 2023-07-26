@@ -4,6 +4,7 @@ import {
   AfterRecover,
   AfterUpdate,
   BaseEntity,
+  BeforeInsert,
   Column,
   Entity,
   JoinTable,
@@ -11,6 +12,8 @@ import {
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Item } from "./item.entity";
+import bcrypt from "bcrypt";
+import appConfig from "../config/app.config";
 
 export enum UserType {
   USER = "user",
@@ -58,6 +61,15 @@ export class User extends BaseEntity {
   isAdmin(): boolean {
     return this.type === UserType.ADMIN;
   }
+
+  @BeforeInsert()
+  hashPassword: () => void = () => {
+    this.password = bcrypt.hashSync(this.password, appConfig.getSaltRounds());
+  };
+
+  validatePassword: (input: string) => boolean = (input) => {
+    return bcrypt.compareSync(input, this.password);
+  };
 
   @AfterLoad()
   @AfterRecover()

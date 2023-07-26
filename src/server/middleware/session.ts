@@ -12,6 +12,7 @@ export const findSessionById: (id: string) => Promise<Session> = async (id) => {
   if (sessions.length < 1) throw new TRPCError({ code: "BAD_REQUEST" });
   return sessions[0];
 };
+
 export const generateSession: (user: User) => Promise<string> = async (
   user,
 ) => {
@@ -27,4 +28,11 @@ export const populateSession: (
 ) => Promise<Session | null> = async (id) => {
   if (id == null) return await Promise.resolve(null);
   else return await findSessionById(id);
+};
+
+export const deleteSession: (session: Session) => Promise<void> = async (
+  session,
+) => {
+  session.deletedAt = new Date();
+  await session.save();
 };
