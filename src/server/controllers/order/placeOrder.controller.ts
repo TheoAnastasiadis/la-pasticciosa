@@ -10,7 +10,7 @@ import { fetchUser } from "../helpers/fetchUser";
 import { assertExists } from "../helpers/assertExists";
 import { assertUserIsAsminOrOwner } from "../helpers/userIsAdminOrOwner";
 import { deliveryRepo } from "../../database/repos/delivery.repo";
-import type { Delivery } from "../../entities/delivery.entity";
+import { DeliveryStatus, type Delivery } from "../../entities/delivery.entity";
 import { TRPCError } from "@trpc/server";
 
 const assertItemIsAssignedToUser: (user: User) => (item: Item) => void =
@@ -18,6 +18,15 @@ const assertItemIsAssignedToUser: (user: User) => (item: Item) => void =
     if (!user.catalogue.includes(item))
       throw new TRPCError({ code: "BAD_REQUEST" });
   };
+
+const assertDeliveryIsAccepted: (delivery: Delivery) => void = (delivery) => {
+  if (delivery.state !== DeliveryStatus.ACCEPTED)
+    throw new TRPCError({
+      code: "PRECONDITION_FAILED",
+      message:
+        "The selected delivery location has not been accepted yet. Please contact one of ours sales representatives",
+    });
+};
 
 export const orderProps = order.omit({
   id: true,
@@ -44,5 +53,7 @@ export const placeOrderController: (
   const delivery = await deliveryRepo.findOneBy({ id: props.delivery });
   assertExists<Delivery>(delivery);
   assertUserIsAsminOrOwner(user, delivery.user.uuid);
+  assertDeliveryIsAccepted(delivery);
+  // main
   return await requestOrder(items, user, delivery).catch(throwDBError);
 };
