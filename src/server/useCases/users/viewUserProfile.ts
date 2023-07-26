@@ -10,9 +10,5 @@ export const viewUserProfile: (
     .leftJoinAndSelect("delivery.user", "user")
     .where("user.uuid = :uuid", { uuid: user.uuid })
     .execute();
-  user.password = "";
-  return {
-    user,
-    deliveries,
-  };
+  return { user, deliveries };
 };

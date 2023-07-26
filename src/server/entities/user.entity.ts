@@ -79,4 +79,12 @@ export class User extends BaseEntity {
     if (typeof this.catalogue === "undefined" || this.catalogue.length === 0)
       this.catalogue = [];
   };
+
+  @AfterLoad()
+  @AfterRecover()
+  @AfterInsert()
+  @AfterUpdate()
+  passwordRedaction: () => void = () => {
+    this.password = "********";
+  };
 }
