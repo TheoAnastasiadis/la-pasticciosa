@@ -1,7 +1,7 @@
 import moment from "moment";
-import { sessionRepo } from "../../database/repos/session.repo";
-import type { Session } from "../../entities/session.entity";
-import type { User } from "../../entities/user.entity";
+import { sessionRepo } from "../database/repos/session.repo";
+import type { Session } from "../entities/session.entity";
+import type { User } from "../entities/user.entity";
 import { TRPCError } from "@trpc/server";
 
 export const findSessionById: (id: string) => Promise<Session> = async (id) => {

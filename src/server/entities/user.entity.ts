@@ -55,6 +55,10 @@ export class User extends BaseEntity {
   @JoinTable()
   catalogue!: Item[];
 
+  isAdmin(): boolean {
+    return this.type === UserType.ADMIN;
+  }
+
   @AfterLoad()
   @AfterRecover()
   @AfterInsert()

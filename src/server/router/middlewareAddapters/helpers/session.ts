@@ -1,5 +1,5 @@
 import { TRPCError } from "@trpc/server";
-import { populateSession } from "../../../middleware/auth/session.auth";
+import { populateSession } from "../../../middleware/session";
 import { middleware } from "../../trpc";
 
 export const requestWSession = middleware(async ({ ctx, next }) => {

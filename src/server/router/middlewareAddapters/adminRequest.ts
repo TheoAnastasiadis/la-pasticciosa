@@ -1,4 +1,3 @@
-import { assertUserIsAdmin } from "../../middleware/auth/admin.auth";
 import { publicProcedure } from "../trpc";
 import { TRPCError } from "@trpc/server";
 import { requestWSession } from "./helpers/session";
@@ -10,6 +9,6 @@ export const adminOnlyRoute = publicProcedure
     if (typeof session === "undefined")
       throw new TRPCError({ code: "BAD_REQUEST" });
     const { user } = session;
-    assertUserIsAdmin(user);
+    if (!user.isAdmin()) throw new TRPCError({ code: "METHOD_NOT_SUPPORTED" });
     return await next({ ctx });
   });
