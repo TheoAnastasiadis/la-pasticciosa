@@ -2,13 +2,12 @@ import {
   deliveryProps,
   requestDeliveryController,
 } from "../../../controllers/delivery/requestDelivery.controller";
-import { publicProcedure } from "../../trpc";
+import { authenticatedRoute } from "../../middlewareAddapters/authenticatedRequest";
 
-export const requestDeliveryRoute = publicProcedure
+export const requestDeliveryRoute = authenticatedRoute
   .input(deliveryProps)
-  .meta({ requiresAuth: true, adminOnly: false })
   .mutation(async ({ input, ctx }) => {
     const props = input;
-    const { user } = ctx;
+    const { user } = ctx.session;
     await requestDeliveryController(props, user);
   });

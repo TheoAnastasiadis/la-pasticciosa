@@ -5,6 +5,7 @@ import { User } from "../entities/user.entity";
 import { Item } from "../entities/item.entity";
 import { Delivery } from "../entities/delivery.entity";
 import { Order } from "../entities/order.entity";
+import { Session } from "../entities/session.entity";
 
 const dbUrl = new URL(appConfig.getDBUrl());
 const routingId = dbUrl.searchParams.get("options");
@@ -18,10 +19,8 @@ export const AppDataSource = new DataSource({
     options: routingId,
   },
   timeTravelQueries: false,
-  entities: [User, Item, Delivery, Order],
+  entities: [User, Item, Delivery, Order, Session],
   synchronize: true,
   logging:
     process.env.NOVE_ENV === "production" ? undefined : ["query", "error"],
 });
-
-// AppDataSource.initialize();

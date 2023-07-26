@@ -1,11 +1,11 @@
 import { removeDeliveryController } from "../../../controllers/delivery/removeDelivery.controller";
-import { publicProcedure } from "../../trpc";
 import { z } from "zod";
+import { authenticatedRoute } from "../../middlewareAddapters/authenticatedRequest";
 
-export const removeDeliveryRoute = publicProcedure
-  .input(z.string())
-  .meta({ requiresAuth: true, adminOnly: false })
-  .mutation(async ({ input }) => {
-    const id = input;
-    await removeDeliveryController(id);
+export const removeDeliveryRoute = authenticatedRoute
+  .input(z.object({ deliveryId: z.string(), userId: z.string() }))
+  .mutation(async ({ input, ctx }) => {
+    const { deliveryId } = input;
+    const { session } = ctx;
+    await removeDeliveryController(deliveryId, session.user);
   });

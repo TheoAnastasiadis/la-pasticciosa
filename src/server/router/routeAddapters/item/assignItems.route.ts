@@ -1,10 +1,9 @@
 import { z } from "zod";
-import { publicProcedure } from "../../trpc";
 import { assignItemController } from "../../../controllers/item/assignItem.controller";
+import { adminOnlyRoute } from "../../middlewareAddapters/adminRequest";
 
-export const assignItemsRoute = publicProcedure
+export const assignItemsRoute = adminOnlyRoute
   .input(z.object({ userId: z.string(), itemId: z.string() }))
-  .meta({ requiresAuth: true, adminOnly: true })
   .mutation(async ({ input }) => {
     const { userId, itemId } = input;
     return await assignItemController(itemId, userId);

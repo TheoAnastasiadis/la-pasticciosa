@@ -1,6 +1,4 @@
 import { viewUsersController } from "../../../controllers/user/viewUsers.controller";
-import { publicProcedure } from "../../trpc";
+import { adminOnlyRoute } from "../../middlewareAddapters/adminRequest";
 
-export const viewUsersRoute = publicProcedure
-  .meta({ requiresAuth: true, adminOnly: true })
-  .query(viewUsersController);
+export const viewUsersRoute = adminOnlyRoute.query(viewUsersController);

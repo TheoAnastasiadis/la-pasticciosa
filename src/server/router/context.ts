@@ -1,5 +1,18 @@
-import { type User } from "../entities/user.entity";
+import type * as trpcExpress from "@trpc/server/adapters/express";
+import type { Session } from "../entities/session.entity";
 
 export interface Context {
-  user: User;
+  sessionId: string | null;
+  setCookie: trpcExpress.CreateExpressContextOptions["res"]["cookie"];
+  session?: Session;
+}
+
+export async function createContext({
+  req,
+  res,
+}: trpcExpress.CreateExpressContextOptions): Promise<Context> {
+  return {
+    sessionId: req.cookies.sessionId,
+    setCookie: res.cookie,
+  };
 }

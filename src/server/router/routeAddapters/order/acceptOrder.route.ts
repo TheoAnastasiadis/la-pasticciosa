@@ -1,10 +1,9 @@
 import { acceptOrderController } from "../../../controllers/order/acceptOrder.controller";
-import { publicProcedure } from "../../trpc";
+import { adminOnlyRoute } from "../../middlewareAddapters/adminRequest";
 import { z } from "zod";
 
-export const acceptOrderRoute = publicProcedure
+export const acceptOrderRoute = adminOnlyRoute
   .input(z.string())
-  .meta({ requiresAuth: true, adminOnly: false })
   .mutation(async ({ input }) => {
     const id = input;
     return await acceptOrderController(id);

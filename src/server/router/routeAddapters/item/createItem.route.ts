@@ -1,10 +1,9 @@
 import { item } from "../../../entities/decoders/item.decoder";
-import { publicProcedure } from "../../trpc";
 import { createItemController } from "../../../controllers/item/createItem.controller";
+import { adminOnlyRoute } from "../../middlewareAddapters/adminRequest";
 
-export const createItemRoute = publicProcedure
+export const createItemRoute = adminOnlyRoute
   .input(item.omit({ id: true }))
-  .meta({ requiresAuth: true, adminOnly: true })
   .mutation(async ({ input }) => {
     const props = input;
     await createItemController(props);

@@ -4,7 +4,6 @@ import { requestUserController } from "../../../controllers/user/requestUser.con
 
 export const requestUserRoute = publicProcedure
   .input(user.omit({ uuid: true, type: true, status: true, catalogue: true }))
-  .meta({ requiresAuth: false, adminOnly: false })
   .mutation(async ({ input }) => {
     const user = input;
     return await requestUserController(user);

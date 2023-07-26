@@ -12,7 +12,7 @@ import {
 } from "typeorm";
 import { Item } from "./item.entity";
 
-export enum userType {
+export enum UserType {
   USER = "user",
   ADMIN = "admin",
 }
@@ -36,8 +36,8 @@ export class User extends BaseEntity {
   @Column()
   password!: string;
 
-  @Column({ type: "enum", enum: userType, default: userType.USER })
-  type!: userType;
+  @Column({ type: "enum", enum: UserType, default: UserType.USER })
+  type!: UserType;
 
   @Column({ type: "enum", enum: UserStatus, default: UserStatus.REQUESTED })
   status!: UserStatus;

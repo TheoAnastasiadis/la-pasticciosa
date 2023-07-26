@@ -1,11 +1,10 @@
 import { acceptDeliveryController } from "../../../controllers/delivery/acceptDelivery.controller";
-import { publicProcedure } from "../../trpc";
 import { z } from "zod";
+import { adminOnlyRoute } from "../../middlewareAddapters/adminRequest";
 
-export const acceptDeliveryRoute = publicProcedure
+export const acceptDeliveryRoute = adminOnlyRoute
   .input(z.string())
-  .meta({ requiresAuth: true, adminOnly: false })
-  .mutation(async ({ input }) => {
+  .mutation(async ({ input, ctx }) => {
     const id = input;
     return await acceptDeliveryController(id);
   });

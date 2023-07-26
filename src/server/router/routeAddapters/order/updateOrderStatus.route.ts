@@ -1,9 +1,9 @@
 import { updateOrderStatusController } from "../../../controllers/order/updateOrderStatus.controller";
 import { OrderStatus } from "../../../entities/order.entity";
-import { publicProcedure } from "../../trpc";
+import { adminOnlyRoute } from "../../middlewareAddapters/adminRequest";
 import { z } from "zod";
 
-export const updateOrderStatusRoute = publicProcedure
+export const updateOrderStatusRoute = adminOnlyRoute
   .input(
     z.object({
       orderId: z.string(),
@@ -15,7 +15,6 @@ export const updateOrderStatusRoute = publicProcedure
       ]),
     }),
   )
-  .meta({ requiresAuth: true, adminOnly: false })
   .mutation(async ({ input }) => {
     const { orderId, status } = input;
     return await updateOrderStatusController(orderId, status);

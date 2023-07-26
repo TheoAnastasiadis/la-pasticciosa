@@ -1,11 +1,10 @@
 import { viewOrdersController } from "../../../controllers/order/viewOrders.controller";
-import { publicProcedure } from "../../trpc";
+import { authenticatedRoute } from "../../middlewareAddapters/authenticatedRequest";
 import { z } from "zod";
 
-export const viewOrdersRoute = publicProcedure
+export const viewOrdersRoute = authenticatedRoute
   .input(z.string().optional())
-  .meta({ requiresAuth: true, adminOnly: false })
   .query(async ({ input, ctx }) => {
-    const userId = typeof input !== "undefined" ? input : ctx.user.uuid;
+    const userId = input ?? ctx.session.user.uuid;
     return await viewOrdersController(userId);
   });
