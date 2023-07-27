@@ -4,12 +4,12 @@ import { createItem } from "../../../../src/server/useCases/items/createItem";
 
 describe("Create Items", () => {
   beforeAll(async () => {
-    await AppDataSource.initialize();
+    if (!AppDataSource.isInitialized) await AppDataSource.initialize();
   });
 
   test("creates new item", async () => {
     const item = itemRepo.create({
-      name: "Product",
+      name: "New Item",
       price: 10,
       description: "Lorem ipsum...",
       image: "https://example.com/images/product/original.jpg",
@@ -18,12 +18,7 @@ describe("Create Items", () => {
 
     await createItem(item);
 
-    const items = await itemRepo.find();
-
+    const items = await itemRepo.findBy({ name: "New Item" });
     expect(items).toHaveLength(1);
-  });
-
-  afterAll(async () => {
-    await itemRepo.delete({ name: "Product" });
   });
 });

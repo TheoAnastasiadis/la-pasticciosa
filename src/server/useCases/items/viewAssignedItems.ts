@@ -4,7 +4,7 @@ import type { Item } from "../../entities/item.entity";
 export const viewAssignedItems: (
   userId: string,
 ) => Promise<Item[] | undefined> = async (userId) => {
-  const result = await userRepo.findOne({
+  const [result] = await userRepo.find({
     where: {
       uuid: userId,
     },
@@ -12,5 +12,5 @@ export const viewAssignedItems: (
       catalogue: true,
     },
   });
-  return result?.catalogue;
+  return result.catalogue;
 };

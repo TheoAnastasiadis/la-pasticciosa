@@ -4,24 +4,17 @@ import { removeDelivery } from "../../../../src/server/useCases/delivery/removeD
 
 describe("Remove Delivery", () => {
   beforeAll(async () => {
-    await AppDataSource.initialize();
-
-    const delivery = deliveryRepo.create({
-      name: "Fancy Restaurant",
-      street: "Rndm Dr.",
-      number: "69",
-      zip: 99999,
-      user: undefined,
-    });
-
-    await deliveryRepo.insert(delivery);
+    if (!AppDataSource.isInitialized) await AppDataSource.initialize();
   });
 
   test("removes delivery from db", async () => {
-    const delivery = await deliveryRepo.findOneBy({ name: "Fancy Restaurant" });
-    if (delivery == null) throw new Error("Test case error");
+    const delivery = await deliveryRepo.findOneByOrFail({
+      name: "Requested Delivery",
+    });
     await removeDelivery(delivery);
-    const results = await deliveryRepo.find();
+    const results = await deliveryRepo.findBy({
+      name: "Requested Delivery",
+    });
     expect(results).toHaveLength(0);
   });
 });

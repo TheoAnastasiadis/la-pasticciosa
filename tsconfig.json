@@ -9,12 +9,12 @@
     "declarationMap": true,
     "sourceMap": true,
     "outDir": "build",
-    "rootDir": "src/server",
     "strict": true,
     "noImplicitAny": true,
     "noFallthroughCasesInSwitch": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "esModuleInterop": true
-  }
+  },
+  "include": ["src/**/*", "test/**/*"]
 }

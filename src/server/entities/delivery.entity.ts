@@ -33,7 +33,7 @@ export class Delivery extends BaseEntity {
   @Column({ nullable: true })
   details?: string;
 
-  @OneToOne(() => User)
+  @OneToOne(() => User, { onDelete: "SET NULL" })
   @JoinColumn()
   user!: User;
 

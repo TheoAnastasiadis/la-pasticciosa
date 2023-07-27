@@ -5,28 +5,13 @@ import { acceptDelivery } from "../../../../src/server/useCases/delivery/acceptD
 
 describe("Accept Delivery", () => {
   beforeAll(async () => {
-    await AppDataSource.initialize();
-
-    const delivery = deliveryRepo.create({
-      name: "Fancy Restaurant",
-      street: "Rndm Dr.",
-      number: "69",
-      zip: 99999,
-      user: undefined,
-    });
-
-    await deliveryRepo.insert(delivery);
+    if (!AppDataSource.isInitialized) await AppDataSource.initialize();
   });
-
   test("changes delivery status to 'accepted'", async () => {
-    const delivery = await deliveryRepo.findOneBy({ name: "Fancy Restaurant" });
-    if (delivery == null) throw new Error("Test case error");
-    await acceptDelivery(delivery);
-    await delivery.reload();
-    expect(delivery).toHaveProperty("state", DeliveryStatus.ACCEPTED);
-  });
-
-  afterAll(async () => {
-    await deliveryRepo.delete({ name: "Fancy Restaurant" });
+    const requestedDelivery = await deliveryRepo.findOneByOrFail({
+      name: "Requested Delivery",
+    });
+    const acceptedDelivery = await acceptDelivery(requestedDelivery);
+    expect(acceptedDelivery).toHaveProperty("state", DeliveryStatus.ACCEPTED);
   });
 });

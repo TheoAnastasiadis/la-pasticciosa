@@ -9,5 +9,7 @@
         "tsconfig": "tsconfig.json"
       }
     ]
-  }
+  },
+  "globalSetup": "./server/useCases/seedDB.ts",
+  "globalTeardown": "./server/useCases/clearDB.ts"
 }

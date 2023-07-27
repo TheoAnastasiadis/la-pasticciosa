@@ -5,11 +5,13 @@ import {
   AfterUpdate,
   BaseEntity,
   BeforeInsert,
+  BeforeUpdate,
   Column,
   Entity,
   JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
+  TypeORMError,
 } from "typeorm";
 import { Item } from "./item.entity";
 import bcrypt from "bcrypt";
@@ -54,7 +56,10 @@ export class User extends BaseEntity {
   @Column({ length: 9 })
   vat!: string;
 
-  @ManyToMany(() => Item, { cascade: true })
+  @ManyToMany(() => Item, {
+    cascade: true,
+    eager: true,
+  })
   @JoinTable()
   catalogue!: Item[];
 
@@ -86,5 +91,13 @@ export class User extends BaseEntity {
   @AfterUpdate()
   passwordRedaction: () => void = () => {
     this.password = "********";
+  };
+
+  @BeforeUpdate()
+  prevertPasswordOverwriting: () => void = () => {
+    if (this.password === "********")
+      throw new TypeORMError(
+        "You attempted to save a user with an obfuscated password",
+      );
   };
 }

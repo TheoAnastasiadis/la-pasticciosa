@@ -22,5 +22,5 @@ export const AppDataSource = new DataSource({
   entities: [User, Item, Delivery, Order, Session],
   synchronize: true,
   logging:
-    process.env.NOVE_ENV === "production" ? undefined : ["query", "error"],
+    process.env.NOVE_ENV === "production" ? ["query", "error"] : ["error"],
 });
