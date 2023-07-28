@@ -10,6 +10,6 @@
       }
     ]
   },
-  "globalSetup": "./server/useCases/seedDB.ts",
-  "globalTeardown": "./server/useCases/clearDB.ts"
+  "globalSetup": "./server/seedDB.ts",
+  "globalTeardown": "./server/clearDB.ts"
 }

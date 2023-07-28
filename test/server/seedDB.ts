@@ -1,19 +1,19 @@
-import { AppDataSource } from "../../../src/server/database/dataSource";
-import { deliveryRepo } from "../../../src/server/database/repos/delivery.repo";
-import { itemRepo } from "../../../src/server/database/repos/item.repo";
-import { orderRepo } from "../../../src/server/database/repos/order.repo";
-import { userRepo } from "../../../src/server/database/repos/user.repo";
+import { AppDataSource } from "../../src/server/database/dataSource";
+import { deliveryRepo } from "../../src/server/database/repos/delivery.repo";
+import { itemRepo } from "../../src/server/database/repos/item.repo";
+import { orderRepo } from "../../src/server/database/repos/order.repo";
+import { userRepo } from "../../src/server/database/repos/user.repo";
 import {
   Delivery,
   DeliveryStatus,
-} from "../../../src/server/entities/delivery.entity";
-import { Item } from "../../../src/server/entities/item.entity";
-import { Order, OrderStatus } from "../../../src/server/entities/order.entity";
+} from "../../src/server/entities/delivery.entity";
+import { Item } from "../../src/server/entities/item.entity";
+import { Order, OrderStatus } from "../../src/server/entities/order.entity";
 import {
   User,
   UserStatus,
   UserType,
-} from "../../../src/server/entities/user.entity";
+} from "../../src/server/entities/user.entity";
 
 export default async function (): Promise<void> {
   await AppDataSource.initialize();
