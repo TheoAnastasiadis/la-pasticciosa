@@ -4,7 +4,9 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  OneToMany,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
@@ -24,7 +26,7 @@ export class Order extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: string;
 
-  @OneToOne(() => User)
+  @ManyToOne(() => User)
   @JoinColumn()
   user!: User;
 
@@ -32,11 +34,12 @@ export class Order extends BaseEntity {
   @JoinColumn()
   delivery!: Delivery;
 
-  @OneToMany(() => Item, (item) => item.id)
+  @ManyToMany(() => Item, (item) => item.id, { eager: true })
+  @JoinTable()
   items!: Item[];
 
-  @Column({ type: "numeric" })
-  total!: number;
+  @Column()
+  total!: string;
 
   @Column({ type: "enum", enum: OrderStatus, default: OrderStatus.PENDING })
   status!: OrderStatus;

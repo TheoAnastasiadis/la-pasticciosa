@@ -57,7 +57,6 @@ export class User extends BaseEntity {
   vat!: string;
 
   @ManyToMany(() => Item, {
-    cascade: true,
     eager: true,
   })
   @JoinTable()

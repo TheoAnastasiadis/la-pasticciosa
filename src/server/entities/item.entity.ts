@@ -11,8 +11,8 @@ export class Item extends BaseEntity {
   @Column()
   description!: string;
 
-  @Column({ type: "numeric" })
-  price!: number;
+  @Column()
+  price!: string;
 
   @Column()
   image!: string;
