@@ -4,4 +4,11 @@ import { throwDBError } from "./throwDBError";
 
 export const fetchDelivery: (id: string) => Promise<Delivery | null> = async (
   id,
-) => await deliveryRepo.findOneBy({ id }).catch(throwDBError);
+) => {
+  const delivery = await deliveryRepo.findOne({
+    where: { id },
+    relations: { user: true },
+  });
+  if (delivery === null) throwDBError();
+  return delivery;
+};

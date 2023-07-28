@@ -1,7 +1,7 @@
-import { AppDataSource } from "../../../../src/server/database/dataSource";
-import { type Item } from "../../../../src/server/entities/item.entity";
-import { type User } from "../../../../src/server/entities/user.entity";
-import { createCaller } from "../testObjects";
+import { AppDataSource } from "../../../src/server/database/dataSource";
+import { type Item } from "../../../src/server/entities/item.entity";
+import { type User } from "../../../src/server/entities/user.entity";
+import { createCaller } from "./testObjects";
 
 let callAsAcceptedUser: Awaited<
   ReturnType<typeof createCaller>

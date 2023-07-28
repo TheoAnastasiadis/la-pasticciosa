@@ -9,5 +9,5 @@ export const requestDeliveryRoute = authenticatedRoute
   .mutation(async ({ input, ctx }) => {
     const props = input;
     const { user } = ctx.session;
-    await requestDeliveryController(props, user);
+    return await requestDeliveryController(props, user);
   });

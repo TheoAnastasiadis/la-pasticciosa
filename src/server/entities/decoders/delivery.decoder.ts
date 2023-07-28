@@ -8,5 +8,5 @@ export const devilvery = z.object({
   name: z.string(),
   details: z.optional(z.string()),
   user: z.string().uuid(),
-  sate: z.union([z.literal("requested"), z.literal("accepted")])
+  state: z.union([z.literal("requested"), z.literal("accepted")]),
 });

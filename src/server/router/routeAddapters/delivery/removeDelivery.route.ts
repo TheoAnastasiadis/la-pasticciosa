@@ -3,7 +3,7 @@ import { z } from "zod";
 import { authenticatedRoute } from "../../middlewareAddapters/authenticatedRequest";
 
 export const removeDeliveryRoute = authenticatedRoute
-  .input(z.object({ deliveryId: z.string(), userId: z.string() }))
+  .input(z.object({ deliveryId: z.coerce.string(), userId: z.coerce.string() }))
   .mutation(async ({ input, ctx }) => {
     const { deliveryId } = input;
     const { session } = ctx;

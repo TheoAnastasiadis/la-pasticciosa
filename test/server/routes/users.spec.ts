@@ -1,12 +1,12 @@
 import { instance } from "ts-mockito";
-import { appRouter } from "../../../../src/server/router";
-import { createCaller, setCookie } from "../testObjects";
+import { appRouter } from "../../../src/server/router";
+import { createCaller, setCookie } from "./testObjects";
 import {
   type User,
   UserType,
   UserStatus,
-} from "../../../../src/server/entities/user.entity";
-import { AppDataSource } from "../../../../src/server/database/dataSource";
+} from "../../../src/server/entities/user.entity";
+import { AppDataSource } from "../../../src/server/database/dataSource";
 
 let callAsAcceptedUser: Awaited<
   ReturnType<typeof createCaller>
