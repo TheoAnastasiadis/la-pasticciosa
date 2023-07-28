@@ -28,6 +28,7 @@ describe("Request Order", () => {
     delivery.user = user;
     await requestOrder(user.catalogue, user, delivery).catch(
       (error: TRPCError) => {
+        console.log(JSON.stringify(error, null, 2));
         expect(error.code).toBe("PRECONDITION_FAILED");
       },
     );

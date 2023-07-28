@@ -30,7 +30,7 @@ export class Order extends BaseEntity {
   @JoinColumn()
   user!: User;
 
-  @OneToOne(() => Delivery, { onDelete: "SET NULL" })
+  @ManyToOne(() => Delivery, { onDelete: "SET NULL" })
   @JoinColumn()
   delivery!: Delivery;
 
