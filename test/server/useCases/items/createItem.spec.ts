@@ -10,7 +10,7 @@ describe("Create Items", () => {
   test("creates new item", async () => {
     const item = itemRepo.create({
       name: "New Item",
-      price: 10,
+      price: (10).toFixed(),
       description: "Lorem ipsum...",
       image: "https://example.com/images/product/original.jpg",
       thumbnail: "https://example.com/images/product/small.jpg",

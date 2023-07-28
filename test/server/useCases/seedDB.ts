@@ -21,7 +21,7 @@ export default async function (): Promise<void> {
   const item1 = new Item();
   item1.name = "Item 1";
   item1.description = "Delicious beef patty with melted cheese on a soft bun.";
-  item1.price = 8.99;
+  item1.price = (8.99).toFixed(2);
   item1.image = "https://example.com/cheeseburger.jpg";
   item1.thumbnail = "https://example.com/thumbnails/cheeseburger.jpg";
   await itemRepo.insert(item1);
@@ -31,7 +31,7 @@ export default async function (): Promise<void> {
   item2.name = "Item 2";
   item2.description =
     "Classic pizza topped with tomatoes, mozzarella, and fresh basil.";
-  item2.price = 12.5;
+  item2.price = (12.5).toFixed(2);
   item2.image = "https://example.com/margherita_pizza.jpg";
   item2.thumbnail = "https://example.com/thumbnails/margherita_pizza.jpg";
   await itemRepo.insert(item2);
@@ -41,7 +41,7 @@ export default async function (): Promise<void> {
   item3.name = "Item 3";
   item3.description =
     "Decadent chocolate brownie served with vanilla ice cream.";
-  item3.price = 5.75;
+  item3.price = (5.75).toFixed(2);
   item3.image = "https://example.com/chocolate_brownie.jpg";
   item3.thumbnail = "https://example.com/thumbnails/chocolate_brownie.jpg";
   await itemRepo.insert(item3);
@@ -59,6 +59,7 @@ export default async function (): Promise<void> {
   user1.vat = "123456789";
   user1.catalogue = [];
   await userRepo.insert(user1);
+  await user1.reload();
 
   const user2 = new User();
   user2.userName = "Accepted User";
@@ -71,6 +72,7 @@ export default async function (): Promise<void> {
   user2.vat = "987654321";
   user2.catalogue = [];
   await userRepo.insert(user2);
+  await user2.reload();
 
   const user3 = new User();
   user3.userName = "Assigned User";
@@ -103,16 +105,18 @@ export default async function (): Promise<void> {
   delivery2.zip = 54321;
   delivery2.name = "Accepted Delivery";
   delivery2.details = "Green building, 5th floor";
-  delivery2.user = user3;
   delivery2.state = DeliveryStatus.ACCEPTED;
   await deliveryRepo.insert(delivery2);
+  await delivery2.reload();
+  delivery2.user = user3;
+  await delivery2.save();
 
   // create example Orders
   const order1 = new Order();
   order1.user = user3;
   order1.delivery = delivery1;
   order1.items = [item1, item2];
-  order1.total = 21.49;
+  order1.total = (21.49).toFixed(2);
   order1.status = OrderStatus.PENDING;
   order1.estimatedDelivery = "2023-07-26 18:30:00";
   order1.createdAt = new Date("2023-07-26 10:15:00");
