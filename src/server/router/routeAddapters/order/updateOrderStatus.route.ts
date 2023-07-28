@@ -6,7 +6,7 @@ import { z } from "zod";
 export const updateOrderStatusRoute = adminOnlyRoute
   .input(
     z.object({
-      orderId: z.string(),
+      orderId: z.coerce.string(),
       status: z.enum([
         OrderStatus.COMPLETE,
         OrderStatus.PENDING,

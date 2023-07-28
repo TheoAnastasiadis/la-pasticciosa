@@ -5,7 +5,7 @@ import { z } from "zod";
 export const updateOrderEstimateRoute = adminOnlyRoute
   .input(
     z.object({
-      id: z.string(),
+      id: z.coerce.string(),
       day: z.number(),
       month: z.number(),
       year: z.number(),

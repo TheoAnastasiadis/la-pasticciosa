@@ -26,7 +26,6 @@ export default async function (): Promise<void> {
   item1.thumbnail = "https://example.com/thumbnails/cheeseburger.jpg";
   await itemRepo.insert(item1);
   await item1.reload();
-
   const item2 = new Item();
   item2.name = "Item 2";
   item2.description =
@@ -36,7 +35,6 @@ export default async function (): Promise<void> {
   item2.thumbnail = "https://example.com/thumbnails/margherita_pizza.jpg";
   await itemRepo.insert(item2);
   await item2.reload();
-
   const item3 = new Item();
   item3.name = "Item 3";
   item3.description =
@@ -46,7 +44,6 @@ export default async function (): Promise<void> {
   item3.thumbnail = "https://example.com/thumbnails/chocolate_brownie.jpg";
   await itemRepo.insert(item3);
   await item3.reload();
-
   // create example users
   const user1 = new User();
   user1.userName = "Requested User";
@@ -60,7 +57,6 @@ export default async function (): Promise<void> {
   user1.catalogue = [];
   await userRepo.insert(user1);
   await user1.reload();
-
   const user2 = new User();
   user2.userName = "Accepted User";
   user2.email = "chefmaster@example.com";
@@ -73,7 +69,6 @@ export default async function (): Promise<void> {
   user2.catalogue = [];
   await userRepo.insert(user2);
   await user2.reload();
-
   const user3 = new User();
   user3.userName = "Assigned User";
   user3.email = "supplier@example.com";
@@ -87,7 +82,6 @@ export default async function (): Promise<void> {
   await user3.reload();
   user3.catalogue.push(item1, item2, item3);
   await user3.save();
-
   // create example deliveries
   const delivery1 = new Delivery();
   delivery1.street = "Food Street";
@@ -98,7 +92,6 @@ export default async function (): Promise<void> {
   delivery1.user = user2;
   delivery1.state = DeliveryStatus.REQUESTED;
   await deliveryRepo.insert(delivery1);
-
   const delivery2 = new Delivery();
   delivery2.street = "Delivery Avenue";
   delivery2.number = "456";
@@ -110,7 +103,6 @@ export default async function (): Promise<void> {
   await delivery2.reload();
   delivery2.user = user3;
   await delivery2.save();
-
   // create example Orders
   const order1 = new Order();
   order1.user = user3;

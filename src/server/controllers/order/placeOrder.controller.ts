@@ -32,7 +32,10 @@ export const placeOrderController: (
   // items
   items.map(assertExists<Item>);
   // delivery
-  const delivery = await deliveryRepo.findOneBy({ id: props.delivery });
+  const [delivery] = await deliveryRepo.find({
+    where: { id: props.delivery },
+    relations: { user: true },
+  });
   assertExists<Delivery>(delivery);
   assertUserIsAsminOrOwner(user, delivery.user.uuid);
   // main

@@ -3,8 +3,8 @@ import { z } from "zod";
 export const order = z.object({
   id: z.string(),
   user: z.string().uuid(),
-  delivery: z.string(),
-  items: z.array(z.string()),
+  delivery: z.coerce.string(),
+  items: z.array(z.coerce.string()),
   total: z.number(),
   status: z.union([
     z.literal("pending"),
@@ -14,4 +14,4 @@ export const order = z.object({
   ]),
   estimatedDelivery: z.optional(z.string().datetime()),
   createdAt: z.date(),
-})
+});

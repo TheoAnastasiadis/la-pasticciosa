@@ -20,7 +20,7 @@ export const requestOrder: (
 
   // validate items
   const itemsAreAssigned = items
-    .map((item) => user.catalogue.includes(item))
+    .map((item) => user.catalogue.map((c) => c.id).includes(item.id))
     .reduce((p, c) => p && c);
   if (!itemsAreAssigned) throw new TRPCError({ code: "PRECONDITION_FAILED" });
 
