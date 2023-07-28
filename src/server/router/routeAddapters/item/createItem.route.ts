@@ -6,5 +6,5 @@ export const createItemRoute = adminOnlyRoute
   .input(item.omit({ id: true }))
   .mutation(async ({ input }) => {
     const props = input;
-    await createItemController(props);
+    return await createItemController(props);
   });

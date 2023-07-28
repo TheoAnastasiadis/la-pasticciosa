@@ -3,7 +3,7 @@ import { acceptUserController } from "../../../controllers/user/acceptUser.contr
 import { adminOnlyRoute } from "../../middlewareAddapters/adminRequest";
 
 export const acceptUserRoute = adminOnlyRoute
-  .input(z.string())
+  .input(z.coerce.string())
   .mutation(async ({ input }) => {
     const uuid = input;
     return await acceptUserController(uuid);

@@ -4,7 +4,7 @@ import {
   DeleteDateColumn,
   Entity,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { User } from "./user.entity";
@@ -14,7 +14,10 @@ export class Session extends BaseEntity {
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
-  @OneToOne(() => User)
+  @ManyToOne(() => User, (user) => user.uuid, {
+    eager: true,
+    onDelete: "CASCADE",
+  })
   @JoinColumn()
   user!: User;
 

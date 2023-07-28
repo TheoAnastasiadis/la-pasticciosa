@@ -3,7 +3,7 @@ import { viewUserProfileController } from "../../../controllers/user/viewUserPro
 import { authenticatedRoute } from "../../middlewareAddapters/authenticatedRequest";
 
 export const viewUserProfileRoute = authenticatedRoute
-  .input(z.string().optional())
+  .input(z.coerce.string().optional())
   .query(async ({ input, ctx }) => {
     const uuid = input ?? ctx.session.user.uuid;
     const { user } = ctx.session;

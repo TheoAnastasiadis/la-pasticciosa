@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { order } from "./order.decoder";
 
 export const item = z.object({
   id: z.string(),
@@ -8,5 +7,4 @@ export const item = z.object({
   price: z.string(),
   image: z.string().url(),
   thumbnail: z.string().url(),
-  presentInOrders: z.array(order),
 });

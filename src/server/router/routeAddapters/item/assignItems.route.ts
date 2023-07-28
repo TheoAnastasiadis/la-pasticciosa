@@ -3,7 +3,7 @@ import { assignItemController } from "../../../controllers/item/assignItem.contr
 import { adminOnlyRoute } from "../../middlewareAddapters/adminRequest";
 
 export const assignItemsRoute = adminOnlyRoute
-  .input(z.object({ userId: z.string(), itemId: z.string() }))
+  .input(z.object({ userId: z.coerce.string(), itemId: z.coerce.string() }))
   .mutation(async ({ input }) => {
     const { userId, itemId } = input;
     return await assignItemController(itemId, userId);

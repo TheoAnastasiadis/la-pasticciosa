@@ -2,9 +2,9 @@ import type { z } from "zod";
 import { user } from "../../entities/decoders/user.decoder";
 import { TRPCError } from "@trpc/server";
 import { userRepo } from "../../database/repos/user.repo";
-import { createUser } from "../../useCases/users/createUser";
 import { throwDBError } from "../helpers/throwDBError";
-import type { InsertResult } from "typeorm";
+import { requestUser } from "../../useCases/users/requestUser";
+import type { User } from "../../entities/user.entity";
 
 // helpers
 const checkForDuplicateEmails: (email: string) => Promise<void> = async (
@@ -28,8 +28,8 @@ const userProps = user.omit({
 
 export const requestUserController: (
   props: z.infer<typeof userProps>,
-) => Promise<InsertResult> = async (props) => {
+) => Promise<User> = async (props) => {
   await checkForDuplicateEmails(props.email);
   const newUser = userRepo.create({ ...props });
-  return await createUser(newUser).catch(throwDBError);
+  return await requestUser(newUser).catch(throwDBError);
 };
