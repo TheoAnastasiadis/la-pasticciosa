@@ -3,15 +3,20 @@ import {
   Column,
   Entity,
   JoinColumn,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { User } from "./user.entity";
+import { delivery } from "./decoders/delivery.decoder";
+import type { z } from "zod";
+import assert from "assert";
 
 export enum DeliveryStatus {
   REQUESTED = "requested",
   ACCEPTED = "accepted",
 }
+
+const deliveryProps = delivery.omit({ id: true, user: true });
 
 @Entity()
 export class Delivery extends BaseEntity {
@@ -24,8 +29,8 @@ export class Delivery extends BaseEntity {
   @Column()
   number!: string;
 
-  @Column({ type: "numeric" })
-  zip!: number;
+  @Column()
+  zip!: string;
 
   @Column()
   name!: string;
@@ -33,7 +38,7 @@ export class Delivery extends BaseEntity {
   @Column({ nullable: true })
   details?: string;
 
-  @OneToOne(() => User, { onDelete: "SET NULL" })
+  @ManyToOne(() => User, (user) => user.uuid, { onDelete: "SET NULL" })
   @JoinColumn()
   user!: User;
 
@@ -43,4 +48,29 @@ export class Delivery extends BaseEntity {
     default: DeliveryStatus.REQUESTED,
   })
   state!: DeliveryStatus;
+
+  static createAndSave: (
+    props: z.infer<typeof deliveryProps>,
+    user: User,
+  ) => Promise<Delivery> = async (props, user) => {
+    const delivery = Delivery.create(props as Delivery);
+    await delivery.save();
+    delivery.user = user;
+    return await delivery.save();
+  };
+
+  static findById: (id: string) => Promise<Delivery> = async (id) => {
+    const deliveries = await Delivery.find({
+      where: { id },
+      relations: { user: true },
+    });
+    assert(deliveries.length > 0);
+    return deliveries[0];
+  };
+
+  toSafeOutput: () => z.infer<typeof delivery> = () => {
+    const safe: z.infer<typeof delivery> = this as any;
+    safe.user = this.user.uuid;
+    return safe;
+  };
 }
