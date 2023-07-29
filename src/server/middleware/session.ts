@@ -1,11 +1,10 @@
 import moment from "moment";
-import { sessionRepo } from "../database/repos/session.repo";
-import type { Session } from "../entities/session.entity";
+import { Session } from "../entities/session.entity";
 import type { User } from "../entities/user.entity";
 import { TRPCError } from "@trpc/server";
 
 export const findSessionById: (id: string) => Promise<Session> = async (id) => {
-  const sessions = await sessionRepo.find({
+  const sessions = await Session.find({
     where: { id },
     relations: { user: true },
   });
@@ -16,11 +15,11 @@ export const findSessionById: (id: string) => Promise<Session> = async (id) => {
 export const generateSession: (user: User) => Promise<string> = async (
   user,
 ) => {
-  const session = sessionRepo.create({
+  const session = Session.create({
     user,
     deletedAt: moment(new Date()).add(1, "M").toDate(),
   });
-  return (await sessionRepo.insert(session)).generatedMaps[0].id;
+  return (await Session.insert(session)).generatedMaps[0].id;
 };
 
 export const populateSession: (
