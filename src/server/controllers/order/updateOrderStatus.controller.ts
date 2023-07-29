@@ -1,13 +1,13 @@
-import type { Order, OrderStatus } from "../../entities/order.entity";
+import type { order } from "../../entities/decoders/order.decoder";
+import { Order, type OrderStatus } from "../../entities/order.entity";
 import { updateOrderStatus } from "../../useCases/order/updateOrderStatus";
-import { assertExists } from "../helpers/assertExists";
-import { fetchOrder } from "../helpers/fetchOrder";
+import { throwNotFoundError } from "../errors/notFound.error";
+import type { z } from "zod";
 
 export const updateOrderStatusController: (
   id: string,
   status: OrderStatus,
-) => Promise<Order> = async (id, status) => {
-  const order = await fetchOrder(id);
-  assertExists<Order>(order);
-  return await updateOrderStatus(order, status);
+) => Promise<z.infer<typeof order>> = async (id, status) => {
+  const order = await Order.findById(id).catch(throwNotFoundError);
+  return (await updateOrderStatus(order, status)).toSafeOutput();
 };

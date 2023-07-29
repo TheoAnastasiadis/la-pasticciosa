@@ -1,17 +1,16 @@
 import moment from "moment";
-import type { Order } from "../../entities/order.entity";
-import { assertExists } from "../helpers/assertExists";
-import { fetchOrder } from "../helpers/fetchOrder";
+import { Order } from "../../entities/order.entity";
 import { updateOrderEstimate } from "../../useCases/order/updateOrderEstimate";
+import type { z } from "zod";
+import type { order } from "../../entities/decoders/order.decoder";
 
 export const updateOrderEstimateController: (
   id: string,
   year: number,
   monthIdx: number,
   day: number,
-) => Promise<Order> = async (id, year, monthIdx, day) => {
-  const order = await fetchOrder(id);
-  assertExists<Order>(order);
+) => Promise<z.infer<typeof order>> = async (id, year, monthIdx, day) => {
+  const order = await Order.findById(id);
   const timestamp = moment([year, monthIdx, day]).toDate();
-  return await updateOrderEstimate(order, timestamp);
+  return (await updateOrderEstimate(order, timestamp)).toSafeOutput();
 };

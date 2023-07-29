@@ -1,25 +1,17 @@
-import { devilvery } from "../../entities/decoders/delivery.decoder";
+import type { delivery } from "../../entities/decoders/delivery.decoder";
 import type { z } from "zod";
 import type { User } from "../../entities/user.entity";
-import { deliveryRepo } from "../../database/repos/delivery.repo";
-import { type Delivery, DeliveryStatus } from "../../entities/delivery.entity";
-import { requestDelivery } from "../../useCases/delivery/requestDelivery";
-import { throwDBError } from "../helpers/throwDBError";
-
-export const deliveryProps = devilvery.omit({
-  id: true,
-  user: true,
-  state: true,
-});
+import {
+  type deliveryProps,
+  requestDelivery,
+} from "../../useCases/delivery/requestDelivery";
+import { throwDBError } from "../errors/db.error";
 
 export const requestDeliveryController: (
   props: z.infer<typeof deliveryProps>,
   user: User,
-) => Promise<Delivery> = async (props, user) => {
-  const delivery = deliveryRepo.create({
-    ...props,
-    state: DeliveryStatus.REQUESTED,
-    user,
-  });
-  return await requestDelivery(delivery).catch(throwDBError);
+) => Promise<z.infer<typeof delivery>> = async (props, user) => {
+  return (
+    await requestDelivery(props, user).catch(throwDBError)
+  ).toSafeOutput();
 };

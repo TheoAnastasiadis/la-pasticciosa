@@ -1,13 +1,13 @@
-import type { Delivery } from "../../entities/delivery.entity";
+import { Delivery } from "../../entities/delivery.entity";
 import { acceptDelivery } from "../../useCases/delivery/acceptDelivery";
-import { assertExists } from "../helpers/assertExists";
-import { fetchDelivery } from "../helpers/fetchDelivery";
-import { throwDBError } from "../helpers/throwDBError";
+import { throwDBError } from "../errors/db.error";
+import type { z } from "zod";
+import { type delivery } from "../../entities/decoders/delivery.decoder";
+import { throwNotFoundError } from "../errors/notFound.error";
 
 export const acceptDeliveryController: (
   id: string,
-) => Promise<Delivery> = async (id) => {
-  const delivery = await fetchDelivery(id);
-  assertExists<Delivery>(delivery);
-  return await acceptDelivery(delivery).catch(throwDBError);
+) => Promise<z.infer<typeof delivery>> = async (id) => {
+  const delivery = await Delivery.findById(id).catch(throwNotFoundError);
+  return (await acceptDelivery(delivery).catch(throwDBError)).toSafeOutput();
 };

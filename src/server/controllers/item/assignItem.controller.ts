@@ -1,20 +1,16 @@
-import type { Item } from "../../entities/item.entity";
-import type { User } from "../../entities/user.entity";
+import type { user } from "../../entities/decoders/user.decoder";
+import { Item } from "../../entities/item.entity";
+import { User } from "../../entities/user.entity";
 import { assignItem } from "../../useCases/items/assignItem";
-import { assertExists } from "../helpers/assertExists";
-import { fetchItem } from "../helpers/fetchItem";
-import { fetchUser } from "../helpers/fetchUser";
-import { throwDBError } from "../helpers/throwDBError";
+import { throwNotFoundError } from "../errors/notFound.error";
+import { throwDBError } from "../errors/db.error";
+import type { z } from "zod";
 
 export const assignItemController: (
   itemId: string,
   userUuid: string,
-) => Promise<User> = async (itemId, userUuid) => {
-  const user = await fetchUser(userUuid);
-  assertExists<User>(user);
-
-  const item = await fetchItem(itemId);
-  assertExists<Item>(item);
-
-  return await assignItem(item, user).catch(throwDBError);
+) => Promise<z.infer<typeof user>> = async (itemId, userUuid) => {
+  const user = await User.findById(userUuid).catch(throwDBError);
+  const item = await Item.findById(itemId).catch(throwNotFoundError);
+  return (await assignItem(item, user).catch(throwDBError)).toSafeOutput();
 };

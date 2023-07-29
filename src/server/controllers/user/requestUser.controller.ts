@@ -1,16 +1,15 @@
 import type { z } from "zod";
-import { user } from "../../entities/decoders/user.decoder";
+import type { user } from "../../entities/decoders/user.decoder";
 import { TRPCError } from "@trpc/server";
-import { userRepo } from "../../database/repos/user.repo";
-import { throwDBError } from "../helpers/throwDBError";
-import { requestUser } from "../../useCases/users/requestUser";
-import type { User } from "../../entities/user.entity";
+import { throwDBError } from "../errors/db.error";
+import { requestUser, type userProps } from "../../useCases/users/requestUser";
+import { User } from "../../entities/user.entity";
 
 // helpers
 const checkForDuplicateEmails: (email: string) => Promise<void> = async (
   email,
 ) => {
-  const duplicates = await userRepo.findBy({ email });
+  const duplicates = await User.findBy({ email });
   if (duplicates.length > 0) {
     throw new TRPCError({
       code: "PRECONDITION_FAILED",
@@ -19,17 +18,9 @@ const checkForDuplicateEmails: (email: string) => Promise<void> = async (
   }
 };
 
-const userProps = user.omit({
-  uuid: true,
-  type: true,
-  status: true,
-  catalogue: true,
-});
-
 export const requestUserController: (
   props: z.infer<typeof userProps>,
-) => Promise<User> = async (props) => {
+) => Promise<z.infer<typeof user>> = async (props) => {
   await checkForDuplicateEmails(props.email);
-  const newUser = userRepo.create({ ...props });
-  return await requestUser(newUser).catch(throwDBError);
+  return (await requestUser(props).catch(throwDBError)).toSafeOutput();
 };

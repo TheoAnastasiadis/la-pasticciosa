@@ -1,16 +1,9 @@
 import type { z } from "zod";
-import { item } from "../../entities/decoders/item.decoder";
-import { Item } from "../../entities/item.entity";
-import { createItem } from "../../useCases/items/createItem";
-import { throwDBError } from "../helpers/throwDBError";
-
-const itemProps = item.omit({ id: true });
+import { createItem, type itemProps } from "../../useCases/items/createItem";
+import { throwDBError } from "../errors/db.error";
+import type { item } from "../../entities/decoders/item.decoder";
 
 export const createItemController: (
   props: z.infer<typeof itemProps>,
-) => Promise<Item> = async (props) => {
-  const item = new Item();
-  Object.assign(item, props);
-
-  return await createItem(item).catch(throwDBError);
-};
+) => Promise<z.infer<typeof item>> = async (props) =>
+  (await createItem(props).catch(throwDBError)).toSafeOutput();
