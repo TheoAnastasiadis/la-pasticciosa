@@ -1,7 +1,10 @@
 import { appRouter } from "../../../src/server/router";
 import { AppDataSource } from "../../../src/server/database/dataSource";
-import { userRepo } from "../../../src/server/database/repos/user.repo";
-import { User, UserType } from "../../../src/server/entities/user.entity";
+import {
+  User,
+  UserStatus,
+  UserType,
+} from "../../../src/server/entities/user.entity";
 
 const setCookie: (name: any, val: any, options?: any) => any = (
   name,
@@ -15,17 +18,16 @@ const setCookie: (name: any, val: any, options?: any) => any = (
 describe("Login", () => {
   beforeAll(async () => {
     if (!AppDataSource.isInitialized) await AppDataSource.initialize();
-    await userRepo.insert(
-      User.create({
-        email: "existing@user.com",
-        password: "1234abcd",
-        companyName: "company",
-        companyAddress: "address",
-        type: UserType.USER,
-        userName: "username",
-        vat: "123456789",
-      }),
-    );
+    await User.createAndSave({
+      email: "existing@user.com",
+      password: "1234abcd",
+      companyName: "company",
+      companyAddress: "address",
+      type: UserType.USER,
+      userName: "username",
+      vat: "123456789",
+      status: UserStatus.ACCEPTED,
+    });
   });
   test("logs an existing user in", async () => {
     await appRouter

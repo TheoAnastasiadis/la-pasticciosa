@@ -1,6 +1,9 @@
 import { AppDataSource } from "../../../../src/server/database/dataSource";
-import { deliveryRepo } from "../../../../src/server/database/repos/delivery.repo";
-import { DeliveryStatus } from "../../../../src/server/entities/delivery.entity";
+import {
+  Delivery,
+  DeliveryStatus,
+} from "../../../../src/server/entities/delivery.entity";
+import { User } from "../../../../src/server/entities/user.entity";
 import { requestDelivery } from "../../../../src/server/useCases/delivery/requestDelivery";
 
 describe("Request Delivery", () => {
@@ -9,16 +12,17 @@ describe("Request Delivery", () => {
   });
 
   test("creates a new delivery with status 'requested'", async () => {
-    const delivery = deliveryRepo.create({
-      name: "New Delivery",
-      street: "Rndm Dr.",
-      number: "69",
-      zip: 99999,
-      user: undefined,
-    });
-    await requestDelivery(delivery);
-    const results = await deliveryRepo.findBy({ name: "New Delivery" });
-    expect(results).toHaveLength(1);
-    expect(results.at(0)).toHaveProperty("state", DeliveryStatus.REQUESTED);
+    const user = await User.findOneByOrFail({ userName: "Accepted User" });
+    await requestDelivery(
+      {
+        name: "New Delivery",
+        street: "Rndm Dr.",
+        number: "69",
+        zip: "99999",
+      },
+      user,
+    );
+    const delivery = await Delivery.findOneByOrFail({ name: "New Delivery" });
+    expect(delivery).toHaveProperty("state", DeliveryStatus.REQUESTED);
   });
 });

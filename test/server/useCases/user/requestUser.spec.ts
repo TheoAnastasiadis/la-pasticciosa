@@ -1,5 +1,5 @@
 import { AppDataSource } from "../../../../src/server/database/dataSource";
-import { userRepo } from "../../../../src/server/database/repos/user.repo";
+import { User } from "../../../../src/server/entities/user.entity";
 import { requestUser } from "../../../../src/server/useCases/users/requestUser";
 
 describe("Request User", () => {
@@ -7,17 +7,15 @@ describe("Request User", () => {
     if (!AppDataSource.isInitialized) await AppDataSource.initialize();
   });
   test("requests the creation of a new user", async () => {
-    const user = userRepo.create({
+    await requestUser({
       userName: "New User",
       email: "john@doe.com",
       password: "**********",
       companyName: "Doe Ltd.",
       companyAddress: "69 Rndm Dr., Athens, Greece",
       vat: "999999999",
-      catalogue: [],
     });
-    await requestUser(user);
-    const users = await userRepo.findBy({ userName: "New User" });
+    const users = await User.findBy({ userName: "New User" });
     expect(users).toHaveLength(1);
   });
 });

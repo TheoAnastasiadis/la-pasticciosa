@@ -1,6 +1,8 @@
 import { AppDataSource } from "../../../src/server/database/dataSource";
-import { deliveryRepo } from "../../../src/server/database/repos/delivery.repo";
-import { DeliveryStatus } from "../../../src/server/entities/delivery.entity";
+import {
+  Delivery,
+  DeliveryStatus,
+} from "../../../src/server/entities/delivery.entity";
 import type { User } from "../../../src/server/entities/user.entity";
 import { createCaller } from "./testObjects";
 
@@ -35,14 +37,14 @@ describe("Delivery Routes", () => {
     expect(delivery).toHaveProperty("state", DeliveryStatus.REQUESTED);
   });
   test("accept delivery [as admin]", async () => {
-    const delivery = await deliveryRepo.findOneByOrFail({
+    const delivery = await Delivery.findOneByOrFail({
       state: DeliveryStatus.REQUESTED,
     });
     const result = await callAsAdmin.acceptDelivery(delivery.id);
     expect(result).toHaveProperty("state", DeliveryStatus.ACCEPTED);
   });
   test("remove delivery [as admin]", async () => {
-    const delivery = await deliveryRepo.findOne({
+    const delivery = await Delivery.findOne({
       where: [
         { state: DeliveryStatus.ACCEPTED },
         { state: DeliveryStatus.REQUESTED },

@@ -23,7 +23,7 @@ describe("User Routes", () => {
     callAsAdmin = callers.callAsAdmin;
     user = callers.user;
     requested = callers.requested;
-  });
+  }, 10000);
   test("request user [unauthenticated]", async () => {
     const user = await appRouter
       .createCaller({ sessionId: null, setCookie: instance(setCookie) })
@@ -43,12 +43,12 @@ describe("User Routes", () => {
   });
   test("view user profile [as user]", async () => {
     const result = await callAsAcceptedUser.viewUserProfile();
-    expect(result).toHaveProperty("user.uuid", user.uuid);
+    expect(result).toHaveProperty("user.uuid", `${user.uuid}`);
     expect(result).toHaveProperty("deliveries", []);
   });
   test("view user profile [as admin]", async () => {
     const result = await callAsAdmin.viewUserProfile(user.uuid);
-    expect(result).toHaveProperty("user.uuid", user.uuid);
+    expect(result).toHaveProperty("user.uuid", `${user.uuid}`);
     expect(result).toHaveProperty("deliveries", []);
   });
   test("view users [as admin]", async () => {

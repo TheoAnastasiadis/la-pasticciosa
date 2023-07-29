@@ -1,5 +1,5 @@
 import { AppDataSource } from "../../../../src/server/database/dataSource";
-import { deliveryRepo } from "../../../../src/server/database/repos/delivery.repo";
+import { Delivery } from "../../../../src/server/entities/delivery.entity";
 import { removeDelivery } from "../../../../src/server/useCases/delivery/removeDelivery";
 
 describe("Remove Delivery", () => {
@@ -8,11 +8,11 @@ describe("Remove Delivery", () => {
   });
 
   test("removes delivery from db", async () => {
-    const delivery = await deliveryRepo.findOneByOrFail({
+    const delivery = await Delivery.findOneByOrFail({
       name: "Requested Delivery",
     });
     await removeDelivery(delivery);
-    const results = await deliveryRepo.findBy({
+    const results = await Delivery.findBy({
       name: "Requested Delivery",
     });
     expect(results).toHaveLength(0);

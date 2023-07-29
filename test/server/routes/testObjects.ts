@@ -1,21 +1,18 @@
-import { userRepo } from "../../../src/server/database/repos/user.repo";
 import {
-  type User,
+  User,
   UserStatus,
   UserType,
 } from "../../../src/server/entities/user.entity";
 import { appRouter } from "../../../src/server/router";
 import { mock, instance } from "ts-mockito";
 import type * as trpcExpress from "@trpc/server/adapters/express";
-import { sessionRepo } from "../../../src/server/database/repos/session.repo";
-import { itemRepo } from "../../../src/server/database/repos/item.repo";
-import type { Item } from "../../../src/server/entities/item.entity";
+import { Item } from "../../../src/server/entities/item.entity";
 import { AppDataSource } from "../../../src/server/database/dataSource";
-import { deliveryRepo } from "../../../src/server/database/repos/delivery.repo";
 import {
-  type Delivery,
+  Delivery,
   DeliveryStatus,
 } from "../../../src/server/entities/delivery.entity";
+import { Session } from "../../../src/server/entities/session.entity";
 
 export const setCookie =
   mock<trpcExpress.CreateExpressContextOptions["res"]["cookie"]>();
@@ -29,8 +26,10 @@ export const createCaller: () => Promise<{
   requested: User;
   delivery: Delivery;
 }> = async () => {
+  // initiliaze
+  if (!AppDataSource.isInitialized) await AppDataSource.initialize();
   // create
-  const admin = userRepo.create({
+  const admin = await User.createAndSave({
     userName: "admin",
     password: "********",
     email: "admin@example.com",
@@ -41,7 +40,7 @@ export const createCaller: () => Promise<{
     vat: "987654321",
   });
 
-  const user = userRepo.create({
+  const user = await User.createAndSave({
     userName: "user",
     password: "**********",
     email: "client@email.com",
@@ -52,7 +51,7 @@ export const createCaller: () => Promise<{
     vat: "012345678",
   });
 
-  const requested = userRepo.create({
+  const requested = await User.createAndSave({
     userName: "other_user",
     password: "**********",
     email: "other@email.com",
@@ -63,43 +62,32 @@ export const createCaller: () => Promise<{
     vat: "999999999",
   });
 
-  const item = itemRepo.create({
+  const item = await Item.createAndSave({
     name: "Old Item",
-    image: "",
+    image: "http://example.com/images/item_1_full.jpg",
     price: "0.33",
-    thumbnail: "",
-    description: "",
+    thumbnail: "http://example.com/images/item_1_small.jpg",
+    description: "lorem ipsum",
   });
 
-  const delivery = deliveryRepo.create({
-    name: "Company HQ",
-    street: "Main St.",
-    number: "1A",
-    zip: 12345,
-    details: "Building E, South entrance",
-    state: DeliveryStatus.ACCEPTED,
-  });
-  // initiliaze
-  if (!AppDataSource.isInitialized) await AppDataSource.initialize();
+  const delivery = await Delivery.createAndSave(
+    {
+      name: "Company HQ",
+      street: "Main St.",
+      number: "1A",
+      zip: "12345",
+      details: "Building E, South entrance",
+      state: DeliveryStatus.ACCEPTED,
+    },
+    user,
+  );
   // save
-  await userRepo.insert(user);
-  await userRepo.insert(admin);
-  await userRepo.insert(requested);
-  await itemRepo.insert(item);
-  await deliveryRepo.insert(delivery);
-  await delivery.reload();
-  delivery.user = user;
-  await delivery.save();
-  await user.reload();
-  user.catalogue.push(item);
+  user.catalogue = [item];
   await user.save();
-  await admin.reload();
-  await requested.reload();
-  await item.reload();
   // create sessions
-  const userSession = (await sessionRepo.insert({ user })).generatedMaps[0].id;
-  const adminSession = (await sessionRepo.insert({ user: admin }))
-    .generatedMaps[0].id;
+  const userSession = (await Session.insert({ user })).generatedMaps[0].id;
+  const adminSession = (await Session.insert({ user: admin })).generatedMaps[0]
+    .id;
   // create callers
   const callAsAcceptedUser = appRouter.createCaller({
     sessionId: userSession,

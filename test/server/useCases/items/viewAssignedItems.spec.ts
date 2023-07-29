@@ -1,5 +1,5 @@
 import { AppDataSource } from "../../../../src/server/database/dataSource";
-import { userRepo } from "../../../../src/server/database/repos/user.repo";
+import { User } from "../../../../src/server/entities/user.entity";
 import { viewAssignedItems } from "../../../../src/server/useCases/items/viewAssignedItems";
 
 describe("View Assigned Items", () => {
@@ -8,10 +8,8 @@ describe("View Assigned Items", () => {
   }, 10000);
 
   test("assigns item to user", async () => {
-    const user = await userRepo.findOneByOrFail({ userName: "Assigned User" });
+    const user = await User.findOneByOrFail({ userName: "Assigned User" });
     const items = await viewAssignedItems(user.uuid);
-
-    expect(items).toBeTruthy();
     expect(items).toHaveLength(3);
   });
 });

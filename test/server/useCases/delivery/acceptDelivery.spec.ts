@@ -1,6 +1,8 @@
 import { AppDataSource } from "../../../../src/server/database/dataSource";
-import { deliveryRepo } from "../../../../src/server/database/repos/delivery.repo";
-import { DeliveryStatus } from "../../../../src/server/entities/delivery.entity";
+import {
+  Delivery,
+  DeliveryStatus,
+} from "../../../../src/server/entities/delivery.entity";
 import { acceptDelivery } from "../../../../src/server/useCases/delivery/acceptDelivery";
 
 describe("Accept Delivery", () => {
@@ -8,7 +10,7 @@ describe("Accept Delivery", () => {
     if (!AppDataSource.isInitialized) await AppDataSource.initialize();
   });
   test("changes delivery status to 'accepted'", async () => {
-    const requestedDelivery = await deliveryRepo.findOneByOrFail({
+    const requestedDelivery = await Delivery.findOneByOrFail({
       name: "Requested Delivery",
     });
     const acceptedDelivery = await acceptDelivery(requestedDelivery);

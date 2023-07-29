@@ -1,6 +1,6 @@
 import { AppDataSource } from "../../../../src/server/database/dataSource";
-import { itemRepo } from "../../../../src/server/database/repos/item.repo";
-import { userRepo } from "../../../../src/server/database/repos/user.repo";
+import { Item } from "../../../../src/server/entities/item.entity";
+import { User } from "../../../../src/server/entities/user.entity";
 import { assignItem } from "../../../../src/server/useCases/items/assignItem";
 
 describe("Assign Items", () => {
@@ -9,8 +9,8 @@ describe("Assign Items", () => {
   }, 10000);
 
   test("assigns item to user", async () => {
-    const item = await itemRepo.findOneByOrFail({ name: "Item 1" });
-    const user = await userRepo.findOneByOrFail({ userName: "Accepted User" });
+    const item = await Item.findOneByOrFail({ name: "Item 1" });
+    const user = await User.findOneByOrFail({ userName: "Accepted User" });
 
     const userWithCatalogue = await assignItem(item, user);
     expect(userWithCatalogue.catalogue).toHaveLength(1);

@@ -1,5 +1,5 @@
 import { AppDataSource } from "../../../../src/server/database/dataSource";
-import { itemRepo } from "../../../../src/server/database/repos/item.repo";
+import { Item } from "../../../../src/server/entities/item.entity";
 import { createItem } from "../../../../src/server/useCases/items/createItem";
 
 describe("Create Items", () => {
@@ -8,7 +8,7 @@ describe("Create Items", () => {
   });
 
   test("creates new item", async () => {
-    const item = itemRepo.create({
+    await createItem({
       name: "New Item",
       price: (10).toFixed(),
       description: "Lorem ipsum...",
@@ -16,9 +16,7 @@ describe("Create Items", () => {
       thumbnail: "https://example.com/images/product/small.jpg",
     });
 
-    await createItem(item);
-
-    const items = await itemRepo.findBy({ name: "New Item" });
+    const items = await Item.findBy({ name: "New Item" });
     expect(items).toHaveLength(1);
   });
 });
