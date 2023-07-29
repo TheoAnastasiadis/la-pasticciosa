@@ -1,10 +1,18 @@
 import { TRPCError } from "@trpc/server";
-import { orderRepo } from "../../database/repos/order.repo";
 import { DeliveryStatus, type Delivery } from "../../entities/delivery.entity";
 import type { Item } from "../../entities/item.entity";
 import type { User } from "../../entities/user.entity";
 import { Order, OrderStatus } from "../../entities/order.entity";
-import { AppDataSource } from "../../database/dataSource";
+import { order } from "../../entities/decoders/order.decoder";
+
+export const orderProps = order.omit({
+  id: true,
+  user: true,
+  total: true,
+  status: true,
+  estimatedDelivery: true,
+  createdAt: true,
+});
 
 export const requestOrder: (
   items: Item[],
@@ -30,11 +38,14 @@ export const requestOrder: (
     .toFixed(2);
 
   const status = OrderStatus.PENDING;
-  const order = orderRepo.create({ total, status });
-  await orderRepo.insert(order);
-  await order.reload();
-  order.user = user;
-  order.delivery = delivery;
-  order.items = items;
-  return await AppDataSource.manager.save(Order, order);
+  return await Order.createAndSave(
+    {
+      status,
+      total,
+      estimatedDelivery: null,
+    },
+    user,
+    delivery,
+    items,
+  );
 };

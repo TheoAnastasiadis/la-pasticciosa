@@ -1,9 +1,11 @@
-import { itemRepo } from "../../database/repos/item.repo";
-import { type Item } from "../../entities/item.entity";
+import { item } from "../../entities/decoders/item.decoder";
+import { Item } from "../../entities/item.entity";
+import type { z } from "zod";
 
-export const createItem: (item: Omit<Item, "id">) => Promise<Item> = async (
-  item,
-) => {
-  const id = (await itemRepo.insert(item)).generatedMaps[0].id;
-  return { ...item, id };
+export const itemProps = item.omit({ id: true });
+
+export const createItem: (
+  props: z.infer<typeof itemProps>,
+) => Promise<Item> = async (props) => {
+  return await Item.createAndSave(props as Item);
 };
