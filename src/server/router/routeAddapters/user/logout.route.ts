@@ -4,4 +4,5 @@ import { authenticatedRoute } from "../../middlewareAddapters/authenticatedReque
 export const logOutRoute = authenticatedRoute.query(async ({ ctx }) => {
   const { session } = ctx;
   await logOutController(session);
+  ctx.setCookie("sessionId", null);
 });

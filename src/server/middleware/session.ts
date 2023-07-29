@@ -33,6 +33,5 @@ export const populateSession: (
 export const deleteSession: (session: Session) => Promise<void> = async (
   session,
 ) => {
-  session.deletedAt = new Date();
-  await session.save();
+  await session.softRemove();
 };

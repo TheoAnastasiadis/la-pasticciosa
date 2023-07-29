@@ -1,17 +1,11 @@
 import {
-  AfterInsert,
-  AfterLoad,
-  AfterRecover,
-  AfterUpdate,
   BaseEntity,
   BeforeInsert,
-  BeforeUpdate,
   Column,
   Entity,
   JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
-  TypeORMError,
 } from "typeorm";
 import { Item } from "./item.entity";
 import bcrypt from "bcrypt";
@@ -72,31 +66,7 @@ export class User extends BaseEntity {
   };
 
   validatePassword: (input: string) => boolean = (input) => {
+    console.log(`Comparing input: ${input} with password ${this.password}`);
     return bcrypt.compareSync(input, this.password);
-  };
-
-  @AfterLoad()
-  @AfterRecover()
-  @AfterInsert()
-  @AfterUpdate()
-  preventUndefined: () => void = () => {
-    if (typeof this.catalogue === "undefined" || this.catalogue.length === 0)
-      this.catalogue = [];
-  };
-
-  @AfterLoad()
-  @AfterRecover()
-  @AfterInsert()
-  @AfterUpdate()
-  passwordRedaction: () => void = () => {
-    this.password = "********";
-  };
-
-  @BeforeUpdate()
-  prevertPasswordOverwriting: () => void = () => {
-    if (this.password === "********")
-      throw new TypeORMError(
-        "You attempted to save a user with an obfuscated password",
-      );
   };
 }
