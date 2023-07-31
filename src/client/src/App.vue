@@ -2,7 +2,11 @@
   <ILayout>
     <ILayoutHeader>
       <INavbar>
-        <INavbarBrand to="/"> La Pasticciosa </INavbarBrand>
+        <INavbarBrand to="/">
+          <h1 class="h3">La Pasticciosa</h1>
+          &nbsp;
+          <IBadge color="secondary" size="md">B2B</IBadge>
+        </INavbarBrand>
         <INavbarCollapsible class="_justify-content:flex-end">
           <INav>
             <INavItem to="/login"> Σύνδεση / Εγγραφή </INavItem>

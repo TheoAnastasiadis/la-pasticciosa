@@ -4,14 +4,18 @@
       <IColumn md="6" xs="12" around>
         <ICard>
           <h2>Συμπληρώστε τα στοιχεία σας</h2>
-          <p>
+          <p class="_color:info!">
             Μόλις η αίτηση σας εγγριθεί από τους διαχειρηστές μας θα μπορείτε να
             υποβάλλετε παραγγελίες και να παρακολουθείτε την εξέλιξη τους.
           </p>
           <IForm class="_padding-top:1 _padding-bottom:1">
             <IFormGroup>
               <IInput type="text" placeholder="όνομα χρήστη">
-                <template #prepend><span>Όνομα χρήστη</span></template>
+                <template #prepend
+                  ><span class="_background:secondary-10"
+                    >Όνομα χρήστη</span
+                  ></template
+                >
               </IInput>
             </IFormGroup>
             <IFormGroup>
@@ -57,7 +61,7 @@
               >
             </IFormGroup>
             <IFormGroup>
-              <IButton color="primary" block>Εγγραφή</IButton>
+              <IButton block>Εγγραφή</IButton>
             </IFormGroup>
           </IForm>
         </ICard>
@@ -67,12 +71,14 @@
       ><IColumn md="5" xs="12" around>
         <p class="_text:left">
           Έχετε ήδη λογαριασμό; Συνδεθείτε
-          <RouterLink to="/login">με τους κωδικούς σας</RouterLink>.
+          <RouterLink to="/login" class="_color:secondary!"
+            >με τους κωδικούς σας</RouterLink
+          >.
         </p>
-        <p class="_text:left">
+        <p class="_text:left _color:info!">
           <small
-            ><a href="#">Όροι Χρήσης</a> :
-            <a href="#">Πολιτική Απορρήτου</a></small
+            ><a href="#" class="_color:info!">Όροι Χρήσης</a> :
+            <a href="#" class="_color:info!">Πολιτική Απορρήτου</a></small
           >
         </p>
       </IColumn>

@@ -83,10 +83,10 @@
     /**
      * Color light variables
      */
-    --color-light-h: 221.73913043478262;
-    --color-light-s: 45.09803921568626%;
-    --color-light-l: 89.99999999999999%;
-    --color-light-a: 1;
+    --color-light-h: var(--color-gray-100-h);
+    --color-light-s: var(--color-gray-100-s);
+    --color-light-l: var(--color-gray-100-l);
+    --color-light-a: var(--color-gray-100-a);
     --color-light: hsla(var(--color-light-h), var(--color-light-s), var(--color-light-l), var(--color-light-a));
 
     /**
@@ -119,36 +119,36 @@
     /**
      * Color primary variables
      */
-    --color-primary-h: 246;
-    --color-primary-s: 100%;
-    --color-primary-l: 62.745098039215684%;
+    --color-primary-h: 16.666666666666686;
+    --color-primary-s: 81.81818181818188%;
+    --color-primary-l: 95.68627450980391%;
     --color-primary-a: 1;
     --color-primary: hsla(var(--color-primary-h), var(--color-primary-s), var(--color-primary-l), var(--color-primary-a));
 
     /**
      * Color secondary variables
      */
-    --color-secondary-h: 20.89068825910931;
+    --color-secondary-h: 188.70000000000005;
     --color-secondary-s: 100%;
-    --color-secondary-l: 48.431372549019606%;
+    --color-secondary-l: 39.21568627450981%;
     --color-secondary-a: 1;
     --color-secondary: hsla(var(--color-secondary-h), var(--color-secondary-s), var(--color-secondary-l), var(--color-secondary-a));
 
     /**
      * Color info variables
      */
-    --color-info-h: 234.66666666666663;
-    --color-info-s: 66.17647058823529%;
-    --color-info-l: 26.666666666666668%;
+    --color-info-h: 173.8888888888889;
+    --color-info-s: 42.85714285714286%;
+    --color-info-l: 49.411764705882355%;
     --color-info-a: 1;
     --color-info: hsla(var(--color-info-h), var(--color-info-s), var(--color-info-l), var(--color-info-a));
 
     /**
      * Color success variables
      */
-    --color-success-h: 97.7049180327869;
-    --color-success-s: 95.81151832460732%;
-    --color-success-l: 37.450980392156865%;
+    --color-success-h: 59.361702127659555;
+    --color-success-s: 39.49579831932773%;
+    --color-success-l: 53.333333333333336%;
     --color-success-a: 1;
     --color-success: hsla(var(--color-success-h), var(--color-success-s), var(--color-success-l), var(--color-success-a));
 
@@ -164,9 +164,9 @@
     /**
      * Color danger variables
      */
-    --color-danger-h: 356.45161290322585;
-    --color-danger-s: 76.8595041322314%;
-    --color-danger-l: 52.54901960784314%;
+    --color-danger-h: 5.5491329479768865;
+    --color-danger-s: 70.61224489795919%;
+    --color-danger-l: 51.96078431372548%;
     --color-danger-a: 1;
     --color-danger: hsla(var(--color-danger-h), var(--color-danger-s), var(--color-danger-l), var(--color-danger-a));
 
@@ -1331,9 +1331,9 @@
     --contrast-text-color-white: var(--contrast-text-color-light);
     --contrast-text-color-gray: var(--contrast-text-color-light);
     --contrast-text-color-black: var(--contrast-text-color-dark);
-    --contrast-text-color-primary: var(--contrast-text-color-dark);
+    --contrast-text-color-primary: var(--contrast-text-color-light);
     --contrast-text-color-secondary: var(--contrast-text-color-light);
-    --contrast-text-color-info: var(--contrast-text-color-dark);
+    --contrast-text-color-info: var(--contrast-text-color-light);
     --contrast-text-color-success: var(--contrast-text-color-light);
     --contrast-text-color-warning: var(--contrast-text-color-light);
     --contrast-text-color-danger: var(--contrast-text-color-dark);

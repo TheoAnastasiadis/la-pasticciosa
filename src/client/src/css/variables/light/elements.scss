@@ -1,0 +1,17 @@
+.light-theme {
+    /**
+     * Body variables
+     */
+    --body--background: var(--color-primary);
+    --body--color: var(--color-secondary);
+
+    /**
+     * Link variables
+     */
+    --link--color: var(--color-info);
+
+    /**
+     * Button variables
+     */
+    --button--background: var(--color-secondary);
+}

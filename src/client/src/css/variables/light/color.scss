@@ -1,0 +1,46 @@
+.light-theme {
+    /**
+     * Color primary variables
+     */
+    --color-primary-h: 16.666666666666686;
+    --color-primary-s: 81.81818181818188%;
+    --color-primary-l: 95.68627450980391%;
+    --color-primary-a: 1;
+    --color-primary: hsla(var(--color-primary-h), var(--color-primary-s), var(--color-primary-l), var(--color-primary-a));
+
+    /**
+     * Color secondary variables
+     */
+    --color-secondary-h: 188.70000000000005;
+    --color-secondary-s: 100%;
+    --color-secondary-l: 39.21568627450981%;
+    --color-secondary-a: 1;
+    --color-secondary: hsla(var(--color-secondary-h), var(--color-secondary-s), var(--color-secondary-l), var(--color-secondary-a));
+
+    /**
+     * Color success variables
+     */
+    --color-success-h: 59.361702127659555;
+    --color-success-s: 39.49579831932773%;
+    --color-success-l: 53.333333333333336%;
+    --color-success-a: 1;
+    --color-success: hsla(var(--color-success-h), var(--color-success-s), var(--color-success-l), var(--color-success-a));
+
+    /**
+     * Color danger variables
+     */
+    --color-danger-h: 5.5491329479768865;
+    --color-danger-s: 70.61224489795919%;
+    --color-danger-l: 51.96078431372548%;
+    --color-danger-a: 1;
+    --color-danger: hsla(var(--color-danger-h), var(--color-danger-s), var(--color-danger-l), var(--color-danger-a));
+
+    /**
+     * Color info variables
+     */
+    --color-info-h: 245;
+    --color-info-s: 31.57894736842105%;
+    --color-info-l: 22.35294117647059%;
+    --color-info-a: 1;
+    --color-info: hsla(var(--color-info-h), var(--color-info-s), var(--color-info-l), var(--color-info-a));
+}

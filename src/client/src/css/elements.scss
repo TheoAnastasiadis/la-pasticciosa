@@ -8,7 +8,7 @@
     /**
      * Body variables
      */
-    --body--background: #dae1f1;
+    --body--background: var(--color-primary);
     --body--color: var(--color-gray-900);
 
     /**
@@ -90,13 +90,7 @@
     --h6--font-size: var(--font-size);
 
     /**
-     * Navbar variables
+     * A variables
      */
-    --navbar--light--background: white;
-
-    /**
-     * Button variables
-     */
-    --button--light--background: var(--color-primary);
-    --button--light--color: white;
+    --a--color: var(--color-secondary);
 }

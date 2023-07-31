@@ -23,9 +23,7 @@
               />
             </IFormGroup>
 
-            <IFormGroup
-              ><IButton color="primary" block>Σύνδεση</IButton></IFormGroup
-            >
+            <IFormGroup><IButton block>Σύνδεση</IButton></IFormGroup>
           </IForm></ICard
         ></IColumn
       ></IRow
@@ -33,12 +31,15 @@
       ><IColumn md="5" xs="12" around>
         <p class="_text:left">
           Δεν είστε χρήστης ακόμη; Κάντε
-          <RouterLink to="/signup">αίτηση εγγραφής</RouterLink> τώρα!
+          <RouterLink to="/signup" class="_color:secondary!"
+            >αίτηση εγγραφής</RouterLink
+          >
+          τώρα!
         </p>
-        <p class="_text:left">
+        <p class="_text:left _color:info!">
           <small
-            ><a href="#">Όροι Χρήσης</a> :
-            <a href="#">Πολιτική Απορρήτου</a></small
+            ><a href="#" class="_color:info!">Όροι Χρήσης</a> :
+            <a href="#" class="_color:info!">Πολιτική Απορρήτου</a></small
           >
         </p>
       </IColumn>
