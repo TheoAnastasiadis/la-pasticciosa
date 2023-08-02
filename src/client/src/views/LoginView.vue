@@ -36,12 +36,6 @@
           >
           τώρα!
         </p>
-        <p class="_text:left _color:info!">
-          <small
-            ><a href="#" class="_color:info!">Όροι Χρήσης</a> :
-            <a href="#" class="_color:info!">Πολιτική Απορρήτου</a></small
-          >
-        </p>
       </IColumn>
     </IRow>
   </IContainer>
