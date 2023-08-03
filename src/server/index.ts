@@ -6,12 +6,14 @@ import { appRouter } from "./router";
 import { createContext } from "./router/context";
 import appConfig from "./config/app.config";
 import { AppDataSource } from "./database/dataSource";
+import morgan from "morgan";
 
 const app = express();
 const MOUNT_PATH = appConfig.getServerMountPath();
 
 /** Middleware */
 app.use(cookieParser());
+app.use(morgan("dev"));
 
 /** Main Router */
 app.use(
