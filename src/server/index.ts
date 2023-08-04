@@ -7,6 +7,7 @@ import { createContext } from "./router/context";
 import appConfig from "./config/app.config";
 import { AppDataSource } from "./database/dataSource";
 import morgan from "morgan";
+import cors from "cors";
 
 const app = express();
 const MOUNT_PATH = appConfig.getServerMountPath();
@@ -14,6 +15,7 @@ const MOUNT_PATH = appConfig.getServerMountPath();
 /** Middleware */
 app.use(cookieParser());
 app.use(morgan("dev"));
+app.use(cors());
 
 /** Main Router */
 app.use(
