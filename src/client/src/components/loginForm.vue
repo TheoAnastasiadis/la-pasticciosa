@@ -78,16 +78,12 @@
 <script lang="ts">
 import loader from "./loader.vue";
 import { Field, Form, ErrorMessage } from "vee-validate";
-import errorToast from "./errorToast.vue";
 import { toTypedSchema } from "@vee-validate/zod";
 import { z } from "zod";
 import { useToast, TYPE } from "vue-toastification";
-import {
-  backend,
-  type OutputTypes,
-  type ClientError,
-} from "../services/backend";
-import { TRPCClientError } from "@trpc/client";
+import { backend, type ClientError } from "../services/backend";
+import { useUserStore } from "../stores/user";
+import { mapActions, mapStores } from "pinia";
 
 export default {
   data() {
@@ -107,12 +103,16 @@ export default {
       ),
     };
   },
+  computed: {
+    ...mapStores(useUserStore),
+  },
   methods: {
     async onSubmit(values) {
-      console.log("submit");
       const toast = useToast();
       const { email, password } = values;
-      this.loading = true;
+
+      this.loading = true; // start of async op
+
       await backend.logIn
         .query({ email, password })
         .catch((error: ClientError) => {
@@ -127,9 +127,13 @@ export default {
             toast(error.message, { type: TYPE.ERROR });
           }
         });
-
+      const { user, deliveries } = await backend.viewUserProfile.query(
+        undefined,
+      );
+      this.userStore.login(user, deliveries);
       this.loading = false;
     },
+    ...mapActions(useUserStore, ["login"]),
   },
   components: { Field, Form, ErrorMessage, loader },
 };
