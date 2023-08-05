@@ -87,6 +87,7 @@ import {
   type OutputTypes,
   type ClientError,
 } from "../services/backend";
+import { TRPCClientError } from "@trpc/client";
 
 export default {
   data() {
@@ -114,12 +115,19 @@ export default {
       this.loading = true;
       await backend.logIn
         .query({ email, password })
-        .catch(() =>
-          toast({
-            component: errorToast,
-            props: { message: "Δεν υπήρξε σύνδεση στον διακομιστή!" },
-          }),
-        );
+        .catch((error: ClientError) => {
+          if (error.message === "Failed to fetch") {
+            toast(
+              "Πρόβλημα στην σύνδεση με τον διακομιστή. Παρακαλώ προσπαθήστε ξανά.",
+              {
+                type: TYPE.ERROR,
+              },
+            );
+          } else {
+            toast(error.message, { type: TYPE.ERROR });
+          }
+        });
+
       this.loading = false;
     },
   },
