@@ -19,7 +19,8 @@ export const generateSession: (user: User) => Promise<string> = async (
     user,
     deletedAt: moment(new Date()).add(1, "M").toDate(),
   });
-  return (await Session.insert(session)).generatedMaps[0].id;
+  await Session.insert(session);
+  return session.id;
 };
 
 export const populateSession: (

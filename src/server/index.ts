@@ -15,7 +15,12 @@ const MOUNT_PATH = appConfig.getServerMountPath();
 /** Middleware */
 app.use(cookieParser());
 app.use(morgan("dev"));
-app.use(cors());
+app.use(
+  cors({
+    origin: appConfig.getClientUrl(),
+    credentials: true,
+  }),
+);
 
 /** Main Router */
 app.use(

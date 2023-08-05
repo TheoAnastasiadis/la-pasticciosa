@@ -9,4 +9,8 @@ export default {
   getDevPort: () => parseInt(process.env.DEV_PORT ?? "8080"),
   getServerMountPath: () => process.env.SERVER_MOUNT_PATH ?? "/data",
   getSaltRounds: () => parseInt(process.env.SALT_ROUNDS as string),
+  getClientUrl: () =>
+    (process.env.NODE_ENV === "production"
+      ? process.env.clientUrl
+      : "http://localhost:5173") as string,
 };
