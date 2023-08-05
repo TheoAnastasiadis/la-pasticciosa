@@ -21,5 +21,6 @@ export const AppDataSource = new DataSource({
   timeTravelQueries: false,
   entities: [User, Item, Delivery, Order, Session],
   synchronize: true,
-  logging: process.env.NOVE_ENV === "production" ? [] : ["error"],
+  logging:
+    process.env.NOVE_ENV === "production" ? ["error"] : ["error", "query"],
 });

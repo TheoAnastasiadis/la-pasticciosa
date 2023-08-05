@@ -2,11 +2,13 @@ import moment from "moment";
 import { Session } from "../entities/session.entity";
 import type { User } from "../entities/user.entity";
 import { TRPCError } from "@trpc/server";
+import { MoreThan } from "typeorm";
 
 export const findSessionById: (id: string) => Promise<Session> = async (id) => {
   const sessions = await Session.find({
-    where: { id },
+    where: { id, deletedAt: MoreThan(new Date()) }, // we handle deletion here
     relations: { user: true },
+    withDeleted: true, // so we include all here
   });
   if (sessions.length < 1) throw new TRPCError({ code: "BAD_REQUEST" });
   return sessions[0];
