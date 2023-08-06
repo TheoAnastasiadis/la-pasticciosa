@@ -1,9 +1,11 @@
 <template>
   <div class="demo--form-variant-primary">
     <div
-      class="xt-card flex-auto w-12/12 md:w-6/12 mx-auto p-7 sm:p-9 text-base rounded-2xl text-white xt-links-inverse bg-primary-500"
+      class="xt-card flex-auto w-12/12 md:w-6/12 mx-auto p-4 md:p-7 sm:p-9 text-base rounded-2xl text-white xt-links-inverse bg-primary-500"
     >
-      <h3>Συμπληρώστε τα στοιχεία σας</h3>
+      <h3 class="text-xl md:text-2xl font-bold pb-4 text-center md:text-left">
+        Συμπληρώστε τα στοιχεία σας
+      </h3>
       <Form
         class="text-sm"
         @submit="onSubmit"
@@ -83,7 +85,7 @@ import { useToast, TYPE } from "vue-toastification";
 import { backend, type ClientError } from "../services/backend";
 import { useUserStore } from "../stores/user";
 import { mapActions, mapStores } from "pinia";
-import loader from "../components/loader.vue";
+import loader from "../components/buttonLoader.vue";
 
 export default {
   data() {
@@ -126,10 +128,18 @@ export default {
           } else {
             toast(error.message, { type: TYPE.ERROR });
           }
+          this.loading = false;
         });
-      const { user, deliveries } = await backend.viewUserProfile.query(
-        undefined,
-      );
+      const { user, deliveries } = await backend.viewUserProfile
+        .query(undefined)
+        .catch(() => {
+          toast(
+            "Πρόβλημα στην σύνδεση με τον διακομιστή. Παρακαλώ προσπαθήστε ξανά.",
+            { type: TYPE.ERROR },
+          );
+          return { user: undefined, deliveries: undefined };
+          this.loading = false;
+        });
       this.userStore.login(user, deliveries);
       this.loading = false;
     },

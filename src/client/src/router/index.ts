@@ -24,6 +24,11 @@ const router = createRouter({
       name: "signup",
       component: async () => await import("../views/SignupView.vue"),
     },
+    {
+      path: "/dashboard",
+      name: "dashboard",
+      component: async () => await import("../views/DashboardView.vue"),
+    },
   ],
 });
 
