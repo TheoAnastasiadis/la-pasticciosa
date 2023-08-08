@@ -44,13 +44,95 @@
           <td
             class="py-2 px-4 text-sm align-top leading-snug border border-gray-200 transition group-hover:bg-gray-200"
           >
-            <strong>{{ user.companyName }}</strong>
-            {{ user.companyAddress }}
+            <span data-xt-tooltip>
+              <a
+                href="#"
+                data-xt-tooltip-element
+                class="underline decoration-slate-500 decoration-dotted"
+              >
+                <strong>{{ user.companyName }}</strong
+                >&nbsp;{{ user.companyAddress }}</a
+              >
+              <div class="xt-tooltip p-3 group" data-xt-tooltip-target>
+                <userProfileTooltip :user-id="user.uuid" />
+                <div
+                  class="xt-arrow z-below -inset-1 m-3 w-3 h-3 bg-black opacity-0 transition-opacity ease-out-quint group-in:duration-300 group-out:duration-100 group-in:opacity-100"
+                ></div>
+              </div>
+            </span>
           </td>
           <td
             class="py-2 px-4 text-sm align-top leading-snug border border-gray-200 transition group-hover:bg-gray-200"
           >
-            {{ user.catalogue.length }}
+            <div data-xt-drop="{ position: 'auto-end', duration: 500 }">
+              {{ user.catalogue.length }}
+
+              <button
+                class="xt-button py-1 px-2 text-sm rounded-md font-medium leading-snug tracking-wider bg-slate-100 transition hover:bg-gray-200 active:bg-gray-300 on:bg-gray-200 justify-end text-left truncate"
+              >
+                Προσθήκη
+                <i class="h h-plus text-base hidden md:inline-block"></i>
+              </button>
+              <div class="xt-drop p-3 group" data-xt-drop-target>
+                <div
+                  class="xt-card w-80 rounded-md shadow-lg text-gray-900 xt-links-default bg-white transition opacity-0 scale-95 group-in:opacity-100 group-in:scale-100 group-out:scale-105"
+                >
+                  <div
+                    class="p-5 text-xs rounded-t-md bg-primary-300 flex-auto"
+                  >
+                    <p class="mb-1 font-bold text-sm">Ανάθεση Προϊόντος</p>
+                    <p>
+                      Όταν ένα προϊόν ανατεθεί σε έναν χρήστη, θα εμφανίζεται
+                      στον προσωπικό του κατάλογο και θα μπορεί να
+                      <strong>υποβάλει παραγγελίες</strong> για αυτό το προϊόν.
+                    </p>
+                  </div>
+                  <nav
+                    aria-label="Drop"
+                    class="xt-list xt-list-1 flex-col py-2"
+                  >
+                    <a
+                      v-for="item in items.filter(
+                        (i) => !user.catalogue.includes(i.id), // already assigned items should not be shown
+                      )"
+                      :key="item.id"
+                      @click="
+                        assignItemTo({ itemId: item.id, userId: user.uuid })
+                      "
+                      class="xt-button py-1.5 px-3 text-sm transition hover:bg-primary-300 hover:bg-opacity-25 active:text-white active:bg-primary-500 on:text-white on:bg-primary-500"
+                    >
+                      <div
+                        class="xt-list xt-list-3 flex-auto items-center justify-start text-left flex-nowrap"
+                      >
+                        <div
+                          class="h-10 w-10 bg-primary-100 rounded-md text-white xt-links-inverse"
+                        >
+                          <img
+                            :src="item.thumbnail"
+                            class="w-full h-full object-cover rounded-md"
+                            loading="lazy"
+                          />
+                        </div>
+                        <div>
+                          <div class="font-medium">{{ item.name }}</div>
+                          <div class="text-xs opacity-50">
+                            {{ item.price }} &euro;
+                          </div>
+                        </div>
+                        <div class="ml-auto">
+                          <i
+                            class="text-slate-300 text-base h h-plus-square justify-self-end"
+                          ></i>
+                        </div>
+                      </div>
+                    </a>
+                  </nav>
+                </div>
+                <div
+                  class="xt-arrow z-below -inset-1 m-3 w-3 h-3 bg-gray-200 opacity-0 transition-opacity ease-out-quint group-in:duration-300 group-out:duration-100 group-in:opacity-100"
+                ></div>
+              </div>
+            </div>
           </td>
           <td
             class="py-2 px-4 text-sm align-top leading-snug border border-gray-200 transition group-hover:bg-gray-200"
@@ -62,7 +144,7 @@
             <div data-xt-drop="{ position: 'auto-end', duration: 500 }">
               <button
                 v-if="user.status == 'requested'"
-                class="xt-button py-2 px-3 text-sm rounded-md font-medium leading-snug tracking-wider text-gray-900 bg-orange-100 transition hover:bg-orange-200 active:bg-gray-300 on:bg-gray-200 justify-end text-left truncate"
+                class="xt-button py-1 px-2 text-sm rounded-md font-medium leading-snug tracking-wider text-gray-900 bg-orange-100 transition hover:bg-orange-200 active:bg-gray-300 on:bg-gray-200 justify-end text-left truncate"
               >
                 Σε αναμονή&nbsp;<i
                   class="h h-clock-8 text-base hidden md:inline-block"
@@ -99,7 +181,7 @@
                       </div>
                     </a>
                   </nav>
-                  <div class="p-5 text-xs rounded-b-md bg-green-300 flex-auto">
+                  <div class="p-5 text-xs rounded-b-md bg-orange-200 flex-auto">
                     <p class="mb-1 font-bold text-sm">Τι σημαίνει αυτό;</p>
                     <p>
                       Όταν ένας χρήστης γίνει αποδεκτός από τον διαχειριστή θα
@@ -125,15 +207,19 @@
 import { backend, type OutputTypes } from "../services/backend";
 import { useToast, TYPE } from "vue-toastification";
 import loader from "../components/containerLoader.vue";
+import userProfileTooltip from "../components/userProfileTooltip.vue";
 
 type User = OutputTypes["viewUsers"][number];
+type Item = OutputTypes["createItem"];
 
 export default {
-  data: () => ({ users: [] as User[], loading: false }),
+  data: () => ({ users: [] as User[], loading: false, items: [] as Item[] }),
   async mounted() {
     this.loading = true;
     const users = await backend.viewUsers.query();
+    const items = await backend.viewItems.query();
     this.users = users;
+    this.items = items;
     this.loading = false;
   },
   methods: {
@@ -156,7 +242,27 @@ export default {
         this.loading = false;
       }
     },
+    async assignItemTo(props: { itemId: string; userId: string }) {
+      this.loading = true;
+      const toast = useToast();
+      const { userId, itemId } = props;
+      try {
+        await backend.assignItems.mutate({ userId, itemId });
+        toast("Η ανάθεση προϊόντος πραγματοποιήθηκε με επιτυχία.");
+        this.users = (this.users as User[]).map((u) => {
+          if (u.uuid === userId) u.catalogue.push(itemId);
+          return u;
+        });
+      } catch (e) {
+        toast(
+          "Υπήρξε κάποιο πρόβλημα και η ανάθεση προϊόντος δεν πραγματοποιήθηκε",
+          { type: TYPE.ERROR },
+        );
+      } finally {
+        this.loading = false;
+      }
+    },
   },
-  components: { loader },
+  components: { loader, userProfileTooltip },
 };
 </script>

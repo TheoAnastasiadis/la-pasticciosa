@@ -38,6 +38,7 @@ import "xtendui/src/toggle";
 import "xtendui/src/drop";
 import "xtendui/src/overlay";
 import "xtendui/src/textareaautosize";
+import "xtendui/src/tooltip";
 
 import { mapStores } from "pinia";
 import { useUserStore } from "./stores/user";
