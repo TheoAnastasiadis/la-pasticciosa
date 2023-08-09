@@ -6,7 +6,7 @@ export const delivery = z.object({
   number: z.string(),
   zip: z.string().length(5),
   name: z.string(),
-  details: z.optional(z.string()),
+  details: z.string().optional().nullable(),
   user: z.coerce.string(),
   state: z.union([z.literal("requested"), z.literal("accepted")]),
 });
