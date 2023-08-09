@@ -15,7 +15,7 @@
         <div class="xt-row xt-row-x-10 xt-row-y-4">
           <div class="w-full">
             <label class="block mb-3 font-medium text-white">
-              Όνομα Χρήστη
+              Διεύθυνση Ηλ. Ταχυδρομείου
             </label>
             <Field
               type="text"
@@ -67,6 +67,12 @@
         </div>
       </Form>
     </div>
+  </div>
+  <div class="flex-auto w-12/12 md:w-6/12 mx-auto p-4 md:p-7 sm:p-9 text-base">
+    <p>
+      Δεν είστε ακόμη χρήστης της πλατφόρμας; Εγγραφείτε με τον
+      <RouterLink to="/signup">δικό σας λογαριασμό</RouterLink>!
+    </p>
   </div>
 </template>
 
@@ -142,6 +148,7 @@ export default {
         });
       this.userStore.login(user, deliveries);
       this.loading = false;
+      this.$router.push("/");
     },
     ...mapActions(useUserStore, ["login"]),
   },

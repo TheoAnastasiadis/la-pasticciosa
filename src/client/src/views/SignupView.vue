@@ -1,226 +1,254 @@
 <template>
-  <IContainer>
-    <IRow center>
-      <IColumn md="6" xs="12" around>
-        <ICard>
-          <h2>Συμπληρώστε τα στοιχεία σας</h2>
-          <p class="_color:info!">
-            Μόλις η αίτηση σας εγγριθεί από τους διαχειρηστές μας θα μπορείτε να
-            υποβάλλετε παραγγελίες και να παρακολουθείτε την εξέλιξη τους.
-          </p>
-          <IForm class="_padding-top:1 _padding-bottom:1">
-            <IFormGroup>
-              <IInput
-                type="text"
-                placeholder="όνομα χρήστη"
-                v-model="form.userName"
-                name="username"
+  <div class="demo--form-variant-primary">
+    <div
+      class="xt-card flex-auto w-12/12 md:w-6/12 mx-auto p-4 md:p-7 sm:p-9 text-base rounded-2xl bg-white shadow-xl"
+    >
+      <h3 class="text-xl md:text-2xl font-bold pb-4 text-center md:text-left">
+        Συμπληρώστε τα στοιχεία σας
+      </h3>
+      <p>
+        Χρησιμοποιείστε την παρακάτω φόρμα για να αιτηθείτε την εγγραφή σας στο
+        σύστημα. Μετά την αίτηση, και αφού αυτή γίνει δεκτή από τον διαχειριστή
+        θα μπορείτε να υποβάλετε και να διαχειρίζεστε τις παραγγείες σας
+        ηλεκτρονικά.
+      </p>
+      <Form
+        class="text-sm"
+        @submit="onSubmit"
+        :validation-schema="schema"
+        v-slot="{ errors }"
+      >
+        <div class="xt-row xt-row-x-10 xt-row-y-2">
+          <div class="w-full">
+            <label class="block mb-3 font-medium text-gray-700">
+              Όνομα Χρήστη
+            </label>
+            <Field
+              type="text"
+              name="userName"
+              class="block w-full rounded-md py-2.5 px-3.5 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+              aria-label="username"
+              placeholder="επιλέξτε ένα όνομα χρήστη"
+            />
+            <div
+              class="mt-3 text-red-600 text-xs leading-snug custom-backend-error"
+            >
+              <ErrorMessage name="userName"></ErrorMessage>
+            </div>
+          </div>
+          <div class="w-full">
+            <label class="block mb-3 font-medium text-gray-700">
+              Διεύθυνση Ηλ. Ταχυδρομείου
+            </label>
+            <Field
+              type="text"
+              name="email"
+              class="block w-full rounded-md py-2.5 px-3.5 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+              aria-label="email"
+              placeholder="συμπληρώστε το email σας"
+            />
+            <div
+              class="mt-3 text-red-600 text-xs leading-snug custom-backend-error"
+            >
+              <ErrorMessage name="email"></ErrorMessage>
+            </div>
+          </div>
+          <div class="w-full">
+            <label class="block mb-3 font-medium text-gray-700">
+              Κωδικός Πρόσβασης
+            </label>
+            <Field
+              type="password"
+              name="password"
+              v-model="password"
+              class="block w-full rounded-md py-2.5 px-3.5 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+              aria-label="Password"
+              placeholder="προσθέστε έναν κωδικό πρόσβασης"
+            />
+            <div
+              class="my-3 text-red-600 text-xs leading-snug custom-backend-error"
+            >
+              <ErrorMessage name="password"></ErrorMessage>
+            </div>
+            <Field
+              type="password"
+              name="passwordRepeat"
+              class="block w-full rounded-md py-2.5 px-3.5 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+              aria-label="Password"
+              placeholder="πληκτρολογήστε ξανά τον κωδικό πρόσβασης"
+            />
+            <div
+              class="mt-3 text-red-600 text-xs leading-snug custom-backend-error"
+            >
+              <ErrorMessage name="passwordRepeat"></ErrorMessage>
+            </div>
+          </div>
+          <div class="w-full">
+            <label class="block mb-3 font-medium text-gray-700">
+              Επωνυμία Επιχείρησης
+            </label>
+            <Field
+              type="text"
+              name="companyName"
+              class="block w-full rounded-md py-2.5 px-3.5 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+              aria-label="company name"
+              placeholder="προσθέστε την επωνυμία της επιχείρησής σας"
+            />
+            <div
+              class="mt-3 text-red-600 text-xs leading-snug custom-backend-error"
+            >
+              <ErrorMessage name="companyName"></ErrorMessage>
+            </div>
+          </div>
+          <div class="w-full">
+            <label class="block mb-3 font-medium text-gray-700">
+              Έδρα Επιχείρησης
+            </label>
+            <Field
+              type="text"
+              name="companyAddress"
+              class="block w-full rounded-md py-2.5 px-3.5 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+              aria-label="company address"
+              placeholder="προσθέστε την διεύθυνση της επιχείρησής σας"
+            />
+            <div
+              class="mt-3 text-red-600 text-xs leading-snug custom-backend-error"
+            >
+              <ErrorMessage name="companyAddress"></ErrorMessage>
+            </div>
+          </div>
+          <div class="w-full">
+            <label class="block mb-3 font-medium text-gray-700"> ΑΦΜ </label>
+            <Field
+              type="string"
+              name="vat"
+              class="block w-full rounded-md py-2.5 px-3.5 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+              aria-label="company address"
+              placeholder="προσθέστε τον ΑΦΜ σας"
+            />
+            <div
+              class="mt-3 text-red-600 text-xs leading-snug custom-backend-error"
+            >
+              <ErrorMessage name="vat"></ErrorMessage>
+            </div>
+          </div>
+          <div class="w-full">
+            <button
+              type="submit"
+              class="xt-button mt-2 py-2.5 px-3.5 w-full text-sm rounded-md font-medium leading-snug tracking-wider uppercas bg-primary-500 transition hover:bg-primary-600 active:bg-primary-600 on:bg-primary-600 text-gray-100"
+              :class="{
+                'xt-disabled': Object.keys(errors).length > 0,
+              }"
+            >
+              ΕΓΓΡΑΦΗ &nbsp;
+              <i class="h h-user-in text-xl"></i>
+              <span
+                class="xt-loader absolute z-content inset-0 rounded-inherit overflow-hidden"
               >
-                <template #prepend
-                  ><span class="_background:secondary-10"
-                    >Όνομα χρήστη</span
-                  ></template
-                >
-              </IInput>
-            </IFormGroup>
-            <IFormGroup>
-              <IInput
-                type="email"
-                placeholder="email επικοινωνίας"
-                v-model="form.email"
-              >
-                <template #prepend><span>Email</span></template>
-              </IInput>
-            </IFormGroup>
-            <IFormGroup>
-              <IInput
-                type="password"
-                placeholder="συμπληρώστε έναν κωδικό πρόσβασης"
-                v-model="form.password"
-                name="password"
-              >
-                <template #prepend><span>Κωδικός</span></template>
-              </IInput>
-              <div
-                :class="
-                  (errors.password.length > 0 ? `_visible` : `_hidden`) +
-                  ' _margin-top:1'
-                "
-              >
-                <p
-                  v-for="error in errors.password"
-                  class="_text:left _color:danger _font-size:sm"
-                >
-                  {{ error }}
-                </p>
-              </div>
-            </IFormGroup>
-            <IFormGroup>
-              <IInput
-                type="password"
-                placeholder="συμπληρώστε ξανά τον κωδικό πρόσβασης"
-                name="password-repeat"
-                v-model="form.password2"
-              >
-                <template #prepend><span>Κωδικός (επανάληψη)</span></template>
-              </IInput>
-              <div
-                :class="
-                  (errors.password2.length > 0 ? `_visible` : `_hidden`) +
-                  ' _margin-top:1'
-                "
-              >
-                <p
-                  v-for="error in errors.password2"
-                  class="_text:left _color:danger _font-size:sm"
-                >
-                  {{ error }}
-                </p>
-              </div>
-            </IFormGroup>
-            <IFormGroup>
-              <IInput
-                type="text"
-                placeholder="επωνυμία της επιχείρησης προς εγγραφή"
-                v-model="form.companyName"
-                ><template #prepend><span>Επωνυμία</span></template></IInput
-              >
-            </IFormGroup>
-            <IFormGroup>
-              <IInput
-                type="number"
-                placeholder="συμπληρώστε τον ΑΦΜ της επιχείρησης"
-                v-model="form.vat"
-                ><template #prepend><span>ΑΦΜ</span></template></IInput
-              >
-            </IFormGroup>
-            <IFormGroup>
-              <IInput
-                type="text"
-                placeholder="συμπληρώστε την διεύθυνση της έδρας της επιχείρησης"
-                v-model="form.companyAddress"
-                ><template #prepend><span>Έδρα</span></template></IInput
-              >
-            </IFormGroup>
-            <IFormGroup>
-              <IButton
-                block
-                @click="submit"
-                :disabled="!formIsValid"
-                :loading="formLoading"
-                >Εγγραφή
-                <template #loading>
-                  <ILoader color="dark" class="_margin-right:1/2" />
-                  Γίνεται εγγραφή
-                </template>
-              </IButton>
-            </IFormGroup>
-          </IForm>
-        </ICard>
-      </IColumn>
-    </IRow>
-    <IRow center class="_margin-top:1"
-      ><IColumn md="5" xs="12" around>
-        <p class="_text:left">
-          Έχετε ήδη λογαριασμό; Συνδεθείτε
-          <RouterLink to="/login" class="_color:secondary!"
-            >με τους κωδικούς σας</RouterLink
-          >.
-        </p>
-      </IColumn>
-    </IRow>
-  </IContainer>
+                <loader :loading="loading"></loader>
+              </span>
+            </button>
+          </div>
+        </div>
+      </Form>
+    </div>
+  </div>
+  <div class="flex-auto w-12/12 md:w-6/12 mx-auto p-4 md:p-7 sm:p-9 text-base">
+    <p>
+      Αν έχετε ήδη δημιουργήσει λογαριασμό στην πλατφόρμα μας,
+      <RouterLink to="/login">συνδεθείτε με τους κωδικούς σας</RouterLink>!
+    </p>
+  </div>
 </template>
 
 <script lang="ts">
-import {
-  backend,
-  type OutputTypes,
-  type ClientError,
-} from "../services/backend";
+import { Field, Form, ErrorMessage } from "vee-validate";
+import { toTypedSchema } from "@vee-validate/zod";
+import { z } from "zod";
+import { useToast, TYPE } from "vue-toastification";
+import { backend, type ClientError } from "../services/backend";
+import loader from "../components/buttonLoader.vue";
 
 export default {
   data() {
     return {
-      form: {
-        userName: "",
-        email: "",
-        password: "",
-        password2: "",
-        companyName: "",
-        companyAddress: "",
-        vat: 0,
-      },
-      formLoading: false,
+      loading: false,
+      password: undefined,
+      schema: toTypedSchema(
+        z.object({
+          userName: z.string({
+            required_error: "Αυτό το πεδίο είναι υποχρεωτικό",
+          }),
+          email: z
+            .string({
+              required_error: "Αυτό το πεδίο είναι υποχρεωτικό",
+            })
+            .email("Βεβαιωθείτε ότι έχετε συμπληρώσει σωστά το email σας."),
+          password: z
+            .string({ required_error: "Αυτό το πεδίο είναι υποχρεωτικό" })
+            .min(8, "Οι κωδικοί αποτελούνται από 8 χαρακτήρες και πάνω."),
+          passwordRepeat: z
+            .string({ required_error: "Αυτό το πεδίο είναι υποχρεωτικό" })
+            .refine(
+              (p) => p === (this.password as unknown as string),
+              "Οι κωδικοί πρέπει να είναι ίδιοι",
+            ),
+          companyName: z.string({
+            required_error: "Αυτό το πεδίο είναι υποχρεωτικό",
+          }),
+          companyAddress: z.string({
+            required_error: "Αυτό το πεδίο είναι υποχρεωτικό",
+          }),
+          vat: z
+            .string({ required_error: "Αυτό το πεδίο είναι υποχρεωτικό" })
+            .length(9, "Βεβαιωθείτε ότι έχετε συμπληρώσει σωστά τον ΑΦΜ σας")
+            .regex(
+              /^[0-9]*$/,
+              "Βεβαιωθείτε ότι έχετε συμπληρώσει σωστά τον ΑΦΜ σας",
+            ),
+        }),
+      ),
     };
   },
   computed: {
-    errors() {
-      let errors: Record<
-        | "userName"
-        | "email"
-        | "password"
-        | "password2"
-        | "companyName"
-        | "companyAddress"
-        | "vat",
-        string[]
-      > = {
-        userName: [],
-        email: [],
-        password: [],
-        companyName: [],
-        companyAddress: [],
-        vat: [],
-        password2: [],
-      };
-
-      // password validators
-      if (this.form.password) {
-        if (!(this.form.password.length >= 8))
-          errors.password.push(
-            "Ο κωδικός πρέπει να αποτελείται από τουλάχιστον 8 χαρακτήρες",
-          );
-        if (!(this.form.password as string).match(/[^A-Za-zΑ-Ωα-ω]/))
-          errors.password.push(
-            "Ο κωδικός πρέπει να περιέχει τουλάχιστον ένα σύμβολο",
-          );
-      }
-
-      // password 2 validators
-      if (this.form.password2) {
-        if (!(this.form.password === this.form.password2))
-          errors.password2.push("Οι κωδικοί δεν ταυτίζονται");
-      }
-
-      return errors;
-    },
-    formIsValid() {
-      return (
-        // values are truthy
-        Object.values(this.form)
-          .map((v) => !!v)
-          .reduce((p, c) => p && c) &&
-        // errors are empty
-        Object.values(this.errors)
-          .map((errs) => (errs as string[]).length == 0)
-          .reduce((p, c) => p && c)
-      );
+    repeatPassword() {
+      return this.password;
     },
   },
   methods: {
-    async submit() {
-      this.formLoading = true;
-      // const toast = createToastService();
-      // console.dir(toast);
-      let user: OutputTypes["requestUser"];
-      try {
-        user = await backend.requestUser.mutate(this.form);
-      } catch (error) {
-        console.error(error);
-      }
-      this.formLoading = false;
+    async onSubmit(values) {
+      const toast = useToast();
+      const { userName, email, password, companyName, companyAddress, vat } =
+        values;
+
+      this.loading = true; // start of async op
+
+      await backend.requestUser
+        .mutate({ userName, email, password, companyName, companyAddress, vat })
+        .then(() => {
+          toast(
+            "Η εγγραφή σας πραγματοποιήθηκε με επιτυχία! Συνδεθείτε με τους κωδικούς σας για να αιτηθείτε τοποθεσίες παράδοσης.",
+            { timeout: 10000, type: TYPE.SUCCESS },
+          );
+          this.$router.push("/login");
+        })
+        .catch((error: ClientError) => {
+          if (error.message === "Failed to fetch") {
+            toast(
+              "Πρόβλημα στην σύνδεση με τον διακομιστή. Παρακαλώ προσπαθήστε ξανά.",
+              {
+                type: TYPE.ERROR,
+              },
+            );
+          } else {
+            toast(error.message, { type: TYPE.ERROR });
+          }
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
   },
+  components: { Field, Form, ErrorMessage, loader },
 };
 </script>
