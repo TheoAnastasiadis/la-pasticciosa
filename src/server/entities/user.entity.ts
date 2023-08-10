@@ -6,6 +6,7 @@ import {
   JoinTable,
   ManyToMany,
   PrimaryGeneratedColumn,
+  TypeORMError,
 } from "typeorm";
 import { Item } from "./item.entity";
 import bcrypt from "bcrypt";
@@ -98,5 +99,24 @@ export class User extends BaseEntity {
         : [];
     safe.password = "**********";
     return safe;
+  };
+
+  assignItem: (item: Item) => Promise<void> = async (item) => {
+    const items = new Set(this.catalogue.map((i) => i.id));
+    if (items.has(item.id))
+      throw new TypeORMError(`Item '${item.id}' is already assigned`);
+    this.catalogue.push(item);
+    await this.save();
+  };
+
+  unassignItem: (item: Item) => Promise<void> = async (item) => {
+    const items = new Set(this.catalogue.map((i) => i.id));
+    if (!items.has(item.id))
+      throw new TypeORMError(
+        `Cannot remove item before it has been assigned to the user`,
+      );
+    items.delete(item.id);
+    this.catalogue = this.catalogue.filter((i) => items.has(i.id));
+    await this.save();
   };
 }

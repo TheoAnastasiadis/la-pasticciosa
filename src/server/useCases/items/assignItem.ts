@@ -5,6 +5,6 @@ export const assignItem: (item: Item, user: User) => Promise<User> = async (
   item,
   user,
 ) => {
-  user.catalogue.push(item);
-  return await user.save();
+  await user.assignItem(item);
+  return user;
 };
