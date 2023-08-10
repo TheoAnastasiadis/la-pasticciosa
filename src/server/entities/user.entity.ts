@@ -23,6 +23,7 @@ export enum UserType {
 export enum UserStatus {
   REQUESTED = "requested",
   ACCEPTED = "accepted",
+  REJECTED = "rejected",
 }
 
 const userProps = user.omit({ uuid: true, catalogue: true });
