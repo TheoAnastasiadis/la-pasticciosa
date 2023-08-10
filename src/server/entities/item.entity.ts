@@ -1,4 +1,10 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  BaseEntity,
+  Column,
+  DeleteDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from "typeorm";
 import { item } from "./decoders/item.decoder";
 import type { z } from "zod";
 
@@ -23,6 +29,9 @@ export class Item extends BaseEntity {
 
   @Column()
   thumbnail!: string;
+
+  @DeleteDateColumn()
+  deletedAt!: string;
 
   static findById: (id: string) => Promise<Item> = async (id) => {
     return await Item.findOneByOrFail({ id });
