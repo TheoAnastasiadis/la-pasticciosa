@@ -7,7 +7,7 @@
       <h2 class="text-xl font-bold md:text-2xl">
         La Pasticciosa
         <div
-          class="align-middle py-2 px-2.5 text-xs rounded-xl text-gray-900 font-medium leading-snug tracking-wider uppercase bg-primary-200 hidden sm:inline-block"
+          class="align-middle py-2 px-2.5 text-xs rounded-xl text-gray-900 font-medium leading-snug tracking-wider uppercase bg-primary-200 hidden sm:inline-block shadow-sm"
         >
           B2B Portal
         </div>
@@ -16,7 +16,7 @@
     <div class="flex">
       <div data-xt-drop="{ position: 'bottom-end', duration: 500 }">
         <button
-          class="xt-button rounded-full border-1 md:border-2 p-2 border-slate-300 hover:border-primary-300 w-10 h-10 md:w-12 md:h-12 bg-slate-200"
+          class="xt-button rounded-full border-1 md:border-2 p-2 border-slate-300 hover:border-primary-300 w-10 h-10 md:w-12 md:h-12 bg-slate-200 shadow-sm"
           data-xt-drop-element
         >
           <span v-if="!this.userStore.user">&nbsp;</span>

@@ -10,11 +10,6 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: "/about",
-      name: "about",
-      component: async () => await import("../views/AboutView.vue"),
-    },
-    {
       path: "/login",
       name: "login",
       component: async () => await import("../views/LoginView.vue"),

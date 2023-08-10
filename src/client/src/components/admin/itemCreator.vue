@@ -181,8 +181,8 @@
 </template>
 
 <script lang="ts">
-import { backend, type OutputTypes } from "../services/backend";
-import buttonLoader from "./buttonLoader.vue";
+import { backend, type OutputTypes } from "../../services/backend";
+import buttonLoader from "../reusables/loaders/buttonLoader.vue";
 import { Field, Form, ErrorMessage } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import { z } from "zod";

@@ -8,5 +8,3 @@
     <slot></slot>
   </tr>
 </template>
-
-<script lang="ts"></script>

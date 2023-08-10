@@ -91,7 +91,7 @@ import { useToast, TYPE } from "vue-toastification";
 import { backend, type ClientError } from "../services/backend";
 import { useUserStore } from "../stores/user";
 import { mapActions, mapStores } from "pinia";
-import loader from "../components/buttonLoader.vue";
+import loader from "../components/reusables/loaders/buttonLoader.vue";
 
 export default {
   data() {

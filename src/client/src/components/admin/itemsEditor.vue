@@ -1,4 +1,5 @@
 <template>
+  <Loader :loading="loading" />
   <p>
     Παρακάτω βλέπετε τα προϊόντα που έχουν καταχωρηθεί στο σύστημα
     <strong>από τον διαχειριστή</strong>. Τα προϊόντα αυτά είναι ορατά μόνο από
@@ -43,6 +44,15 @@
                   {{ item.description }}
                 </div>
               </div>
+              <div class="w-full">
+                <button
+                  @click="deleteItem(item.id)"
+                  class="xt-button bg-red-400 hover:bg-red-500 p-1 rounded-md text-white w-full"
+                >
+                  Διαγραφή&nbsp;
+                  <i class="text-sm h h-trash-1"></i>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -61,8 +71,10 @@
 
 <script lang="ts">
 import { useToast, TYPE } from "vue-toastification";
-import { backend, type OutputTypes } from "../services/backend";
+import { backend, type OutputTypes } from "../../services/backend";
 import itemCreator from "./itemCreator.vue";
+import Loader from "../reusables/loaders/containerLoader.vue";
+
 type Item = OutputTypes["createItem"];
 
 export default {
@@ -70,7 +82,7 @@ export default {
     items: [] as Item[],
     loading: false,
   }),
-  components: { itemCreator },
+  components: { itemCreator, Loader },
   async mounted() {
     const toast = useToast();
     this.loading = true;
@@ -86,6 +98,24 @@ export default {
   methods: {
     itemCreated(item: Item) {
       this.items.push(item);
+    },
+    async deleteItem(id: string) {
+      this.loading = true;
+      const toast = useToast();
+      await backend.deleteItem
+        .mutate(id)
+        .then(() => {
+          this.items = this.items.filter((i: Item) => i.id !== id);
+          toast("Το προϊόν αφαιρέθηκε με επιτυχία.");
+        })
+        .catch(() => {
+          toast("Υπήρξε κάποιο πρόβλημα και το προϊόν δεν διαγράφηκε.", {
+            type: TYPE.ERROR,
+          });
+        })
+        .finally(() => {
+          this.loading = false;
+        });
     },
   },
 };

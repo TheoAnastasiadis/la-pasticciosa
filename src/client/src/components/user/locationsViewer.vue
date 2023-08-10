@@ -67,7 +67,7 @@
 
 <script lang="ts">
 import deliveryCreator from "./deliveryCreator.vue";
-import { OutputTypes, backend } from "../services/backend";
+import { OutputTypes, backend } from "../../services/backend";
 type Delivery = OutputTypes["requestDelivery"];
 export default {
   data: () => ({ locations: [] as Delivery[], loading: false }),

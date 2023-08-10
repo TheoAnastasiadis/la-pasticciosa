@@ -1,4 +1,4 @@
-<template></template>
+<template><p>This will include the home page</p></template>
 <script lang="ts">
 import { mapStores } from "pinia";
 import { useUserStore } from "../stores/user";

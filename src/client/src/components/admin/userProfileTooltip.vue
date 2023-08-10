@@ -64,7 +64,7 @@
           </div>
         </div>
       </div>
-      <div v-if="deliveries.length > 0">
+      <!-- <div v-if="deliveries.length > 0">
         <div
           class="xt-list xt-list-1 flex-auto items-center justify-start text-left flex-nowrap py-1.5 px-2 text-sm"
         >
@@ -103,13 +103,13 @@
             </table>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { OutputTypes, backend } from "../services/backend";
+import { OutputTypes, backend } from "../../services/backend";
 type User = OutputTypes["viewUserProfile"]["user"];
 type Delivery = OutputTypes["viewUserProfile"]["deliveries"][number];
 
