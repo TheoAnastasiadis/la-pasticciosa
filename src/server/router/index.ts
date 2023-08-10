@@ -17,11 +17,15 @@ import { acceptOrderRoute } from "./routeAddapters/order/acceptOrder.route";
 import { viewOrdersRoute } from "./routeAddapters/order/viewOrders.route";
 import { LoginUserRoute } from "./routeAddapters/user/loginUser.route";
 import { logOutRoute } from "./routeAddapters/user/logout.route";
+import { rejectUserRoute } from "./routeAddapters/user/rejectUser.route";
+import { viewDeliveriesRoute } from "./routeAddapters/delivery/viewDeliveries.route";
+import { unassignItemsRoute } from "./routeAddapters/item/unassignItems.route";
 
 export const appRouter = router({
   // User Routes
   requestUser: requestUserRoute,
   acceptUser: acceptUserRoute,
+  rejectUser: rejectUserRoute,
   viewUsers: viewUsersRoute,
   viewUserProfile: viewUserProfileRoute,
   // User Routes -> Auth
@@ -29,6 +33,7 @@ export const appRouter = router({
   logOut: logOutRoute,
   // Items Routes
   assignItems: assignItemsRoute,
+  unassingItems: unassignItemsRoute,
   createItem: createItemRoute,
   viewItems: viewItemsRoute,
   viewAssignedItems: viewAssignedItemsRoute,
@@ -36,6 +41,7 @@ export const appRouter = router({
   requestDelivery: requestDeliveryRoute,
   acceptDelivery: acceptDeliveryRoute,
   removeDelivery: removeDeliveryRoute,
+  viewDeliveries: viewDeliveriesRoute,
   // Order Routes
   placeOrder: placeOrderRoute,
   updateOrderStatus: updateOrderStatusRoute,
