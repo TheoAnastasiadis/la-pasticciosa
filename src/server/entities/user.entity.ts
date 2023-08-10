@@ -59,6 +59,7 @@ export class User extends BaseEntity {
 
   @ManyToMany(() => Item, {
     eager: true,
+    onDelete: "SET NULL",
   })
   @JoinTable()
   catalogue!: Item[];
