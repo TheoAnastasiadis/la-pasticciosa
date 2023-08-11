@@ -21,6 +21,7 @@ import { rejectUserRoute } from "./routeAddapters/user/rejectUser.route";
 import { viewDeliveriesRoute } from "./routeAddapters/delivery/viewDeliveries.route";
 import { unassignItemsRoute } from "./routeAddapters/item/unassignItems.route";
 import { deleteItemRoute } from "./routeAddapters/item/deleteItem.route";
+import { changeUserPasswordRoute } from "./routeAddapters/user/changeUserPassword.route";
 
 export const appRouter = router({
   // User Routes
@@ -32,6 +33,7 @@ export const appRouter = router({
   // User Routes -> Auth
   logIn: LoginUserRoute,
   logOut: logOutRoute,
+  changePassword: changeUserPasswordRoute,
   // Items Routes
   assignItems: assignItemsRoute,
   unassingItems: unassignItemsRoute,

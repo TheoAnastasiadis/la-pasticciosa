@@ -7,4 +7,7 @@ export const viewUsers: () => Promise<User[]> = async () =>
       type: UserType.USER,
       status: Not(UserStatus.REJECTED),
     },
+    order: {
+      uuid: "DESC",
+    },
   });
