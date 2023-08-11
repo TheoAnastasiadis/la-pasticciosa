@@ -84,6 +84,7 @@
           }"
         >
           νεα αιτηση
+          <Loader :loading="loading" />
         </button>
       </div>
     </Form>
@@ -96,6 +97,7 @@ import { Form, Field, ErrorMessage } from "vee-validate";
 import { z } from "zod";
 import { backend, type OutputTypes } from "../../services/backend";
 import { useToast, TYPE } from "vue-toastification";
+import Loader from "../reusables/loaders/buttonLoader.vue";
 
 type Delivery = OutputTypes["requestDelivery"];
 
@@ -113,9 +115,10 @@ export default {
         details: z.string().optional(),
       }),
     ),
+    loading: false,
   }),
   emits: ["deliveryRequested"],
-  components: { Form, Field, ErrorMessage },
+  components: { Form, Field, ErrorMessage, Loader },
   methods: {
     async onSubmit(values, actions) {
       const toast = useToast();

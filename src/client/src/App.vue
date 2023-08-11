@@ -3,6 +3,7 @@
   <div class="container">
     <RouterView />
   </div>
+  <Footer />
 </template>
 
 <script lang="ts">
@@ -14,8 +15,9 @@ import "xtendui/src/textareaautosize";
 import "xtendui/src/tooltip";
 
 import Header from "./components/header.vue";
+import Footer from "./components/footer.vue";
 
 export default {
-  components: { Header },
+  components: { Header, Footer },
 };
 </script>

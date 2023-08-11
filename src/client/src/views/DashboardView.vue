@@ -21,28 +21,33 @@
         Nulla quis tempus risus, a aliquet ligula.
       </p>
     </template>
-
     <template #users>
       <UsersTable />
     </template>
-
     <template #items>
       <ItemsEditor />
     </template>
-
     <template #deliveries>
       <LocationsTable />
     </template>
-
+    <template #profile>
+      <Profile />
+    </template>
     <template #help>
       <p>Example</p>
     </template>
   </Nav>
   <Nav v-else :header="userHeader">
     <template #orders></template>
-    <template #catalogue></template>
-    <template #deliveries></template>
-    <template #profile></template>
+    <template #catalogue>
+      <ItemsViewer />
+    </template>
+    <template #deliveries>
+      <DeliveryTable />
+    </template>
+    <template #profile>
+      <Profile />
+    </template>
     <template #help></template>
   </Nav>
 </template>
@@ -51,9 +56,13 @@
 import UsersTable from "../components/admin/usersTable.vue";
 import ItemsEditor from "../components/admin/itemsEditor.vue";
 import LocationsTable from "../components/admin/locationsTable.vue";
+import DeliveryTable from "../components/user/deliveryTable.vue";
 import { mapStores } from "pinia";
 import { useUserStore } from "../stores/user";
 import Nav from "../components/reusables/top-level/navigation.vue";
+import ItemsViewer from "../components/user/itemsViewer.vue";
+import Profile from "../components/profile.vue";
+
 export default {
   data: () => ({
     adminHeader: [
@@ -65,6 +74,7 @@ export default {
         icon: "navigator-2",
         hash: "deliveries",
       },
+      { title: "Προφίλ", icon: "user", hash: "profile" },
       {
         title: "Βοήθεια",
         icon: "book",
@@ -94,7 +104,10 @@ export default {
     UsersTable,
     ItemsEditor,
     LocationsTable,
+    DeliveryTable,
     Nav,
+    ItemsViewer,
+    Profile,
   },
 };
 </script>

@@ -30,6 +30,7 @@
               {{ user.catalogue.length }}
               <button
                 class="xt-button py-1 px-2 text-sm rounded-md font-medium leading-snug tracking-wider bg-slate-100 transition hover:bg-gray-200 active:bg-gray-300 on:bg-gray-200 justify-end text-left truncate"
+                @click="editingUser = user"
               >
                 Προσθήκη
                 <i class="h h-plus text-base hidden md:inline-block"></i>
@@ -47,14 +48,20 @@
                 </template>
                 <template #content>
                   <!-- Assigned Area -->
-                  <div class="w-full"  @dragenter.prevent @dragover.prevent  @drop.prevent="assignDropped(user.uuid)($event)">
-                    <div class="w-full bg-gray-200 border border-dashed p-5 text-center" v-if="goingToAssign">
+                  <div
+                    class="w-full"
+                    @dragenter.prevent
+                    @dragover.prevent
+                    @drop.prevent="assignDropped(user.uuid)($event)"
+                  >
+                    <div
+                      class="w-full bg-gray-200 border border-dashed p-5 text-center"
+                      v-if="goingToAssign"
+                    >
                       <p class="text-md text-green-600">Προσθέστε προϊόν</p>
                     </div>
                     <Action
-                      v-for="item in items.filter(
-                        (i) => user.catalogue.includes(i.id), // only unassigned items
-                      )"
+                      v-for="item in assignedItems"
                       :key="item.id"
                       @click="
                         unassignItemFrom({ itemId: item.id, userId: user.uuid })
@@ -68,19 +75,37 @@
                       @dragging-ended="toggleGoingToUnassign()"
                     />
                   </div>
-                  <p class="w-full text-gray-400 text-sm px-2">
-                    <div class="w-full h-0 border-b-2"></div>
-                    Προσθέστε περισσότερα
-                  </p>
+                  <div class="w-full p-2">
+                    <div
+                      class="w-full border-t border-dashed border-gray-400 mb-2 border-spacing-4"
+                    ></div>
+                    <div class="w-full relative">
+                      <i
+                        class="absolute top-2.5 right-3.5 text-black text-opacity-50 h h-lens text-sm"
+                      ></i>
+                      <input
+                        type="text"
+                        v-model="searchTerm"
+                        class="lock w-full rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-primary-300"
+                        placeholder="αναζήτηση"
+                      />
+                    </div>
+                  </div>
                   <!-- Unassigned area -->
-                  <div class="w-full"  @dragenter.prevent @dragover.prevent  @drop.prevent="unassignDropped(user.uuid)($event)">
-                    <div class="w-full bg-gray-200 border border-dashed p-5 text-center" v-if="goingToUnassign">
+                  <div
+                    class="w-full"
+                    @dragenter.prevent
+                    @dragover.prevent
+                    @drop.prevent="unassignDropped(user.uuid)($event)"
+                  >
+                    <div
+                      class="w-full bg-gray-200 border border-dashed p-5 text-center"
+                      v-if="goingToUnassign"
+                    >
                       <p class="text-md text-primary-600">Αφαιρέστε προϊόν</p>
                     </div>
                     <Action
-                      v-for="item in items.filter(
-                        (i) => !user.catalogue.includes(i.id), // only unassigned items
-                      )"
+                      v-for="item in nonAssignedItems"
                       :key="item.id"
                       @click="
                         assignItemTo({ itemId: item.id, userId: user.uuid })
@@ -152,6 +177,7 @@
 </template>
 
 <script lang="ts">
+import Fuse from "fuse.js";
 import { backend, type OutputTypes } from "../../services/backend";
 import { useToast, TYPE } from "vue-toastification";
 import loader from "../reusables/loaders/containerLoader.vue";
@@ -174,7 +200,9 @@ export default {
     items: [] as Item[],
     columns: ["#", "χρηστες", "προϊοντα", "κατασταση"],
     goingToAssign: false,
-    goingToUnassign: false
+    goingToUnassign: false,
+    editingUser: undefined as User | undefined,
+    searchTerm: "",
   }),
   async mounted() {
     this.loading = true;
@@ -183,6 +211,29 @@ export default {
     this.users = users;
     this.items = items;
     this.loading = false;
+  },
+  computed: {
+    assignedItems(): Item[] {
+      return this.items.filter(
+        (item) => this.editingUser?.catalogue?.includes(item.id),
+      );
+    },
+    nonAssignedItems(): Item[] {
+      const itemsNotInCatalogue: Item[] = this.items.filter(
+        (item) => !this.editingUser?.catalogue?.includes(item.id),
+      );
+
+      if (this.searchTerm) {
+        const fuse = new Fuse<Item>(itemsNotInCatalogue, {
+          keys: ["name", "description", "price"],
+        });
+
+        return fuse
+          .search(this.searchTerm)
+          .map((r) => r.item)
+          .splice(0, 3);
+      } else return itemsNotInCatalogue.splice(0, 3);
+    },
   },
   methods: {
     async accept(id: string) {
@@ -248,9 +299,12 @@ export default {
       const { userId, itemId } = props;
       try {
         await backend.unassingItems.mutate({ userId, itemId });
-        toast("Η διαγραφή προϊόντος από τον κατάλογο του χρήστη πραγματοποιήθηκε με επιτυχία.");
+        toast(
+          "Η διαγραφή προϊόντος από τον κατάλογο του χρήστη πραγματοποιήθηκε με επιτυχία.",
+        );
         this.users = (this.users as User[]).map((u) => {
-          if (u.uuid === userId) u.catalogue = u.catalogue.filter(i => i !== itemId);
+          if (u.uuid === userId)
+            u.catalogue = u.catalogue.filter((i) => i !== itemId);
           return u;
         });
       } catch (e) {
@@ -263,23 +317,27 @@ export default {
       }
     },
     toggleGoingToAssign() {
-      setTimeout(() => {this.goingToAssign = !this.goingToAssign}, 100)
+      setTimeout(() => {
+        this.goingToAssign = !this.goingToAssign;
+      }, 100);
     },
     toggleGoingToUnassign() {
-      setTimeout(() => {this.goingToUnassign = !this.goingToUnassign}, 100)
+      setTimeout(() => {
+        this.goingToUnassign = !this.goingToUnassign;
+      }, 100);
     },
     assignDropped(userId: string) {
       return (evt) => {
-        const itemId = evt.dataTransfer.getData('itemId')
-        this.assignItemTo({itemId, userId})
-      }
+        const itemId = evt.dataTransfer.getData("itemId");
+        this.assignItemTo({ itemId, userId });
+      };
     },
     unassignDropped(userId: string) {
       return (evt) => {
-        const itemId = evt.dataTransfer.getData('itemId')
-        this.unassignItemFrom({itemId, userId})
-      }
-    }
+        const itemId = evt.dataTransfer.getData("itemId");
+        this.unassignItemFrom({ itemId, userId });
+      };
+    },
   },
   components: {
     loader,

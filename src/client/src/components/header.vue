@@ -13,7 +13,10 @@
         </div>
       </h2>
     </div>
-    <div class="flex">
+    <div class="flex items-baseline">
+      <div class="xt-5 mr-5 hidden md:block" v-if="userStore.user">
+        Καλωσήρθες, {{ userStore.user?.userName }}
+      </div>
       <div data-xt-drop="{ position: 'bottom-end', duration: 500 }">
         <button
           class="xt-button rounded-full border-1 md:border-2 p-2 border-slate-300 hover:border-primary-300 w-10 h-10 md:w-12 md:h-12 bg-slate-200 shadow-sm"
