@@ -1,29 +1,32 @@
 import {
   BaseEntity,
   Column,
+  Entity,
   JoinTable,
   ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
+  Relation,
 } from "typeorm";
 import { Item } from "./item.entity";
 import { Order } from "./order.entity";
 import type { quantity } from "./decoders/quantity.decoder";
 import type { z } from "zod";
 
+@Entity()
 export class Quantity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: string;
 
-  @ManyToMany(() => Item, { onDelete: "SET NULL", nullable: true })
+  @ManyToMany(() => Item, { onDelete: "NO ACTION", nullable: true })
   @JoinTable()
   item!: Item;
 
-  @Column({ type: "number" })
+  @Column({ type: "int" })
   value!: number;
 
   @ManyToOne(() => Order, (order) => order.quantities)
-  order!: Order;
+  order!: Relation<Order>;
 
   static createAndSave: (
     item: Item,

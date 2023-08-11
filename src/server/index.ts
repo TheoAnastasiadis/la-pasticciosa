@@ -39,8 +39,9 @@ AppDataSource.initialize()
       console.log(`Server listening on port ${PORT}`);
     }),
   )
-  .catch(() => {
+  .catch((e) => {
     console.warn(
       "Connection with the database could not be established. The server did not start.",
     );
+    console.error(e);
   });
