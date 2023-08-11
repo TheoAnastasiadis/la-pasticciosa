@@ -8,7 +8,8 @@ export const placeOrderRoute = authenticatedRoute
   .input(z.object({ props: orderProps, userId: z.string().optional() }))
   .output(order)
   .mutation(async ({ input, ctx }) => {
-    const { props, userId } = input;
-    const id = userId ?? ctx.session.user.uuid;
-    return await placeOrderController(props, id);
+    let { props, userId } = input;
+    const { user } = ctx.session;
+    if (typeof userId === "undefined") userId = user.uuid; // simple users do not need to provide their id since it can be infered from the session
+    return await placeOrderController(props, userId, user);
   });

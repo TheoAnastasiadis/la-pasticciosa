@@ -15,10 +15,10 @@ export const orderProps = order.omit({
 });
 
 export const requestOrder: (
-  items: Item[],
+  quantities: Array<{ item: Item; value: number }>,
   user: User,
   delivery: Delivery,
-) => Promise<Order> = async (items, user, delivery) => {
+) => Promise<Order> = async (quantities, user, delivery) => {
   // validate delivery
   if (
     delivery.user.uuid !== user.uuid ||
@@ -27,14 +27,18 @@ export const requestOrder: (
     throw new TRPCError({ code: "PRECONDITION_FAILED" });
 
   // validate items
-  const itemsAreAssigned = items
+  const itemsAreAssigned = quantities
+    .map((q) => q.item)
     .map((item) => user.catalogue.map((c) => c.id).includes(item.id))
     .reduce((p, c) => p && c);
   if (!itemsAreAssigned) throw new TRPCError({ code: "PRECONDITION_FAILED" });
 
-  const total = items
-    .map((item) => parseFloat(item.price))
-    .reduce((s, c) => s + c)
+  // calculate sum as item.price * quantity.value
+  const total = quantities
+    .map(
+      ({ item, value }) => parseFloat(item.price) * parseInt(value.toString()),
+    )
+    .reduce((p, c) => p + c)
     .toFixed(2);
 
   const status = OrderStatus.PENDING;
@@ -46,6 +50,6 @@ export const requestOrder: (
     },
     user,
     delivery,
-    items,
+    quantities,
   );
 };

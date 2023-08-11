@@ -4,17 +4,17 @@ import {
   CreateDateColumn,
   Entity,
   JoinColumn,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { User } from "./user.entity";
 import { Delivery } from "./delivery.entity";
-import { Item } from "./item.entity";
 import { order } from "./decoders/order.decoder";
 import type { z } from "zod";
 import assert from "assert";
+import { Quantity } from "./quantity.entity";
+import type { Item } from "./item.entity";
 
 export enum OrderStatus {
   PENDING = "pending",
@@ -27,7 +27,7 @@ const orderProps = order.omit({
   id: true,
   delivery: true,
   user: true,
-  items: true,
+  quantities: true,
   createdAt: true,
 });
 
@@ -44,9 +44,11 @@ export class Order extends BaseEntity {
   @JoinColumn()
   delivery!: Delivery;
 
-  @ManyToMany(() => Item, (item) => item.id, { eager: true })
-  @JoinTable()
-  items!: Item[];
+  @OneToMany(() => Quantity, (quantity) => quantity.order, {
+    eager: true,
+    nullable: true,
+  })
+  quantities!: Quantity[];
 
   @Column()
   total!: string;
@@ -64,20 +66,25 @@ export class Order extends BaseEntity {
     props: z.infer<typeof orderProps>,
     user: User,
     delivery: Delivery,
-    items: Item[],
-  ) => Promise<Order> = async (props, user, delivery, items) => {
+    quantities: Array<{ item: Item; value: number }>,
+  ) => Promise<Order> = async (props, user, delivery, quantities) => {
     const order = Order.create(props as unknown as Order);
-    await delivery.save();
     order.user = user;
     order.delivery = delivery;
-    order.items = items;
+    await order.save();
+    order.quantities = await Promise.all(
+      quantities.map(
+        async ({ item, value }) =>
+          await Quantity.createAndSave(item, value, order),
+      ),
+    );
     return await order.save();
   };
 
   static findById: (id: string) => Promise<Order> = async (id) => {
     const orders = await Order.find({
       where: { id },
-      relations: { user: true, items: true, delivery: true },
+      relations: { user: true, quantities: true, delivery: true },
     });
     assert(orders.length > 0);
     return orders[0];
@@ -87,7 +94,10 @@ export class Order extends BaseEntity {
     const safe: z.infer<typeof order> = this as any;
     safe.user = this.user.uuid;
     safe.delivery = this.delivery.id;
-    safe.items = this.items.map((item) => item.id);
+    safe.quantities = this.quantities.map((quantity) => ({
+      item: quantity.item.id,
+      value: quantity.value,
+    }));
     return safe;
   };
 }
