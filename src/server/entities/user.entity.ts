@@ -1,6 +1,7 @@
 import {
   BaseEntity,
   BeforeInsert,
+  BeforeUpdate,
   Column,
   Entity,
   JoinTable,
@@ -69,8 +70,11 @@ export class User extends BaseEntity {
   }
 
   @BeforeInsert()
+  @BeforeUpdate()
   hashPassword: () => void = () => {
-    this.password = bcrypt.hashSync(this.password, appConfig.getSaltRounds());
+    if (!this.password.startsWith(`$2b$${appConfig.getSaltRounds()}`))
+      // hashed passwords follow this format
+      this.password = bcrypt.hashSync(this.password, appConfig.getSaltRounds());
   };
 
   validatePassword: (input: string) => boolean = (input) => {

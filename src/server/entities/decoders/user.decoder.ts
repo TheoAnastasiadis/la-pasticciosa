@@ -4,7 +4,7 @@ export const user = z.object({
   uuid: z.coerce.string(),
   userName: z.string(),
   email: z.string().email().toLowerCase(),
-  password: z.string().min(8).max(20),
+  password: z.string().min(8).max(20).regex(/^[^$]/), // passwords should not start with `$`
   status: z.union([
     z.literal("requested"),
     z.literal("accepted"),
