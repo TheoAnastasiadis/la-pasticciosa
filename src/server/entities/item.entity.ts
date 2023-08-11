@@ -24,6 +24,9 @@ export class Item extends BaseEntity {
   @Column()
   price!: string;
 
+  @Column({ default: "Kg" })
+  unit!: string;
+
   @Column()
   image!: string;
 

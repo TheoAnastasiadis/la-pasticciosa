@@ -5,6 +5,7 @@ export const item = z.object({
   name: z.string(),
   description: z.string(),
   price: z.string(),
+  unit: z.string(),
   image: z.string().url(),
   thumbnail: z.string().url(),
 });
