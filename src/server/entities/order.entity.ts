@@ -84,7 +84,7 @@ export class Order extends BaseEntity {
   static findById: (id: string) => Promise<Order> = async (id) => {
     const orders = await Order.find({
       where: { id },
-      relations: { user: true, quantities: true, delivery: true },
+      relations: { user: true, quantities: { item: true }, delivery: true },
     });
     assert(orders.length > 0);
     return orders[0];

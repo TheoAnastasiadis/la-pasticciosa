@@ -23,10 +23,12 @@ export const placeOrderController: (
   assertUserIsAdminOrAcceptedOwner(caller, userId);
   // items
   const items = await Promise.all(
-    props.quantities.map((q) => q.item).map(Item.findById),
+    props.quantities.map(
+      async ({ item }) => await Item.findOneByOrFail({ id: item }),
+    ),
   ).catch(throwNotFoundError);
-  const quantities = props.quantities.map(({ value, item }) => ({
-    item: items.find((i) => i.id === item) as Item,
+  const quantities = props.quantities.map(({ value }, i) => ({
+    item: items[i],
     value,
   }));
   // delivery

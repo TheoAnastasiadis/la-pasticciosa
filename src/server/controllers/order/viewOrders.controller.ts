@@ -7,6 +7,11 @@ import type { z } from "zod";
 export const viewOrdersController: (
   user: User,
 ) => Promise<Array<z.infer<typeof order>>> = async (user) =>
-  (await viewOrdersByUser(user).catch(throwDBError)).map((order) =>
-    order.toSafeOutput(),
-  );
+  (
+    await viewOrdersByUser(user)
+      .then((orders) => {
+        console.log(JSON.stringify(orders, undefined, 2));
+        return orders;
+      })
+      .catch(throwDBError)
+  ).map((order) => order.toSafeOutput());

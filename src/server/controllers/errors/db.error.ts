@@ -1,6 +1,7 @@
 import { TRPCError } from "@trpc/server";
 
-export const throwDBError: () => never = () => {
+export const throwDBError: (e: any) => never = (e) => {
+  console.error(e);
   throw new TRPCError({
     code: "INTERNAL_SERVER_ERROR",
     message:

@@ -4,7 +4,9 @@ export const order = z.object({
   id: z.coerce.string(),
   user: z.coerce.string(),
   delivery: z.coerce.string(),
-  quantities: z.array(z.object({ item: z.string(), value: z.number() })),
+  quantities: z.array(
+    z.object({ item: z.coerce.string(), value: z.coerce.number() }),
+  ),
   total: z.coerce.string(),
   status: z.union([
     z.literal("pending"),
