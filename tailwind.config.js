@@ -1,29 +1,37 @@
 const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
+
+const primary = {
+  50: "#F8F7FF",
+  100: "#F1F0FE",
+  200: "#DDD9FD",
+  300: "#C8C2FC",
+  400: "#9E95FA",
+  500: "#7567F8",
+  600: "#695DDF",
+  700: "#463E95",
+  800: "#352E70",
+  900: "#231F4A",
+};
 
 module.exports = {
   presets: [
     require("tailwindcss/defaultConfig"),
     require("xtendui/tailwind.preset"),
   ],
-  content: ["./node_modules/xtendui/src/*.mjs", "./src/**/*.{html,js,vue,ts}"],
+  content: [
+    "./node_modules/xtendui/src/*.mjs",
+    "./src/**/*.{html,js,vue,ts}",
+    "./node_modules/vue-tailwind-datepicker/**/*.js",
+  ],
   theme: {
     extend: {
       // custom xtendui color
       colors: {
         success: "#48bb78",
         error: "#f56565",
-        primary: {
-          50: "#F8F7FF",
-          100: "#F1F0FE",
-          200: "#DDD9FD",
-          300: "#C8C2FC",
-          400: "#9E95FA",
-          500: "#7567F8",
-          600: "#695DDF",
-          700: "#463E95",
-          800: "#352E70",
-          900: "#231F4A",
-        },
+        primary: primary,
+        "vtd-primary": primary,
       },
       // custom font
       fontFamily: {
