@@ -7,12 +7,12 @@
           class="w-full md:w-3/12 order-last md:order-first fixed z-above bottom-2 right-2 md:static"
         >
           <div
-            class="xt-card p-2 rounded-2xl text-gray-900 xt-links-default bg-white bg-opacity-80 backdrop-filter backdrop-blur-sm backdrop-saturate-50"
+            class="xt-card p-3 md:p-2 rounded-2xl text-gray-900 xt-links-default bg-white bg-opacity-80 backdrop-filter backdrop-blur-sm backdrop-saturate-50"
           >
             <nav aria-label="Navigation" class="xt-list xt-list-1 flex-col">
               <a
                 role="button"
-                class="xt-button flex-auto justify-between py-1.5 px-3 text-sm rounded-2xl font-medium leading-snug text-left transition hover:bg-white hover:text-primary-500 active:text-white active:bg-primary-500 on:text-white on:bg-primary-500 bg-opacity-40 md:hidden"
+                class="xt-button flex-auto justify-between py-1.5 px-3 text-md md:text-sm rounded-2xl font-medium leading-snug text-left transition hover:bg-white hover:text-primary-500 active:text-white active:bg-primary-500 on:text-white on:bg-primary-500 bg-opacity-40 md:hidden"
                 @click="open = !open"
               >
                 <span>Επιλογές</span>

@@ -119,16 +119,16 @@
 </template>
 <script lang="ts">
 import { mapStores } from "pinia";
-import { ClientError, OutputTypes, backend } from "../services/backend";
-import { useUserStore } from "../stores/user";
-import Table from "../components/reusables/table/table.vue";
-import Row from "../components/reusables/table/row.vue";
-import Cell from "../components/reusables/table/cell.vue";
-import Card from "./reusables/content/card.vue";
+import { ClientError, OutputTypes, backend } from "../../services/backend";
+import { useUserStore } from "../../stores/user";
+import Table from "../reusables/table/table.vue";
+import Row from "../reusables/table/row.vue";
+import Cell from "../reusables/table/cell.vue";
+import Card from "../reusables/content/card.vue";
 import { Field, ErrorMessage, Form } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useToast, TYPE } from "vue-toastification";
-import Loader from "../components/reusables/loaders/buttonLoader.vue";
+import Loader from "../reusables/loaders/buttonLoader.vue";
 
 import { z } from "zod";
 type User = OutputTypes["viewUserProfile"]["user"];

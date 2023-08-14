@@ -14,8 +14,8 @@ import "xtendui/src/overlay";
 import "xtendui/src/textareaautosize";
 import "xtendui/src/tooltip";
 
-import Header from "./components/header.vue";
-import Footer from "./components/footer.vue";
+import Header from "./components/common/header.vue";
+import Footer from "./components/common/footer.vue";
 
 export default {
   components: { Header, Footer },

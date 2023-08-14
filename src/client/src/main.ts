@@ -7,6 +7,8 @@ import router from "./router/";
 import Toast, { type PluginOptions, POSITION } from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
+import VueTailwindDatepicker from "vue-tailwind-datepicker";
+
 import "./app.css";
 
 const app = createApp(App);
@@ -17,5 +19,6 @@ app.use(Toast, {
 } satisfies PluginOptions);
 app.use(createPinia());
 app.use(router);
+app.use(VueTailwindDatepicker as any);
 
 app.mount("#app");
