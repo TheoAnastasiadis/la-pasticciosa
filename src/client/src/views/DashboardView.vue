@@ -1,39 +1,6 @@
 <template>
-  <Nav :header="adminHeader" v-if="userStore.user?.type === 'admin'">
-    <template #orders>
-      <OrdersTable />
-    </template>
-    <template #users>
-      <UsersTable />
-    </template>
-    <template #items>
-      <ItemsEditor />
-    </template>
-    <template #deliveries>
-      <LocationsTable />
-    </template>
-    <template #profile>
-      <Profile />
-    </template>
-    <template #help>
-      <p>Example</p>
-    </template>
-  </Nav>
-  <Nav v-else :header="userHeader">
-    <template #orders>
-      <OrdersTable />
-    </template>
-    <template #catalogue>
-      <ItemsViewer />
-    </template>
-    <template #deliveries>
-      <DeliveryTable />
-    </template>
-    <template #profile>
-      <Profile />
-    </template>
-    <template #help></template>
-  </Nav>
+  <Nav :header="adminHeader" v-if="userStore.user?.type === 'admin'" />
+  <Nav v-else :header="userHeader" />
 </template>
 
 <script lang="ts">
@@ -72,7 +39,7 @@ export default {
       {
         title: "Τοποθεσίες Παράδοσης",
         icon: "navigator-2",
-        hash: "deliveries",
+        hash: "locations",
       },
       { title: "Προφίλ", icon: "user", hash: "profile" },
       {

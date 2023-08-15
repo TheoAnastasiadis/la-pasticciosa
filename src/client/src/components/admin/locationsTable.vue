@@ -1,72 +1,77 @@
 <template>
-  <p>
-    Στον παρακάτω πίνακα φαίνονται οι τοποθεσίες παράδοσης τις οποίες έχουν
-    αιτηθεί οι χρήστες του συστήματος. Οι τοποθεσίες παράδοσης με την ένδειξη
-    <strong>ΕΝΕΡΓΗ</strong> μπορούν να επιλεγούν από τους χρήστες για νέες
-    παραγγελέις. Οι τοποθεσίες που είναι εν αναμονή, δεν μπορούν να
-    χρησιμοποιηθούν από τους χρήστες.
-  </p>
-  <Table includeIndex :columns="['Διευθυνση', 'Χρηστης', 'Κατασταση']">
-    <Loader :loading="loading" />
-    <Row v-for="delivery in deliveries">
-      <template #head> {{ delivery.id }}</template>
-      <Cell>
-        <strong>{{ delivery.street }} {{ delivery.number }}</strong>
-        {{ delivery.zip }} <br />
-        {{ delivery.details }}
-      </Cell>
-      <Cell>
-        <Tooltip>
-          <template #trigger>{{ delivery.user }}</template>
-          <template #content
-            ><UserProfileTooltip :userId="delivery.user"
-          /></template>
-        </Tooltip>
-      </Cell>
-      <Cell>
-        <span v-if="delivery.state === 'accepted'">
-          Ενεργή <i class="text-sm h h-check-circle-2 text-green-500"></i>
-        </span>
-        <Drop v-else>
-          <template #trigger>
-            <a
-              class="xt-button p-2 rounded-sm bg-orange-100 hover:bg-orange-200 font-medium"
-              >Σε Αναμονή&nbsp;
-              <i class="text-sm h h-clock-7"></i>
-            </a>
-          </template>
-          <template #content>
-            <Card footer="caution">
-              <template #content>
-                <Action
-                  @click="accept(delivery.id)"
-                  icon="plus-circle"
-                  iconColor="green-500"
-                  title="Αποδοχή"
-                  subtitle="Αποδοχή αυτής της τοποθεσίας παράδοσης;"
-                ></Action>
-                <Action
-                  @click="reject(delivery.id)"
-                  icon="trash-1"
-                  iconColor="red-500"
-                  title="Απόρριψη"
-                  subtitle="Διαγραφή αυτής της τοποθεσίας παράδοσης;"
-                ></Action>
-              </template>
-              <template #footer>
-                <p class="font-bold">Τι σημαίνει;</p>
-                <p>
-                  Με την αποδοχή μιας τοποθεσίας παράδοσης ο χρήστης που την
-                  έχει αιτηθεί θα μπορεί να υποβάλει νέες παραγγελίες προς αυτήν
-                  την τοποθεσία.
-                </p>
-              </template>
-            </Card>
-          </template>
-        </Drop>
-      </Cell>
-    </Row>
-  </Table>
+  <div
+    class="xt-card rounded-2xl p-6 sm:p-8 text-sm text-gray-900 xt-links-default bg-white"
+  >
+    <h3>Τοποθεσίες Παράδοσης</h3>
+    <p>
+      Στον παρακάτω πίνακα φαίνονται οι τοποθεσίες παράδοσης τις οποίες έχουν
+      αιτηθεί οι χρήστες του συστήματος. Οι τοποθεσίες παράδοσης με την ένδειξη
+      <strong>ΕΝΕΡΓΗ</strong> μπορούν να επιλεγούν από τους χρήστες για νέες
+      παραγγελέις. Οι τοποθεσίες που είναι εν αναμονή, δεν μπορούν να
+      χρησιμοποιηθούν από τους χρήστες.
+    </p>
+    <Table includeIndex :columns="['Διευθυνση', 'Χρηστης', 'Κατασταση']">
+      <Loader :loading="loading" />
+      <Row v-for="delivery in deliveries">
+        <template #head> {{ delivery.id }}</template>
+        <Cell>
+          <strong>{{ delivery.street }} {{ delivery.number }}</strong>
+          {{ delivery.zip }} <br />
+          {{ delivery.details }}
+        </Cell>
+        <Cell>
+          <Tooltip>
+            <template #trigger>{{ delivery.user }}</template>
+            <template #content
+              ><UserProfileTooltip :userId="delivery.user"
+            /></template>
+          </Tooltip>
+        </Cell>
+        <Cell>
+          <span v-if="delivery.state === 'accepted'">
+            Ενεργή <i class="text-sm h h-check-circle-2 text-green-500"></i>
+          </span>
+          <Drop v-else>
+            <template #trigger>
+              <a
+                class="xt-button p-2 rounded-sm bg-orange-100 hover:bg-orange-200 font-medium"
+                >Σε Αναμονή&nbsp;
+                <i class="text-sm h h-clock-7"></i>
+              </a>
+            </template>
+            <template #content>
+              <Card footer="caution">
+                <template #content>
+                  <Action
+                    @click="accept(delivery.id)"
+                    icon="plus-circle"
+                    iconColor="green-500"
+                    title="Αποδοχή"
+                    subtitle="Αποδοχή αυτής της τοποθεσίας παράδοσης;"
+                  ></Action>
+                  <Action
+                    @click="reject(delivery.id)"
+                    icon="trash-1"
+                    iconColor="red-500"
+                    title="Απόρριψη"
+                    subtitle="Διαγραφή αυτής της τοποθεσίας παράδοσης;"
+                  ></Action>
+                </template>
+                <template #footer>
+                  <p class="font-bold">Τι σημαίνει;</p>
+                  <p>
+                    Με την αποδοχή μιας τοποθεσίας παράδοσης ο χρήστης που την
+                    έχει αιτηθεί θα μπορεί να υποβάλει νέες παραγγελίες προς
+                    αυτήν την τοποθεσία.
+                  </p>
+                </template>
+              </Card>
+            </template>
+          </Drop>
+        </Cell>
+      </Row>
+    </Table>
+  </div>
 </template>
 
 <script lang="ts">

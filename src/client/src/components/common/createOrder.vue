@@ -27,7 +27,7 @@
               <OrderPreview
                 :selectedDelivery="selectedDelivery"
                 :quantities="quantities"
-                :user="userStore.user"
+                :user="user"
                 @order-placed="orderPlaced"
             /></template>
           </Overlay>
@@ -47,9 +47,7 @@
           :item-id="item.id"
         />
         <DeliveryChip
-          v-for="delivery in userStore.deliveries?.filter(
-            (d) => d.state === 'accepted',
-          )"
+          v-for="delivery in deliveries.filter((d) => d.state === 'accepted')"
           :active="selectedDelivery?.id === delivery.id"
           :title="delivery.name"
           :subtitle="`${delivery.street} ${delivery.number}, ${delivery.zip}`"
@@ -85,50 +83,48 @@ type Delivery = OutputTypes["viewUserProfile"]["deliveries"][number];
 type User = OutputTypes["viewUserProfile"]["user"];
 
 export default {
+  props: ["user"],
   data: () => ({
     loading: false,
     quantities: [] as { item: Item; value: number }[],
     availableItems: [] as Item[],
     selectedDelivery: undefined as Delivery | undefined,
-    user: undefined as User | undefined,
+    deliveries: [] as Delivery[],
   }),
-  async mounted() {
-    const toast = useToast();
-    this.loading = true;
+  watch: {
+    async user(value) {
+      const userIsAdmin = this.userStore.user.type === "admin";
 
-    const userIsAdmin = this.userStore.user.type === "admin";
-    if (!userIsAdmin) this.user = this.userStore.user;
+      const toast = useToast();
+      this.loading = true;
 
-    // First update the user store
-    await backend.viewUserProfile
-      .query(userIsAdmin ? this.user.uuid : undefined)
-      .then(({ user, deliveries }) => {
-        (this.userStore as ReturnType<typeof useUserStore>).login(
-          user,
-          deliveries,
-        );
-      })
-      .catch(() => {
-        toast(
-          "Τα στοιχεία του χρήστη δεν ενημερώθηκαν, ίσως χρειαστεί να φορτώσετε ξανά την σελίδα.",
-        );
-      });
+      // Fetch the user info
+      await backend.viewUserProfile
+        .query(userIsAdmin ? this.user.uuid : undefined)
+        .then(({ deliveries }) => {
+          this.deliveries = deliveries;
+        })
+        .catch(() => {
+          toast(
+            "Τα στοιχεία του χρήστη δεν φορτώθηκαν, ίσως χρειαστεί να φορτώσετε ξανά την σελίδα.",
+            { type: TYPE.ERROR },
+          );
+        });
 
-    // then fetch the item info
-    await backend.viewAssignedItems
-      .query(userIsAdmin ? this.user.uuid : undefined)
-      .then((items) => {
-        this.availableItems = items;
-      })
-      .catch(() => {
-        toast(
-          "Tα διαθέσιμα προϊόντα δεν φορτώθηκαν. Παρακαλώ προσπαθήστε ξανά.",
-          { type: TYPE.ERROR },
-        );
-      })
-      .finally(() => {
-        this.loading = false;
-      });
+      // First item info
+      await backend.viewAssignedItems
+        .query(userIsAdmin ? this.user.uuid : undefined)
+        .then((items) => {
+          this.availableItems = items;
+        })
+        .catch(() => {
+          toast("Tα προϊόντα δεν φορτώθηκαν. Παρακαλώ προσπαθήστε ξανά.", {
+            type: TYPE.ERROR,
+          });
+        });
+
+      this.loading = false;
+    },
   },
   methods: {
     updateQuantity(itemId: string, value: number) {

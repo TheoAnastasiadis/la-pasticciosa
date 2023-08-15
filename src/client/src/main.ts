@@ -9,6 +9,8 @@ import "vue-toastification/dist/index.css";
 
 import VueTailwindDatepicker from "vue-tailwind-datepicker";
 
+import "@morev/vue-transitions/styles";
+
 import "./app.css";
 
 const app = createApp(App);

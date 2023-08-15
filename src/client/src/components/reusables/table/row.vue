@@ -21,22 +21,26 @@
       </button>
     </td>
   </tr>
-  <tr v-if="$slots.drawer">
-    <td
-      class="py-2 px-4 text-xs align-top font-medium leading-snug tracking-wider uppercase text-left border border-gray-200 transition-all bg-slate-100 delay-200"
-      :colspan="colspan"
-      :class="{ hidden: !drawer, 'table-cell': drawer }"
-    >
-      <slot name="drawer"></slot>
-    </td>
-  </tr>
+  <TransitionExpand appear>
+    <tr v-if="$slots.drawer && drawer">
+      <td
+        class="py-2 px-4 text-xs align-top font-medium leading-snug tracking-wider uppercase text-left border border-gray-200 transition-all bg-slate-100 delay-200"
+        :colspan="colspan"
+      >
+        <slot name="drawer"></slot>
+      </td>
+    </tr>
+  </TransitionExpand>
 </template>
 
 <script lang="ts">
+import { TransitionExpand } from "@morev/vue-transitions";
+
 export default {
-  data: () => ({ drawer: false, colspan: 0 }),
-  mounted() {
-    this.colspan = this.$refs.main.cells.length - 1;
+  data: () => ({ drawer: false }),
+  props: ["colspan"],
+  components: {
+    TransitionExpand,
   },
 };
 </script>
