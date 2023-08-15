@@ -2,8 +2,6 @@ import {
   BaseEntity,
   Column,
   Entity,
-  JoinTable,
-  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
   Relation,
@@ -18,8 +16,7 @@ export class Quantity extends BaseEntity {
   @PrimaryGeneratedColumn()
   id!: string;
 
-  @ManyToMany(() => Item, { onDelete: "NO ACTION", nullable: true })
-  @JoinTable()
+  @ManyToOne(() => Item, { onDelete: "NO ACTION", nullable: true })
   item!: Item;
 
   @Column({ type: "int" })
@@ -34,9 +31,10 @@ export class Quantity extends BaseEntity {
     order: Order,
   ) => Promise<Quantity> = async (item, value, order) => {
     const quantity = Quantity.create();
-    quantity.item = item;
     quantity.value = value;
     quantity.order = order;
+    await quantity.save();
+    quantity.item = item;
     return await quantity.save();
   };
 

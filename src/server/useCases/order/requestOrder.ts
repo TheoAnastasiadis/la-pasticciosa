@@ -21,8 +21,6 @@ export const requestOrder: (
 ) => Promise<Order> = async (quantities, user, delivery) => {
   console.log(`requesting order`);
   console.log(JSON.stringify(quantities, undefined, 2));
-  console.log(JSON.stringify(user, undefined, 2));
-  console.log(JSON.stringify(delivery, undefined, 2));
 
   // validate delivery
   if (
