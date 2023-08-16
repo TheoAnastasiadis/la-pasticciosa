@@ -1,7 +1,7 @@
 <template>
   <div class="xt-overflow-sub overflow-y-hidden overflow-x-scroll w-full">
     <table class="my-4 xt-my-auto w-full">
-      <thead>
+      <thead class="hidden md:table-header-group">
         <tr>
           <th
             class="py-2 px-4 text-xs align-top font-medium leading-snug tracking-wider uppercase text-left border border-gray-200"

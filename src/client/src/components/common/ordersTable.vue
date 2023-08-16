@@ -1,10 +1,10 @@
 <template>
   <div
-    class="xt-card rounded-2xl p-6 sm:p-8 text-sm text-gray-900 xt-links-default bg-white"
+    class="xt-card rounded-2xl px-2 md:px-4 py-6 text-sm text-gray-900 xt-links-default bg-white"
   >
     <Loader :loading="loading" />
-    <h3>Παραγγελίες</h3>
-    <div class="w-full">
+    <div class="xt-list flex-col xt-list-1">
+      <h3>Παραγγελίες</h3>
       <p>
         Στον παρακάτω πίνακα μπορείτε να βρείτε πληροφορίες για της τρέχουσες
         και προηγούμενες παραγγελίας σας.
@@ -17,7 +17,7 @@
       <button
         @click="placingOrder = !placingOrder"
         type="button"
-        class="xt-button py-2.5 px-3.5 text-sm rounded-md font-medium leading-snug tracking-wider uppercase text-gray-900 bg-gray-100 transition hover:bg-gray-200 active:bg-gray-300 on:bg-gray-200 my-2 mb-5"
+        class="xt-button py-2.5 px-3.5 text-sm text-white xt-links-inverse rounded-md font-medium leading-snug tracking-wider uppercase bg-primary-500 transition hover:bg-primary-600 active:bg-primary-600 on:bg-primary-600 my-2 mb-5 md:max-w-fit"
       >
         Nεα παραγγελια
         <i
@@ -33,46 +33,75 @@
           <CreateOrder @order-placed="orderPlaced" :user="user" />
         </div>
       </TransitionExpand>
-
-      <Table :columns="columns" include-index>
-        <Row v-for="order in orders" :colspan="columns.length + 1">
-          <template #head>{{ order.id }}</template>
-          <Cell> <DateChip :date="order.createdAt" /> </Cell>
-          <Cell v-if="userStore.user.type === 'admin'">
-            <UserInfo :user="order.user" />
-          </Cell>
-          <Cell>
-            <span class="font-semibold"> {{ order.total }} &euro;</span>
-          </Cell>
-          <Cell>
-            <OrderStatusChip :order="order" @order-updated="orderUpdated" />
-          </Cell>
-          <Cell>
-            <OrderDeliveryChip :order="order" @order-updated="orderUpdated" />
-          </Cell>
-          <template #drawer
-            ><div class="p-5">
-              <p class="text-primary-600 text-lg">
-                Παραγγελια #{{ order.id }}
-                <span class="normal-case text-black">{{
-                  new Date(order.createdAt).toLocaleDateString()
-                }}</span>
-              </p>
-              <OrderTable :quantities="order.quantities" />
-              <p>
-                η επιλεγμενη παραδοση ειναι:
-                <span class="normal-case">
-                  {{ order.delivery.street }}
-                  {{ order.delivery.number }}, {{ order.delivery.zip }}
-                </span>
-              </p>
-            </div></template
-          >
-        </Row>
-      </Table>
     </div>
+
+    <Table :columns="columns" include-index>
+      <Row v-for="order in orders" :colspan="columns.length + 1">
+        <template #head
+          ><span class="inline-block md:hidden">Παραγγελια #</span
+          >{{ order.id }}</template
+        >
+        <Cell
+          ><span class="inline-block md:hidden">Υποβλήθηκε: &nbsp;</span
+          ><DateChip :date="order.createdAt" />
+        </Cell>
+        <Cell v-if="userStore.user.type === 'admin'">
+          <span class="inline-block md:hidden">Από:&nbsp;</span
+          ><UserInfo :user="order.user" />
+        </Cell>
+        <Cell class="block md:hidden"><p>
+          <ul  class="items-list">
+            <li v-for="quantity in order.quantities">
+            <span class="font-semibold">{{ quantity.item.name }}</span> <br/> {{ quantity.value }} ({{ quantity.item.unit }}) &times; {{ quantity.item.price }} &euro;
+            </li>
+          </ul>
+        </p> </Cell>
+        <Cell>
+          <span class="font-semibold">
+            <span class="inline-block md:hidden">Σύνολο:&nbsp;</span
+            >{{ order.total }} &euro;</span
+          >
+        </Cell>
+        <Cell class="block md:hidden">
+          Παράδοση: {{ order.delivery.street }} {{ order.delivery.number }}, {{ order.delivery.zip }}
+        </Cell>
+        <Cell>
+          <span class="inline-block md:hidden mb-1">Κατάσταση: &nbsp;</span>
+          <OrderStatusChip :order="order" @order-updated="orderUpdated" />
+        </Cell>
+        <Cell>
+          <span class="inline-block md:hidden mb-1"
+            >Εκτιμώμενη Παράδοση:&nbsp;</span
+          ><OrderDeliveryChip :order="order" @order-updated="orderUpdated" />
+        </Cell>
+        <template #drawer
+          ><div class="p-5">
+            <p class="text-primary-600 text-lg">
+              Παραγγελια #{{ order.id }}
+              <span class="normal-case text-black">{{
+                new Date(order.createdAt).toLocaleDateString()
+              }}</span>
+            </p>
+            <OrderTable :quantities="order.quantities" />
+            <p>
+              η επιλεγμενη παραδοση ειναι:
+              <span class="normal-case">
+                {{ order.delivery.street }}
+                {{ order.delivery.number }}, {{ order.delivery.zip }}
+              </span>
+            </p>
+          </div></template
+        >
+      </Row>
+    </Table>
   </div>
 </template>
+
+<style scoped>
+.items-list > li {
+  margin-bottom: 0.5rem !important;
+}
+</style>
 
 <script lang="ts">
 import CreateOrder from "./createOrder.vue";
@@ -138,14 +167,13 @@ export default {
   },
   methods: {
     orderUpdated(order) {
+      order.user = this.user;
       this.orders = this.orders.map((o) => {
-        if (o.id === order.id) o = order;
+        if (o.id == order.id) o = order;
         return o;
       });
     },
     orderPlaced(order) {
-      order.estimatedDelivery = null;
-      order.user = this.user;
       this.orders.unshift(order);
     },
   },

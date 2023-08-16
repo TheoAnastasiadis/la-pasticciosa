@@ -1,5 +1,5 @@
 <template>
-  <div class="xt-list flex-col md:flex-row md:flex-nowrap">
+  <div class="xt-list flex-row md:flex-nowrap">
     <div
       class="py-1 pl-2 pr-1.5 text-center rounded-l-lg"
       :class="{
@@ -7,16 +7,17 @@
         'bg-orange-200': order.status === 'pending',
         'bg-primary-200': order.status === 'in_preparation',
         'bg-slate-200': order.status === 'complete',
+        'rounded-r-lg': userStore.user.type === 'user',
       }"
     >
       <div class="my-auto leading-snug">{{ orderStatus }}</div>
     </div>
 
-    <Drop>
+    <Drop v-if="userStore.user.type === 'admin'">
       <template #trigger>
         <button
           type="submit"
-          class="xt-button py-1 px-1.5 border-l border-gray-400 text-sm rounded-b-md md:rounded-bl-none md:rounded-r-md font-medium leading-snug tracking-wider uppercase transition"
+          class="xt-button py-1 px-1.5 border-l border-gray-400 text-sm rounded-bl-none rounded-r-md font-medium leading-snug tracking-wider uppercase transition"
           :class="{
             'bg-green-200 hover:bg-green-300': order.status === 'accepted',
             'bg-orange-200 hover:bg-orange-300': order.status === 'pending',
@@ -80,6 +81,8 @@ import Card from "../reusables/content/card.vue";
 import Action from "../reusables/content/action.vue";
 import ButtonLoader from "../reusables/loaders/buttonLoader.vue";
 import { TYPE, useToast } from "vue-toastification";
+import { mapStores } from "pinia";
+import { useUserStore } from "../../stores/user";
 
 type Order = OutputTypes["placeOrder"];
 
@@ -104,6 +107,7 @@ export default {
           return "Ολοκληρωμένη";
       }
     },
+    ...mapStores(useUserStore),
   },
   methods: {
     async updateOrderStatus(status: Order["status"]) {

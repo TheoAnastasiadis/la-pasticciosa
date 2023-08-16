@@ -1,23 +1,23 @@
 <template>
-  <div class="max-w-7xl mx-auto">
-    <div class="xt-row xt-row-4 md:xt-row-8">
+  <div class="max-w-7xl md:mx-auto mx-2.5 my-0">
+    <div class="xt-row xt-row-2 md:xt-row-8">
       <!-- Drawer -->
       <div
         class="w-full md:w-3/12 order-last md:order-first fixed z-above bottom-2 right-2 md:static"
       >
         <div
-          class="xt-card p-3 md:p-2 rounded-2xl text-gray-900 xt-links-default bg-white bg-opacity-80 backdrop-filter backdrop-blur-sm backdrop-saturate-50"
+          class="xt-card m-1 p-3 md:p-2 rounded-2xl text-gray-900 xt-links-default bg-white bg-opacity-80 backdrop-filter backdrop-blur-sm backdrop-saturate-50 border md:border-none"
         >
           <nav aria-label="Navigation" class="xt-list xt-list-1 flex-col">
             <a
               role="button"
-              class="xt-button flex-auto justify-between py-1.5 px-3 text-md md:text-sm rounded-2xl font-medium leading-snug text-left transition hover:bg-white hover:text-primary-500 active:text-white active:bg-primary-500 on:text-white on:bg-primary-500 bg-opacity-40 md:hidden"
+              class="xt-button flex-auto justify-between py-1.5 px-3 text-md md:text-sm rounded-2xl font-medium leading-snug text-left transition bg-opacity-40 md:hidden"
               @click="open = !open"
             >
-              <span>Επιλογές</span>
+              <span>Μενού</span>
               <i
                 class="h text-sm mr-2"
-                :class="{ 'h-chevrons-down': open, 'h-chevrons-up': !open }"
+                :class="{ 'h-chevrons-down': open, 'h-menu': !open }"
               ></i>
             </a>
 

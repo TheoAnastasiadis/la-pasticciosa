@@ -1,9 +1,5 @@
 <template>
-  <div
-    class="xt-list xt-list-3 items-center"
-    data-xt-overlay="{ duration: 500 }"
-    ref="overlay"
-  >
+  <div data-xt-overlay="{ duration: 500 }" ref="overlay">
     <div data-xt-overlay-element><slot name="trigger"></slot></div>
 
     <div

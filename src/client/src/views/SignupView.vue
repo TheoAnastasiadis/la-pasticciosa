@@ -1,5 +1,5 @@
 <template>
-  <div class="demo--form-variant-primary">
+  <div class="mx-2.5 my-4">
     <div
       class="xt-card flex-auto w-12/12 md:w-6/12 mx-auto p-4 md:p-7 sm:p-9 text-base rounded-2xl bg-white shadow-xl"
     >

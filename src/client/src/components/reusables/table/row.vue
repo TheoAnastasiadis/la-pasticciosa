@@ -1,7 +1,7 @@
 <template>
-  <tr ref="main">
+  <tr ref="main" class="block md:table-row mb-3 md:mb-0">
     <th
-      class="py-2 px-4 text-xs align-top font-medium leading-snug tracking-wider uppercase text-left border border-gray-200 transition group-hover:bg-gray-200"
+      class="py-2 px-4 text-xs align-top font-medium leading-snug tracking-wider uppercase text-left border border-gray-300 md:border-gray-200 transition bg-slate-100 md:bg-white block md:table-cell text-primary-600 md:text-black"
     >
       <slot name="head"></slot>
     </th>

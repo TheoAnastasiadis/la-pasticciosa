@@ -1,20 +1,21 @@
 <template>
-  <div class="xt-list flex-col md:flex-row md:flex-nowrap">
+  <div class="xt-list flex-row md:flex-nowrap">
     <div
       class="py-1 pl-2 pr-1.5 text-center rounded-l-lg"
       :class="{
         'bg-slate-200 ': deliveryString === 'N/A',
         'bg-primary-200 ': deliveryString !== 'N/A',
+        'rounded-r-lg': userStore.user.type === 'user',
       }"
     >
       <div class="my-auto leading-snug">{{ deliveryString }}</div>
     </div>
 
-    <Drop>
+    <Drop v-if="userStore.user.type === 'admin'">
       <template #trigger>
         <button
           type="submit"
-          class="xt-button py-1 px-1.5 border-l border-gray-400 text-sm rounded-b-md md:rounded-bl-none md:rounded-r-md font-medium leading-snug tracking-wider uppercase transition"
+          class="xt-button py-1 px-1.5 border-l border-gray-400 text-sm rounded-bl-none rounded-r-md font-medium leading-snug tracking-wider uppercase transition"
           :class="{
             'bg-slate-200 hover:bg-slate-300': deliveryString === 'N/A',
             'bg-primary-200 hover:bg-primary-300': deliveryString !== 'N/A',
@@ -69,6 +70,8 @@ import Drop from "../reusables/interactives/drop.vue";
 import Card from "../reusables/content/card.vue";
 import { backend } from "../../services/backend";
 import { TYPE, useToast } from "vue-toastification";
+import { mapStores } from "pinia";
+import { useUserStore } from "../../stores/user";
 
 export default {
   props: ["order"],
@@ -80,6 +83,7 @@ export default {
       const timestamp = moment(this.order.estimatedDelivery).unix();
       return moment(this.order.estimatedDelivery).format("DD MMM 'YY");
     },
+    ...mapStores(useUserStore),
   },
   methods: {
     async updateEstimate() {

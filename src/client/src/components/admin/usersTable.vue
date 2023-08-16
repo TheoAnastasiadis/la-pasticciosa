@@ -15,8 +15,12 @@
       </p>
       <Table :columns="columns">
         <Row v-for="user in users" :key="user.uuid">
-          <template #head>{{ user.uuid }}</template>
+          <template #head
+            ><span class="inlibe-block md:hidden">Χρηστης #</span
+            >{{ user.uuid }}</template
+          >
           <Cell>
+            <span class="inlibe-block md:hidden">Πληροφορίες:&nbsp;</span>
             <Tooltip>
               <template #trigger>
                 <strong>{{ user.companyName }}</strong
@@ -31,6 +35,7 @@
           <Cell>
             <Drop>
               <template #trigger>
+                <span class="inlibe-block md:hidden">Κατάλογος:&nbsp;</span>
                 {{ user.catalogue.length }}
                 <button
                   class="xt-button py-1 px-2 text-sm rounded-md font-medium leading-snug tracking-wider bg-slate-100 transition hover:bg-gray-200 active:bg-gray-300 on:bg-gray-200 justify-end text-left truncate"
@@ -132,6 +137,7 @@
             </Drop>
           </Cell>
           <Cell>
+            <span class="inlibe-block md:hidden">Κατάσταση:&nbsp;</span>
             <span v-if="user.status == 'accepted'"
               ><i class="xt-icon h h-user-checked text-base text-green-400"></i
               >&nbsp;Ενεργός</span

@@ -1,17 +1,19 @@
 <template>
   <div
-    class="xt-card rounded-2xl p-6 sm:p-8 text-sm text-gray-900 xt-links-default bg-white"
+    class="xt-card rounded-2xl p-4 text-sm text-gray-900 xt-links-default bg-white"
   >
-    <h3>Προφίλ Χρήστη</h3>
-    <p>
-      Για περισσότερες πληροφορίες επισκεφθείτε τις σελιδές σχετικά με την
-      <a href="#">πολιτική απορρήτου</a> και την
-      <a href="#">διαχείρηση προσωπικών δεδομένων</a>.
-    </p>
-    <div class="xt-row w-full xt-row-2">
+    <div class="xt-list xt-list-1 p-4">
+      <h3>Προφίλ Χρήστη</h3>
+      <p>
+        Για περισσότερες πληροφορίες επισκεφθείτε τις σελιδές σχετικά με την
+        <a href="#">πολιτική απορρήτου</a> και την
+        <a href="#">διαχείρηση προσωπικών δεδομένων</a>.
+      </p>
+    </div>
+    <div class="flex flex-col md:flex-row flex-nowrap md:space-x-2 space-y-2">
       <div class="w-full md:w-6/12">
-        <div class="xt-card xt-row-2 w-full shadow-md rounded-md p-4">
-          <h5>Αλλαγή Κωδικού Πρόσβασης</h5>
+        <div class="xt-card w-full shadow-md rounded-md p-4">
+          <h6>Αλλαγή Κωδικού Πρόσβασης</h6>
           <Form
             class="text-sm"
             @submit="onSubmit"
@@ -91,7 +93,7 @@
       </div>
       <div class="w-full md:w-6/12">
         <div class="xt-card w-full shadow-md rounded-md p-4">
-          <h5>Στοιχεία Τιμολόγησης</h5>
+          <h6>Στοιχεία Τιμολόγησης</h6>
           <Table :include-index="false" :columns="['στοιχεια', 'πληροφοριες']">
             <Row>
               <template #head>ονομα χρηστη</template>

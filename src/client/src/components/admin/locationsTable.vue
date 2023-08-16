@@ -1,6 +1,6 @@
 <template>
   <div
-    class="xt-card rounded-2xl p-6 sm:p-8 text-sm text-gray-900 xt-links-default bg-white"
+    class="xt-card rounded-2xl p-8 text-sm text-gray-900 xt-links-default bg-white"
   >
     <h3>Τοποθεσίες Παράδοσης</h3>
     <p>
@@ -13,13 +13,18 @@
     <Table includeIndex :columns="['Διευθυνση', 'Χρηστης', 'Κατασταση']">
       <Loader :loading="loading" />
       <Row v-for="delivery in deliveries">
-        <template #head> {{ delivery.id }}</template>
+        <template #head>
+          <span class="inlibe-block md:hidden">Tοποθεσια #</span
+          >{{ delivery.id }}</template
+        >
         <Cell>
+          <span class="inlibe-block md:hidden">Διεύθυνση:&nbsp;</span>
           <strong>{{ delivery.street }} {{ delivery.number }}</strong>
           {{ delivery.zip }} <br />
           {{ delivery.details }}
         </Cell>
         <Cell>
+          <span class="inlibe-block md:hidden">Χρήστης:&nbsp;</span>
           <Tooltip>
             <template #trigger>{{ delivery.user }}</template>
             <template #content
@@ -28,6 +33,7 @@
           </Tooltip>
         </Cell>
         <Cell>
+          <span class="inlibe-block md:hidden">Κατάσταση:&nbsp;</span>
           <span v-if="delivery.state === 'accepted'">
             Ενεργή <i class="text-sm h h-check-circle-2 text-green-500"></i>
           </span>

@@ -1,37 +1,56 @@
 <template>
-  <div class="xt-card rounded-md p-4 shadow-lg border border-primary-300">
+  <div
+    class="xt-card rounded-md p-2 md:p-4 shadow-lg border border-primary-300 overflow-hidden"
+  >
     <Loader :loading="loading" />
     <div class="xt-row xt-row-2">
-      <div class="xt-h5 text-primary-500">Δημιουργήστε την παραγγελία σας!</div>
-      <div
-        class="w-full p-5 border border-dashed flex justify-between space-x-3"
+      <div class="xt-h5 text-primary-500 w-full">
+        Δημιουργήστε την παραγγελία σας!
+      </div>
+      <label
+        class="block mb-3 font-medium text-gray-700"
+        v-if="userStore.user.type === 'admin'"
       >
-        <div v-html="deliveryString" class="text-base" />
-        <div>
-          <Overlay
-            :enabled="
-              quantities.length > 0 && typeof selectedDelivery !== 'undefined'
-            "
-          >
-            <template #trigger>
-              <button
-                @click="sendOrder()"
-                class="xt-button bg-primary-500 px-3 py-2.5 rounded-md uppercase text-white font-semibold hover:bg-primary-600 disabled:pointer-events-none"
-              >
-                αποστολη
-                <ButtonLoader :loading="loading" />
-                <i class="text-sm h h-truck ml-1"></i>
-              </button>
-            </template>
-            <template #content>
-              <OrderPreview
-                :selectedDelivery="selectedDelivery"
-                :quantities="quantities"
-                :user="user"
-                @order-placed="orderPlaced"
-            /></template>
-          </Overlay>
-        </div>
+        Για τον χρήστη: &nbsp;
+      </label>
+      <select
+        v-if="userStore.user.type === 'admin'"
+        v-model="selectedUser"
+        class="block w-full xt-select rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none max-w-xs mb-3"
+        aria-label="Select"
+      >
+        <option selected :value="undefined">Επιλέξτε έναν χρήστη</option>
+        <option v-for="user in users" :key="user.uuid" :value="user">
+          {{ user.companyName }}
+        </option>
+      </select>
+      <div
+        class="w-full p-5 border border-dashed flex flex-col md:flex-row justify-between md:space-y-0 space-y-2"
+      >
+        <div v-html="deliveryString" class="text-base w-full md:w-8/12" />
+        <Overlay
+          :enabled="
+            quantities.length > 0 && typeof selectedDelivery !== 'undefined'
+          "
+        >
+          <template #trigger>
+            <button
+              @click="sendOrder()"
+              class="xt-button bg-primary-500 px-3 py-2.5 rounded-md uppercase text-white font-semibold hover:bg-primary-600 disabled:pointer-events-none w-full"
+            >
+              αποστολη
+              <ButtonLoader :loading="loading" />
+              <i class="text-sm h h-truck ml-1"></i>
+            </button>
+          </template>
+          <template #content>
+            <OrderPreview
+              :selectedDelivery="selectedDelivery"
+              :quantities="quantities"
+              :user="selectedUser"
+              @order-placed="orderPlaced"
+          /></template>
+        </Overlay>
       </div>
     </div>
     <div class="mt-4 mb-2">
@@ -82,49 +101,108 @@ type Item = OutputTypes["viewAssignedItems"][number];
 type Delivery = OutputTypes["viewUserProfile"]["deliveries"][number];
 type User = OutputTypes["viewUserProfile"]["user"];
 
+const setup = async () => {};
+
 export default {
   props: ["user"],
   data: () => ({
     loading: false,
     quantities: [] as { item: Item; value: number }[],
     availableItems: [] as Item[],
-    selectedDelivery: undefined as Delivery | undefined,
+    users: [] as User[],
+    selectedUser: undefined as User | undefined,
     deliveries: [] as Delivery[],
+    selectedDelivery: undefined as Delivery | undefined,
   }),
   watch: {
-    async user(value) {
-      const userIsAdmin = this.userStore.user.type === "admin";
+    async selectedUser(user) {
+      if (!user) {
+        this.deliveries = [];
+        this.availableItems = [];
+        return;
+      }
 
       const toast = useToast();
       this.loading = true;
 
-      // Fetch the user info
-      await backend.viewUserProfile
-        .query(userIsAdmin ? this.user.uuid : undefined)
-        .then(({ deliveries }) => {
-          this.deliveries = deliveries;
-        })
-        .catch(() => {
-          toast(
-            "Τα στοιχεία του χρήστη δεν φορτώθηκαν, ίσως χρειαστεί να φορτώσετε ξανά την σελίδα.",
-            { type: TYPE.ERROR },
-          );
-        });
-
-      // First item info
-      await backend.viewAssignedItems
-        .query(userIsAdmin ? this.user.uuid : undefined)
-        .then((items) => {
-          this.availableItems = items;
-        })
-        .catch(() => {
-          toast("Tα προϊόντα δεν φορτώθηκαν. Παρακαλώ προσπαθήστε ξανά.", {
-            type: TYPE.ERROR,
+      try {
+        // Fetch the user info
+        await backend.viewUserProfile
+          .query(user.uuid)
+          .then(({ deliveries }) => {
+            this.deliveries = deliveries;
+          })
+          .catch(() => {
+            toast(
+              "Τα στοιχεία του χρήστη δεν φορτώθηκαν, ίσως χρειαστεί να φορτώσετε ξανά την σελίδα.",
+              { type: TYPE.ERROR },
+            );
           });
-        });
 
-      this.loading = false;
+        // item info
+        await backend.viewAssignedItems
+          .query(user.uuid)
+          .then((items) => {
+            this.availableItems = items;
+          })
+          .catch(() => {
+            toast("Tα προϊόντα δεν φορτώθηκαν. Παρακαλώ προσπαθήστε ξανά.", {
+              type: TYPE.ERROR,
+            });
+          });
+      } finally {
+        this.loading = false;
+      }
     },
+  },
+  async mounted() {
+    const userIsAdmin = this.userStore.user.type === "admin";
+
+    const toast = useToast();
+    this.loading = true;
+
+    try {
+      if (!userIsAdmin) {
+        // user
+        await backend.viewUserProfile
+          .query()
+          .then(({ deliveries }) => {
+            this.deliveries = deliveries;
+          })
+          .catch(() => {
+            toast(
+              "Τα στοιχεία του χρήστη δεν φορτώθηκαν, ίσως χρειαστεί να φορτώσετε ξανά την σελίδα.",
+              { type: TYPE.ERROR },
+            );
+          });
+
+        // First item info
+        await backend.viewAssignedItems
+          .query()
+          .then((items) => {
+            this.availableItems = items;
+          })
+          .catch(() => {
+            toast("Tα προϊόντα δεν φορτώθηκαν. Παρακαλώ προσπαθήστε ξανά.", {
+              type: TYPE.ERROR,
+            });
+          });
+      } else {
+        await backend.viewUsers
+          .query()
+          .then((users) => (this.users = users))
+          .catch(() =>
+            toast(
+              "Οι λίστα χρηστών δεν φορτώθηκε. Παρακαλώ προσπαθήστε ξανά.",
+              {
+                type: TYPE.ERROR,
+              },
+            ),
+          );
+      }
+    } finally {
+      this.loading = false;
+    }
   },
   methods: {
     updateQuantity(itemId: string, value: number) {
