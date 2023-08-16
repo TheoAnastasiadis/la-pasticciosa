@@ -134,6 +134,7 @@ export default {
               value,
             })),
           },
+          userId: this.user.uuid,
         })
         .then((order) => {
           toast(`H παραγγελία με #${order.id} υποβλήθηκε με επιτυχία!`, {

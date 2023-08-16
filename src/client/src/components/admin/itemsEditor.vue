@@ -42,7 +42,7 @@
                 <div class="py-4">
                   <div class="xt-h6">{{ item.name }}</div>
                   <div class="-mt-2 text-base font-medium text-primary-600">
-                    {{ item.price }} €
+                    {{ item.price }} € / {{ item.unit }}
                   </div>
                   <div class="text-sm text-slate-500">
                     {{ item.description }}

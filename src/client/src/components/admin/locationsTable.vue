@@ -25,12 +25,7 @@
         </Cell>
         <Cell>
           <span class="inlibe-block md:hidden">Χρήστης:&nbsp;</span>
-          <Tooltip>
-            <template #trigger>{{ delivery.user }}</template>
-            <template #content
-              ><UserProfileTooltip :userId="delivery.user"
-            /></template>
-          </Tooltip>
+          <UserInfo :user="delivery.user" />
         </Cell>
         <Cell>
           <span class="inlibe-block md:hidden">Κατάσταση:&nbsp;</span>
@@ -87,11 +82,11 @@ import Table from "../reusables/table/table.vue";
 import Row from "../reusables/table/row.vue";
 import Cell from "../reusables/table/cell.vue";
 import Tooltip from "../reusables/interactives/tooltip.vue";
-import UserProfileTooltip from "./userProfileTooltip.vue";
 import Drop from "../reusables/interactives/drop.vue";
 import Card from "../reusables/content/card.vue";
 import Action from "../reusables/content/action.vue";
 import Loader from "../reusables/loaders/containerLoader.vue";
+import UserInfo from "../common/userInfo.vue";
 import { mapStores } from "pinia";
 import { useUserStore } from "../../stores/user";
 
@@ -166,7 +161,7 @@ export default {
     Row,
     Cell,
     Tooltip,
-    UserProfileTooltip,
+    UserInfo,
     Drop,
     Card,
     Action,

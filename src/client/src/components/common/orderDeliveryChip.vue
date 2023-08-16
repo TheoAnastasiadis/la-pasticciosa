@@ -78,9 +78,9 @@ export default {
   data: () => ({ loading: false, date: undefined as Date | undefined }),
   computed: {
     deliveryString() {
-      if (this.order.estimatedDelivery === null) return "N/A";
       moment.locale("el");
       const timestamp = moment(this.order.estimatedDelivery).unix();
+      if (timestamp === 0) return "N/A";
       return moment(this.order.estimatedDelivery).format("DD MMM 'YY");
     },
     ...mapStores(useUserStore),

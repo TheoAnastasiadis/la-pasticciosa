@@ -21,16 +21,7 @@
           >
           <Cell>
             <span class="inlibe-block md:hidden">Πληροφορίες:&nbsp;</span>
-            <Tooltip>
-              <template #trigger>
-                <strong>{{ user.companyName }}</strong
-                >&nbsp;{{ user.companyAddress }}
-              </template>
-
-              <template #content>
-                <userProfileTooltip :user-id="user.uuid" />
-              </template>
-            </Tooltip>
+            <UserInfo :user="user" />
           </Cell>
           <Cell>
             <Drop>
@@ -195,7 +186,6 @@ import Fuse from "fuse.js";
 import { backend, type OutputTypes } from "../../services/backend";
 import { useToast, TYPE } from "vue-toastification";
 import loader from "../reusables/loaders/containerLoader.vue";
-import userProfileTooltip from "./userProfileTooltip.vue";
 import Table from "../reusables/table/table.vue";
 import Row from "../reusables/table/row.vue";
 import Cell from "../reusables/table/cell.vue";
@@ -203,6 +193,7 @@ import Tooltip from "../reusables/interactives/tooltip.vue";
 import Drop from "../reusables/interactives/drop.vue";
 import Card from "../reusables/content/card.vue";
 import Action from "../reusables/content/action.vue";
+import UserInfo from "../common/userInfo.vue";
 
 type User = OutputTypes["viewUsers"][number];
 type Item = OutputTypes["createItem"];
@@ -355,7 +346,6 @@ export default {
   },
   components: {
     loader,
-    userProfileTooltip,
     Table,
     Row,
     Cell,
@@ -363,6 +353,7 @@ export default {
     Drop,
     Card,
     Action,
+    UserInfo,
   },
 };
 </script>

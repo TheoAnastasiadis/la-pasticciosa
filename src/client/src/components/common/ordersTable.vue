@@ -175,6 +175,7 @@ export default {
     },
     orderPlaced(order) {
       this.orders.unshift(order);
+      this.placingOrder = false;
     },
   },
   computed: {

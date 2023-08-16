@@ -79,19 +79,35 @@
                     <ErrorMessage name="description"></ErrorMessage>
                   </div>
 
-                  <label class="block mb-3 font-medium text-gray-700">
-                    Τιμή
-                  </label>
-                  <Field
-                    name="price"
-                    type="number"
-                    class="block mb-3 w-full rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
-                    aria-label="Price"
-                  />
+                  <div class="flex flex-row w-full space-x-1">
+                    <div class="w-6/12 md:w-9/12">
+                      <label class="block mb-3 font-medium text-gray-700">
+                        Τιμή
+                      </label>
+                      <Field
+                        name="price"
+                        type="number"
+                        class="block mb-3 w-full rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+                        aria-label="Price"
+                      />
+                    </div>
+                    <div class="w-6/12 md:w-3/12">
+                      <label class="block mb-3 font-medium text-gray-700">
+                        Μον. μέτρησης
+                      </label>
+                      <Field
+                        name="unit"
+                        type="text"
+                        class="block mb-3 w-full rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+                        aria-label="Unit"
+                        placeholder="πχ. Kg"
+                      />
+                    </div>
+                  </div>
                   <div
                     class="my-3 text-red-500 text-xs leading-snug custom-backend-error"
                   >
-                    <ErrorMessage name="price"></ErrorMessage>
+                    <ErrorMessage name="unit"></ErrorMessage>
                   </div>
 
                   <label class="block mb-3 font-medium text-gray-700">
@@ -207,6 +223,9 @@ export default {
             .transform((n) => Math.round(n * 100) / 100) // round to 2 decimals
             .refine((n) => n > 0, "Η τιμή πρέπει να είναι μεγαλύτερη του 0")
             .transform((n) => n.toFixed(2)),
+          unit: z.string({
+            required_error: "Αυτό το πεδίο είναι υποχρεωτικό",
+          }),
           image: z
             .string({ required_error: "Αυτό το πεδίο είναι υποχρεωτικό" })
             .url(
@@ -225,7 +244,7 @@ export default {
     async onSubmit(values) {
       this.loading = true;
       const toast = useToast();
-      const { name, description, price, image, thumbnail } = values;
+      const { name, description, price, image, thumbnail, unit } = values;
       try {
         const item = await backend.createItem.mutate({
           name,
@@ -233,6 +252,7 @@ export default {
           price,
           image,
           thumbnail,
+          unit,
         });
         toast("Το προϊόν προστέθηκε στον κατάλογο", { type: TYPE.DEFAULT });
         this.$emit("itemCreated", item);
