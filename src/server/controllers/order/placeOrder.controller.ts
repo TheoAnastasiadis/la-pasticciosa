@@ -7,7 +7,6 @@ import {
 } from "../../useCases/order/requestOrder";
 import { assertUserIsAdminOrAcceptedOwner } from "../helpers/userIsAdminOrOwner";
 import { Delivery } from "../../entities/delivery.entity";
-import type { order } from "../../entities/decoders/order.decoder";
 import { throwNotFoundError } from "../errors/notFound.error";
 import { throwDBError } from "../errors/db.error";
 
@@ -15,7 +14,7 @@ export const placeOrderController: (
   props: z.infer<typeof orderProps>,
   userId: string,
   caller: User,
-) => Promise<z.infer<typeof order>> = async (props, userId, caller) => {
+) => Promise<any> = async (props, userId, caller) => {
   // user
   // Admins can create orders on behalf of any user.
   // Simple users can create orders only on their own behalf.
@@ -40,7 +39,5 @@ export const placeOrderController: (
   }).catch(throwNotFoundError);
   assertUserIsAdminOrAcceptedOwner(caller, delivery.user.uuid);
   // main
-  return (
-    await requestOrder(quantities, user, delivery).catch(throwDBError)
-  ).toSafeOutput();
+  return await requestOrder(quantities, user, delivery).catch(throwDBError);
 };
