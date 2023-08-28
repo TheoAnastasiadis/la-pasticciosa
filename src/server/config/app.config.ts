@@ -13,4 +13,5 @@ export default {
     (process.env.NODE_ENV === "production"
       ? process.env.clientUrl
       : "http://localhost:5173") as string,
+  getPaginationLimit: () => 20,
 };

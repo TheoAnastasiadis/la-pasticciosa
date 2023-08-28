@@ -3,7 +3,7 @@ import express from "express";
 import * as trpcExpress from "@trpc/server/adapters/express";
 import cookieParser from "cookie-parser";
 import { appRouter } from "./router";
-import { createContext } from "./router/context";
+import { createContext } from "./router/setup/context";
 import appConfig from "./config/app.config";
 import { AppDataSource } from "./database/dataSource";
 import morgan from "morgan";

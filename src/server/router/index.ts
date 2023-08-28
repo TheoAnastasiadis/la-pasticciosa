@@ -1,57 +1,31 @@
-import { router } from "./trpc";
-import { assignItemsRoute } from "./routeAddapters/item/assignItems.route";
-import { createItemRoute } from "./routeAddapters/item/createItem.route";
-import { viewItemsRoute } from "./routeAddapters/item/viewItems.route";
-import { viewAssignedItemsRoute } from "./routeAddapters/item/viewAssignedItems.route";
-import { acceptUserRoute } from "./routeAddapters/user/acceptUser.route";
-import { requestUserRoute } from "./routeAddapters/user/requestUser.route";
-import { viewUsersRoute } from "./routeAddapters/user/viewUsers.route";
-import { viewUserProfileRoute } from "./routeAddapters/user/viewUserProfile.route";
-import { requestDeliveryRoute } from "./routeAddapters/delivery/requestDelivery.route";
-import { acceptDeliveryRoute } from "./routeAddapters/delivery/acceptDelivery.route";
-import { removeDeliveryRoute } from "./routeAddapters/delivery/removeDelivery.route";
-import { placeOrderRoute } from "./routeAddapters/order/placeOrder.route";
-import { updateOrderStatusRoute } from "./routeAddapters/order/updateOrderStatus.route";
-import { updateOrderEstimateRoute } from "./routeAddapters/order/updateOrderEstimate.route";
-import { acceptOrderRoute } from "./routeAddapters/order/acceptOrder.route";
-import { viewOrdersRoute } from "./routeAddapters/order/viewOrders.route";
-import { LoginUserRoute } from "./routeAddapters/user/loginUser.route";
-import { logOutRoute } from "./routeAddapters/user/logout.route";
-import { rejectUserRoute } from "./routeAddapters/user/rejectUser.route";
-import { viewDeliveriesRoute } from "./routeAddapters/delivery/viewDeliveries.route";
-import { unassignItemsRoute } from "./routeAddapters/item/unassignItems.route";
-import { deleteItemRoute } from "./routeAddapters/item/deleteItem.route";
-import { changeUserPasswordRoute } from "./routeAddapters/user/changeUserPassword.route";
+import { router } from "./setup";
+import * as orderRoutes from "./routes/order";
+import * as userRoutes from "./routes/user";
+import * as itemRoutes from "./routes/item";
+import * as deliveryRoutes from "./routes/delivery";
 
 export const appRouter = router({
   // User Routes
-  requestUser: requestUserRoute,
-  acceptUser: acceptUserRoute,
-  rejectUser: rejectUserRoute,
-  viewUsers: viewUsersRoute,
-  viewUserProfile: viewUserProfileRoute,
-  // User Routes -> Auth
-  logIn: LoginUserRoute,
-  logOut: logOutRoute,
-  changePassword: changeUserPasswordRoute,
+  signUp: userRoutes.signUp,
+  logIn: userRoutes.login,
+  logOut: userRoutes.logout,
+  updateUserStatus: userRoutes.updateStatus,
+  viewUsers: userRoutes.view,
+  changePassword: userRoutes.changePassword,
   // Items Routes
-  assignItems: assignItemsRoute,
-  unassingItems: unassignItemsRoute,
-  createItem: createItemRoute,
-  deleteItem: deleteItemRoute,
-  viewItems: viewItemsRoute,
-  viewAssignedItems: viewAssignedItemsRoute,
+  toggleAssignment: itemRoutes.toggleAssignment,
+  createItem: itemRoutes.create,
+  deleteItem: itemRoutes.deleteItem,
+  viewItems: itemRoutes.view,
   // Delivery Routes
-  requestDelivery: requestDeliveryRoute,
-  acceptDelivery: acceptDeliveryRoute,
-  removeDelivery: removeDeliveryRoute,
-  viewDeliveries: viewDeliveriesRoute,
+  requestDelivery: deliveryRoutes.request,
+  updateDeliveryStatus: deliveryRoutes.updateStatus,
+  viewDeliveries: deliveryRoutes.view,
   // Order Routes
-  placeOrder: placeOrderRoute,
-  updateOrderStatus: updateOrderStatusRoute,
-  updateOrderEstimate: updateOrderEstimateRoute,
-  acceptOrder: acceptOrderRoute,
-  viewOrders: viewOrdersRoute,
+  placeOrder: orderRoutes.placeOrder,
+  updateOrderStatus: orderRoutes.updateStatus,
+  updateOrderEstimate: orderRoutes.updateEstimate,
+  viewOrders: orderRoutes.view,
 });
 
 // Export type router type signature,
