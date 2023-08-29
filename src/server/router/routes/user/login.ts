@@ -1,4 +1,3 @@
-import assert from "assert";
 import { User } from "../../../entities/user";
 import authenticate from "../../middleware/authenticate";
 import authorize from "../../middleware/authorize";
@@ -17,24 +16,25 @@ export const login = procedure
   .input(userProps.pick({ email: true, password: true }))
   .output(z.void())
   .query(async ({ input, ctx }) => {
-    try {
-      const user = await User.findOneByOrFail({ email: input.email }).catch(
-        throwNotFoundError,
+    const user = await User.findOneByOrFail({ email: input.email }).catch(
+      throwNotFoundError,
+    );
+
+    if (user.validatePassword(input.password)) {
+      const session = await Session.save(
+        Session.create({
+          user,
+          deletedAt: moment().add(1, "M").toDate(),
+        }),
       );
-      assert(user.validatePassword(input.password));
-      const session = new Session();
-      session.deletedAt = moment().add(1, "M").toDate();
-      session.user = user;
-      await session.save();
       ctx.setCookie("sessionId", session.id, {
         httpOnly: true,
         expires: moment().add(1, "M").toDate(),
       });
-    } catch (e) {
+    } else
       throw new TRPCError({
         code: "UNAUTHORIZED",
         message:
           "Email and password do not match. Please check your credentials and try again.",
       });
-    }
   });

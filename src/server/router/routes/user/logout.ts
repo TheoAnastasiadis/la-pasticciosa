@@ -1,4 +1,4 @@
-import { Session } from "../../../entities/session";
+import assert from "assert";
 import authenticate from "../../middleware/authenticate";
 import authorize from "../../middleware/authorize";
 import { procedure } from "../../setup";
@@ -10,9 +10,11 @@ export const logout = procedure
   .use(authorize)
   .output(z.void())
   .query(async ({ ctx }) => {
-    const session = await Session.findOneByOrFail({
-      id: ctx.sessionId as string,
-    });
+    // secure routes must have exatrcted a Session from ctx.sessionId
+    const { session } = ctx;
+    assert(session);
+
+    // soft delete session and clear cookie
     await session.softRemove();
     ctx.setCookie("sessionId", null);
   });

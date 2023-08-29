@@ -31,7 +31,7 @@ export const updateStatus = procedure
     // assert order exists
     const order = await Order.findOneOrFail({
       where: { id: orderId },
-      relations: { user: true, quantities: { item: true } },
+      relations: { user: true, quantities: { item: true }, delivery: true },
     }).catch(throwNotFoundError);
 
     // update db

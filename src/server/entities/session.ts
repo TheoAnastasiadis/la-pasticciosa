@@ -17,6 +17,7 @@ export class Session extends BaseEntity {
   @ManyToOne(() => User, (user) => user.uuid, {
     eager: true,
     onDelete: "CASCADE",
+    onUpdate: "NO ACTION",
   })
   @JoinColumn()
   user!: User | undefined;

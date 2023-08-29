@@ -35,6 +35,7 @@ export class Order extends BaseEntity {
   @OneToMany(() => Quantity, (quantity) => quantity.order, {
     eager: true,
     nullable: true,
+    onDelete: "CASCADE",
   })
   quantities!: Quantity[] | undefined;
 

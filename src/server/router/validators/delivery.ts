@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { userWNoPasswordOrCatalogue } from "./user";
 
 export const deliveryState = z.union([
   z.literal("requested"),
@@ -21,5 +22,9 @@ export const requestDeliveryProps = deliveryProps.omit({
   user: true,
   state: true,
 });
+
+export const deliveryWUser = deliveryProps
+  .omit({ user: true })
+  .merge(z.object({ user: userWNoPasswordOrCatalogue }));
 
 export const deliveryWNoUser = deliveryProps.omit({ user: true });

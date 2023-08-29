@@ -5,7 +5,7 @@ import { procedure } from "../../setup";
 import { throwNotFoundError } from "../../errors/notFound.error";
 import { Delivery } from "../../../entities/delivery";
 import { User } from "../../../entities/user";
-import { deliveryWNoUser } from "../../validators";
+import { deliveryWUser } from "../../validators";
 import appConfig from "../../../config/app.config";
 
 const PAGINATION_LIMIT = appConfig.getPaginationLimit();
@@ -15,7 +15,7 @@ export const view = procedure
   .use(authenticate)
   .use(authorize)
   .input(z.object({ page: z.number().optional() }))
-  .output(z.array(deliveryWNoUser))
+  .output(z.array(deliveryWUser))
   .query(async ({ ctx: { onBehalf }, input: { page } }) => {
     const user = await User.findOneByOrFail({ uuid: onBehalf }).catch(
       throwNotFoundError,
@@ -23,14 +23,15 @@ export const view = procedure
 
     if (user.isAdmin())
       // admins can view all delivery locations
-      return await Delivery.find({
+      return (await Delivery.find({
         take: PAGINATION_LIMIT,
         skip: PAGINATION_LIMIT * (page ?? 0),
-      });
+        relations: { user: true },
+      })) as Array<Delivery & { user: User }>;
     // simple users can only access their own locations
     else
-      return await Delivery.find({
+      return (await Delivery.find({
         where: { user: { uuid: user.uuid } },
         relations: { user: true },
-      });
+      })) as Array<Delivery & { user: User }>;
   });

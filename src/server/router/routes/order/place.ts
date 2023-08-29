@@ -2,7 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { throwNotFoundError } from "../../errors/notFound.error";
 import { Delivery, DeliveryStatus } from "../../../entities/delivery";
 import { Item } from "../../../entities/item";
-import { User } from "../../../entities/user";
+import { User, UserStatus } from "../../../entities/user";
 import authenticate from "../../middleware/authenticate";
 import authorize from "../../middleware/authorize";
 import { procedure } from "../../setup";
@@ -12,7 +12,6 @@ import type { Quantity } from "../../../entities/quantity";
 import {
   RequestQuantityProps,
   orderWUserDeliveryQuantities,
-  requestOrderProps,
 } from "../../validators";
 import { createNewOrder } from "../../../database/helpers/order";
 import { z } from "zod";
@@ -22,21 +21,26 @@ export const placeOrder = procedure
   .use(authenticate)
   .use(authorize)
   .input(
-    requestOrderProps.merge(
-      z.object({
-        quantities: z.array(RequestQuantityProps),
-        deliveryId: z.string(),
-      }),
-    ),
+    z.object({
+      quantities: z.array(RequestQuantityProps),
+      deliveryId: z.coerce.string(),
+    }),
   )
   .output(orderWUserDeliveryQuantities)
   .mutation(async ({ input, ctx }) => {
     const { onBehalf } = ctx;
 
+    // validate user
     const user = await User.findOneByOrFail({ uuid: onBehalf }).catch(
       throwNotFoundError,
     );
     assert(user.catalogue);
+    if (user.status !== UserStatus.ACCEPTED)
+      throw new TRPCError({
+        code: "UNAUTHORIZED",
+        message:
+          "This user has not been accepted by the administrators. Only accepted users can place orders.",
+      });
 
     // validate delivery
     const delivery = await Delivery.findOneOrFail({
@@ -62,16 +66,15 @@ export const placeOrder = procedure
         code: "PRECONDITION_FAILED",
         message: "Orders must contain at least on item.",
       });
-    const itemsAreAssigned = input.quantities.every(({ item }) =>
-      (user.catalogue as Item[])
-        .map((catalogueItem) => catalogueItem.id)
-        .includes(item),
+
+    const itemsAreAssigned = input.quantities.every(
+      ({ item }) => user?.catalogue?.map((i) => i.id.toString()).includes(item),
     );
 
     if (!itemsAreAssigned)
       throw new TRPCError({
         code: "PRECONDITION_FAILED",
-        message: "The requested items arre not assigned for this user.",
+        message: "The requested items are not assigned for this user.",
       });
 
     // Calculate order total as item.price * quantity.value
@@ -94,9 +97,9 @@ export const placeOrder = procedure
     // update the db and return result as response
     const order = await createNewOrder(
       {
-        status: OrderStatus.PENDING,
         total,
         estimatedDelivery: undefined,
+        status: OrderStatus.PENDING,
       },
       user,
       delivery,

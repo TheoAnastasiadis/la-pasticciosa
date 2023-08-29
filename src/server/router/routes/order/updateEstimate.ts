@@ -32,11 +32,10 @@ export const updateEstimate = procedure
     // assert that the order exists
     const order = await Order.findOneOrFail({
       where: { id },
-      relations: { user: true, quantities: { item: true } },
+      relations: { user: true, quantities: { item: true }, delivery: true },
     }).catch(throwNotFoundError);
 
     const timestamp = moment([year, month, day]);
-
     // update the db
     await Order.update(
       { id },

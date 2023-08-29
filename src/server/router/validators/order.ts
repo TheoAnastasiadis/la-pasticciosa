@@ -46,7 +46,9 @@ export const orderWUserDeliveryQuantities = orderProps
   )
   .merge(
     z.object({
-      quantities: z.array(z.object({ item: itemProps, value: z.number() })),
+      quantities: z.array(
+        z.object({ item: itemProps, value: z.coerce.number() }),
+      ),
     }),
   )
   .merge(z.object({ delivery: deliveryWNoUser }));

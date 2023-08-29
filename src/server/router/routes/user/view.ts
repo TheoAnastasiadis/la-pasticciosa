@@ -1,11 +1,12 @@
 import { throwNotFoundError } from "../../errors/notFound.error";
-import { User } from "../../../entities/user";
+import { User, UserStatus } from "../../../entities/user";
 import authenticate from "../../middleware/authenticate";
 import authorize from "../../middleware/authorize";
 import { procedure } from "../../setup";
 import { z } from "zod";
 import { userWNoPassword } from "../../validators";
 import appConfig from "../../../config/app.config";
+import { Not } from "typeorm";
 
 const PAGINATION_LIMIT = appConfig.getPaginationLimit();
 
@@ -28,6 +29,7 @@ export const view = procedure
           take: PAGINATION_LIMIT,
           skip: PAGINATION_LIMIT * (page ?? 0),
           relations: { catalogue: true },
+          where: { status: Not(UserStatus.REJECTED) },
         })
       ).map((user) => {
         // @ts-expect-error `User` entity holds rich item info but we only return item ids to the client
