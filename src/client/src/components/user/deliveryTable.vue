@@ -89,7 +89,9 @@ export default {
   data: () => ({ locations: [] as Delivery[], loading: false }),
   async mounted() {
     this.loading = true;
-    const { deliveries } = await backend.viewUserProfile.query();
+    const deliveries = await backend.viewDeliveries.query({
+      page: undefined,
+    });
     this.locations = deliveries;
     this.loading = false;
   },

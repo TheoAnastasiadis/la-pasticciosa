@@ -223,7 +223,7 @@ export default {
 
       this.loading = true; // start of async op
 
-      await backend.requestUser
+      await backend.signUp
         .mutate({ userName, email, password, companyName, companyAddress, vat })
         .then(() => {
           toast(

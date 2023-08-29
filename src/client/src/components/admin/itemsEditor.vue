@@ -91,7 +91,7 @@ export default {
   async mounted() {
     const toast = useToast();
     this.loading = true;
-    this.items = await backend.viewItems.query().catch(() => {
+    this.items = await backend.viewItems.query({ page: 0 }).catch(() => {
       toast(
         "Υπήρξε κάποιο πρόβλημα με την σύνδεση. Τα προιόντα δεν φορτώθηκαν.",
         { type: TYPE.ERROR },
@@ -108,7 +108,7 @@ export default {
       this.loading = true;
       const toast = useToast();
       await backend.deleteItem
-        .mutate(id)
+        .mutate({ itemId: id })
         .then(() => {
           this.items = this.items.filter((i: Item) => i.id !== id);
           toast("Το προϊόν αφαιρέθηκε με επιτυχία.");

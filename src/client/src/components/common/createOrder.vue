@@ -97,11 +97,9 @@ import ButtonLoader from "../reusables/loaders/buttonLoader.vue";
 import Overlay from "../reusables/interactives/overlay.vue";
 import OrderPreview from "./orderPreview.vue";
 
-type Item = OutputTypes["viewAssignedItems"][number];
-type Delivery = OutputTypes["viewUserProfile"]["deliveries"][number];
-type User = OutputTypes["viewUserProfile"]["user"];
-
-const setup = async () => {};
+type Item = OutputTypes["viewItems"][number];
+type Delivery = OutputTypes["viewDeliveries"][number];
+type User = OutputTypes["viewUsers"][number];
 
 export default {
   props: ["user"],
@@ -127,9 +125,9 @@ export default {
 
       try {
         // Fetch the user info
-        await backend.viewUserProfile
-          .query(user.uuid)
-          .then(({ deliveries }) => {
+        await backend.viewDeliveries
+          .query({ page: 0, onBehalf: user.uuid })
+          .then((deliveries) => {
             this.deliveries = deliveries;
           })
           .catch(() => {
@@ -140,8 +138,8 @@ export default {
           });
 
         // item info
-        await backend.viewAssignedItems
-          .query(user.uuid)
+        await backend.viewItems
+          .query({ page: undefined, onBehalf: user.uuid })
           .then((items) => {
             this.availableItems = items;
           })
@@ -163,10 +161,11 @@ export default {
 
     try {
       if (!userIsAdmin) {
+        this.selectedUser = this.user;
         // user
-        await backend.viewUserProfile
-          .query()
-          .then(({ deliveries }) => {
+        await backend.viewDeliveries
+          .query({ page: 0 })
+          .then((deliveries) => {
             this.deliveries = deliveries;
           })
           .catch(() => {
@@ -177,8 +176,8 @@ export default {
           });
 
         // First item info
-        await backend.viewAssignedItems
-          .query()
+        await backend.viewItems
+          .query({ page: 0 })
           .then((items) => {
             this.availableItems = items;
           })
@@ -189,7 +188,7 @@ export default {
           });
       } else {
         await backend.viewUsers
-          .query()
+          .query({ page: 0 })
           .then((users) => (this.users = users))
           .catch(() =>
             toast(

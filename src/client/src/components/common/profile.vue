@@ -10,7 +10,9 @@
         <a href="#">διαχείρηση προσωπικών δεδομένων</a>.
       </p>
     </div>
-    <div class="flex flex-col md:flex-row flex-nowrap md:space-x-2 space-y-2">
+    <div
+      class="flex flex-col md:flex-row flex-nowrap md:space-y-0 md:space-x-2 space-y-2"
+    >
       <div class="w-full md:w-6/12">
         <div class="xt-card w-full shadow-md rounded-md p-4">
           <h6>Αλλαγή Κωδικού Πρόσβασης</h6>
@@ -92,7 +94,7 @@
         </div>
       </div>
       <div class="w-full md:w-6/12">
-        <div class="xt-card w-full shadow-md rounded-md p-4">
+        <div class="w-full p-4">
           <h6>Στοιχεία Τιμολόγησης</h6>
           <Table :include-index="false" :columns="['στοιχεια', 'πληροφοριες']">
             <Row>
@@ -139,7 +141,7 @@ import { useToast, TYPE } from "vue-toastification";
 import Loader from "../reusables/loaders/buttonLoader.vue";
 
 import { z } from "zod";
-type User = OutputTypes["viewUserProfile"]["user"];
+type User = OutputTypes["viewUsers"][number];
 
 export default {
   computed: {
@@ -180,8 +182,8 @@ export default {
 
       await backend.changePassword
         .mutate({
-          newCreds: { password: newPassword },
-          oldCreds: { password: oldPassword },
+          oldPassword,
+          newPassword,
         })
         .then(() => {
           toast("Η αλλαγή του κωδικού πρόσβασης πραγματοποιήθηκε");

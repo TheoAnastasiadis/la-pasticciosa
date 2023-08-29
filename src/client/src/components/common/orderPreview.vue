@@ -32,7 +32,7 @@
     </div>
     <div class="my-3">
       <button
-        @click="placeOrder"
+        @click="placeOrder()"
         :disabled="!agreed || loading"
         class="xt-button py-2.5 px-3.5 text-sm rounded-md w-full font-medium leading-snug tracking-wider uppercase text-white bg-primary-500 transition hover:text-white hover:bg-primary-600 active:text-white active:bg-primary-700 on:text-white on:bg-primary-600"
       >
@@ -125,16 +125,15 @@ export default {
     async placeOrder() {
       this.loading = true;
       const toast = useToast();
+      console.log("Placing...");
       await backend.placeOrder
         .mutate({
-          props: {
-            delivery: this.selectedDelivery.id,
-            quantities: this.quantities.map(({ item, value }) => ({
-              item: item.id,
-              value,
-            })),
-          },
-          userId: this.user.uuid,
+          deliveryId: this.selectedDelivery.id,
+          quantities: this.quantities.map(({ item, value }) => ({
+            item: item.id,
+            value,
+          })),
+          onBehalf: this.user.uuid,
         })
         .then((order) => {
           toast(`H παραγγελία με #${order.id} υποβλήθηκε με επιτυχία!`, {

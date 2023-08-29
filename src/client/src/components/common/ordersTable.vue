@@ -45,7 +45,7 @@
           ><span class="inline-block md:hidden">Υποβλήθηκε: &nbsp;</span
           ><DateChip :date="order.createdAt" />
         </Cell>
-        <Cell v-if="userStore.user.type === 'admin'">
+        <Cell v-if="userStore?.user.type === 'admin'">
           <span class="inline-block md:hidden">Από:&nbsp;</span
           ><UserInfo :user="order.user" />
         </Cell>
@@ -152,7 +152,7 @@ export default {
 
     // fetch orders
     await backend.viewOrders
-      .query()
+      .query({page: 0})
       .then((orders) => {
         this.orders = orders;
       })

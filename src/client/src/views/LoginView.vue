@@ -136,17 +136,18 @@ export default {
           }
           this.loading = false;
         });
-      const { user, deliveries } = await backend.viewUserProfile
-        .query(undefined)
-        .catch(() => {
-          toast(
-            "Πρόβλημα στην σύνδεση με τον διακομιστή. Παρακαλώ προσπαθήστε ξανά.",
-            { type: TYPE.ERROR },
-          );
-          return { user: undefined, deliveries: undefined };
-          this.loading = false;
-        });
-      this.userStore.login(user, deliveries);
+
+      const users = await backend.viewUsers.query({ page: 0 }).catch(() => {
+        toast(
+          "Πρόβλημα στην σύνδεση με τον διακομιστή. Παρακαλώ προσπαθήστε ξανά.",
+          { type: TYPE.ERROR },
+        );
+        this.loading = false;
+        return [];
+      });
+
+      const user = users.find((user) => user.email === email);
+      this.userStore.login(user);
       this.loading = false;
       this.$router.push("/");
     },

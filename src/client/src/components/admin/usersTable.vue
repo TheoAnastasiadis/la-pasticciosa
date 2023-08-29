@@ -64,7 +64,7 @@
                         v-for="item in assignedItems"
                         :key="item.id"
                         @click="
-                          unassignItemFrom({
+                          toggleAssignment({
                             itemId: item.id,
                             userId: user.uuid,
                           })
@@ -111,7 +111,10 @@
                         v-for="item in nonAssignedItems"
                         :key="item.id"
                         @click="
-                          assignItemTo({ itemId: item.id, userId: user.uuid })
+                          toggleAssignment({
+                            itemId: item.id,
+                            userId: user.uuid,
+                          })
                         "
                         :title="item.name"
                         :subtitle="`${item.price} €`"
@@ -211,8 +214,8 @@ export default {
   }),
   async mounted() {
     this.loading = true;
-    const users = await backend.viewUsers.query();
-    const items = await backend.viewItems.query();
+    const users = await backend.viewUsers.query({ page: 0 });
+    const items = await backend.viewItems.query({ page: 0 });
     this.users = users;
     this.items = items;
     this.loading = false;
@@ -245,7 +248,10 @@ export default {
       const toast = useToast();
       this.loading = true;
       try {
-        await backend.acceptUser.mutate(id);
+        await backend.updateUserStatus.mutate({
+          userId: id,
+          status: "accepted",
+        });
         toast("Η αποδοχή του χρήστη πραγματοποιήθηκε!", { type: TYPE.SUCCESS });
         this.users = (this.users as User[]).map((u) => {
           if (u.uuid === id) u.status = "accepted";
@@ -264,7 +270,10 @@ export default {
       const toast = useToast();
       this.loading = true;
       try {
-        await backend.rejectUser.mutate(id);
+        await backend.updateUserStatus.mutate({
+          userId: id,
+          status: "rejected",
+        });
         toast("Η απόρριψη του χρήστη πραγματοποιήθηκε!", {
           type: TYPE.SUCCESS,
         });
@@ -278,45 +287,33 @@ export default {
         this.loading = false;
       }
     },
-    async assignItemTo(props: { itemId: string; userId: string }) {
+    async toggleAssignment(props: { itemId: string; userId: string }) {
       this.loading = true;
       const toast = useToast();
       const { userId, itemId } = props;
       try {
-        await backend.assignItems.mutate({ userId, itemId });
-        toast("Η ανάθεση προϊόντος πραγματοποιήθηκε με επιτυχία.");
-        this.users = (this.users as User[]).map((u) => {
-          if (u.uuid === userId) u.catalogue.unshift(itemId);
-          return u;
-        });
+        await backend.toggleAssignment.mutate({ userId, itemId });
+
+        if (this.editingUser.catalogue.includes(itemId)) {
+          toast("Η αφαίρεση προϊόντος πραγματοποιήθηκε με επιτυχία.");
+          this.users = (this.users as User[]).map((u) => {
+            if (u.uuid === userId)
+              u.catalogue = u.catalogue.filter((item) => item !== itemId);
+            return u;
+          });
+        } else {
+          toast("Η ανάθεση προϊόντος πραγματοποιήθηκε με επιτυχία.");
+          this.users = (this.users as User[]).map((u) => {
+            if (u.uuid === userId) u.catalogue.unshift(itemId);
+            return u;
+          });
+        }
       } catch (e) {
         toast(
           "Υπήρξε κάποιο πρόβλημα και η ανάθεση προϊόντος δεν πραγματοποιήθηκε",
           { type: TYPE.ERROR },
         );
-      } finally {
-        this.loading = false;
-      }
-    },
-    async unassignItemFrom(props: { itemId: string; userId: string }) {
-      this.loading = true;
-      const toast = useToast();
-      const { userId, itemId } = props;
-      try {
-        await backend.unassingItems.mutate({ userId, itemId });
-        toast(
-          "Η διαγραφή προϊόντος από τον κατάλογο του χρήστη πραγματοποιήθηκε με επιτυχία.",
-        );
-        this.users = (this.users as User[]).map((u) => {
-          if (u.uuid === userId)
-            u.catalogue = u.catalogue.filter((i) => i !== itemId);
-          return u;
-        });
-      } catch (e) {
-        toast(
-          "Υπήρξε κάποιο πρόβλημα και η διαγραφή προϊόντος από τον κατάλογο του χρήστη δεν πραγματοποιήθηκε",
-          { type: TYPE.ERROR },
-        );
+        console.error(e);
       } finally {
         this.loading = false;
       }
@@ -334,13 +331,13 @@ export default {
     assignDropped(userId: string) {
       return (evt) => {
         const itemId = evt.dataTransfer.getData("itemId");
-        this.assignItemTo({ itemId, userId });
+        this.toggleAssignment({ itemId, userId });
       };
     },
     unassignDropped(userId: string) {
       return (evt) => {
         const itemId = evt.dataTransfer.getData("itemId");
-        this.unassignItemFrom({ itemId, userId });
+        this.toggleAssignment({ itemId, userId });
       };
     },
   },

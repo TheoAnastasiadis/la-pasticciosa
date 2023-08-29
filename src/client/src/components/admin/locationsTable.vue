@@ -90,7 +90,7 @@ import UserInfo from "../common/userInfo.vue";
 import { mapStores } from "pinia";
 import { useUserStore } from "../../stores/user";
 
-type Delivery = OutputTypes["requestDelivery"];
+type Delivery = OutputTypes["viewDeliveries"][number];
 
 export default {
   data: () => ({ deliveries: [] as Delivery[], loading: false }),
@@ -98,7 +98,7 @@ export default {
     const toast = useToast();
     this.loading = true;
     try {
-      const deliveries = await backend.viewDeliveries.query();
+      const deliveries = await backend.viewDeliveries.query({ page: 0 });
       this.deliveries = deliveries;
     } catch {
       toast("Υπήρξε κάποιο πρόβλημα και οι τοποθεσίες παράδοσης δεν βρέθηκαν", {
@@ -115,8 +115,8 @@ export default {
     async accept(id: string) {
       this.loading = true;
       const toast = useToast();
-      await backend.acceptDelivery
-        .mutate(id)
+      await backend.updateDeliveryStatus
+        .mutate({ deliveryId: id, action: "accept" })
         .then(() => {
           toast("Η αποδοχή πραγματοποιήθηκε με επιτυχία!");
         })
@@ -138,8 +138,8 @@ export default {
       this.loading = true;
       const toast = useToast();
       const userId = this.userStore.user.uuid;
-      await backend.removeDelivery
-        .mutate({ userId, deliveryId })
+      await backend.updateDeliveryStatus
+        .mutate({ deliveryId, action: "delete" })
         .then(() => {
           toast("Η απόρριψη πραγματοποιήθηκε με επιτυχία.");
         })
