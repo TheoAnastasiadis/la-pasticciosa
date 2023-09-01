@@ -24,10 +24,7 @@
           {{ user.companyName }}
         </option>
       </select>
-      <div
-        class="w-full mb-3 animate-pulse"
-        v-if="$route.query.user && $route.query.message && $route.query.mobile"
-      >
+      <div class="w-full mb-3 animate-pulse">
         <div class="text-xs text-gray-400 italic mb-1.5 ml-1.5">
           Νέο μήνυμα από τον χρήστη XAZOS GOUTSOS EE
         </div>
