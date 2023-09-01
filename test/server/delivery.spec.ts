@@ -2,8 +2,8 @@ import { User, UserType } from "../../src/server/entities/user";
 import { Session } from "../../src/server/entities/session";
 import { appRouter } from "../../src/server/router";
 import { Delivery, DeliveryStatus } from "../../src/server/entities/delivery";
-import { In } from "typeorm";
-import { AppDataSource } from "../../src/server/database/dataSource";
+import { BaseEntity, In } from "typeorm";
+import { AppDataSource } from "../../src/server/database";
 
 describe("Delivery Entity Use Cases", () => {
   let adminSessionId: string;
@@ -14,7 +14,7 @@ describe("Delivery Entity Use Cases", () => {
     await AppDataSource.initialize();
 
     // create two example users, one of each kind.
-    admin = User.create({
+    admin = await User.create({
       email: "admin@email.com",
       type: UserType.ADMIN,
       password: "veryStrongPassword",
@@ -22,10 +22,9 @@ describe("Delivery Entity Use Cases", () => {
       companyName: "Company",
       companyAddress: "Address",
       vat: "123456789",
-    });
-    await admin.save();
+    }).save();
 
-    user = User.create({
+    user = await User.create({
       email: "user@email.com",
       type: UserType.USER,
       password: "veryStrongPassword",
@@ -33,19 +32,11 @@ describe("Delivery Entity Use Cases", () => {
       companyName: "Company",
       companyAddress: "Address",
       vat: "123456789",
-    });
-    await user.save();
+    }).save();
 
     // create sessionIds for each
-    const adminSession = Session.create();
-    adminSession.user = admin;
-    await adminSession.save({ reload: true });
-    adminSessionId = adminSession.id;
-
-    const userSession = Session.create();
-    userSession.user = user;
-    await userSession.save({ reload: true });
-    userSessionId = userSession.id;
+    adminSessionId = (await Session.create({ user: admin }).save()).id;
+    userSessionId = (await Session.create({ user: user }).save()).id;
   }, 20000);
 
   test("request new delivery as user", async () => {

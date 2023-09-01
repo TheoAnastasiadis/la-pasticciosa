@@ -1,5 +1,5 @@
 import { Session } from "../../src/server/entities/session";
-import { AppDataSource } from "../../src/server/database/dataSource";
+import { AppDataSource } from "../../src/server/database";
 import { User, UserType } from "../../src/server/entities/user";
 import { Item } from "../../src/server/entities/item";
 import { Delivery, DeliveryStatus } from "../../src/server/entities/delivery";
@@ -18,7 +18,7 @@ describe("Order Entity Use Cases", () => {
     await AppDataSource.initialize();
 
     // create two example users, one of each kind.
-    admin = User.create({
+    admin = await User.create({
       email: "admin@email.com",
       type: UserType.ADMIN,
       password: "veryStrongPassword",
@@ -26,10 +26,9 @@ describe("Order Entity Use Cases", () => {
       companyName: "Company",
       companyAddress: "Address",
       vat: "123456789",
-    });
-    await admin.save();
+    }).save();
 
-    user = User.create({
+    user = await User.create({
       email: "user@email.com",
       type: UserType.USER,
       password: "veryStrongPassword",
@@ -37,19 +36,11 @@ describe("Order Entity Use Cases", () => {
       companyName: "Company",
       companyAddress: "Address",
       vat: "123456789",
-    });
-    await user.save();
+    }).save();
 
     // create sessionIds for each
-    const adminSession = Session.create();
-    adminSession.user = admin;
-    await adminSession.save({ reload: true });
-    adminSessionId = adminSession.id;
-
-    const userSession = Session.create();
-    userSession.user = user;
-    await userSession.save({ reload: true });
-    userSessionId = userSession.id;
+    adminSessionId = (await Session.create({ user: admin }).save()).id;
+    userSessionId = (await Session.create({ user: user }).save()).id;
   }, 20000);
 
   test("place order (as user)", async () => {
@@ -87,7 +78,7 @@ describe("Order Entity Use Cases", () => {
       })
       .placeOrder({
         deliveryId: delivery.id,
-        quantities: [{ item: item.id, value: 1 }],
+        quantityIds: [{ item: item.id, value: 1 }],
       });
 
     expect(order).toHaveProperty("status", OrderStatus.PENDING);
@@ -130,7 +121,7 @@ describe("Order Entity Use Cases", () => {
       })
       .placeOrder({
         deliveryId: delivery.id,
-        quantities: [{ item: item.id, value: 1 }],
+        quantityIds: [{ item: item.id, value: 1 }],
         // @ts-expect-error onBehalf is not explicitly set as input for the route
         onBehalf: user.uuid,
       });
@@ -139,6 +130,61 @@ describe("Order Entity Use Cases", () => {
     expect(order).toHaveProperty("status", OrderStatus.PENDING);
     expect(moment(order.estimatedDelivery).unix()).toBe(0);
     expect(order).toHaveProperty("total", "10.99");
+  }, 20000);
+
+  test("auto generate order", async () => {
+    // create example items and assign to user
+    const item1 = await Item.save(
+      Item.create({
+        name: "Raviolli",
+        description: "Filled Pasta",
+        price: "10.99",
+        unit: "Kg",
+        image: "https://www.example.com/images/full.png",
+        thumbnail: "https://www.example.com/images/thumb.jpg",
+      }),
+    );
+    const item2 = await Item.save(
+      Item.create({
+        name: "Papardelle",
+        description: "regular",
+        price: "5.67",
+        unit: "500gr",
+        image: "https://www.example.com/images/full.png",
+        thumbnail: "https://www.example.com/images/thumb.jpg",
+      }),
+    );
+    user.catalogue = [item1, item2];
+    await user.save();
+
+    // create example delivery and assign to user
+    const delivery = await Delivery.save(
+      Delivery.create({
+        name: "Restaurant",
+        user,
+        street: "Example Str.",
+        number: "2A",
+        zip: "12345",
+        details: "Lorem Ipsum",
+        state: DeliveryStatus.ACCEPTED,
+      }),
+    );
+
+    const text = "Θα ήθελα 2 κιλά ραβιόλι παρακαλώ πολύ.";
+
+    const detection = await appRouter
+      .createCaller({
+        sessionId: adminSessionId,
+        setCookie: {} as any,
+      })
+      .autoGenerate({ mobile: user.mobileNumber, text });
+
+    expect(detection).not.toHaveProperty("reason");
+    expect(detection).toHaveProperty("user", user.uuid.toString());
+    expect(detection).toHaveProperty("quantities", [
+      { item: item1.id.toString(), value: 2 },
+    ]);
+    expect(detection).toHaveProperty("delivery", delivery.id.toString());
   }, 20000);
 
   test("update status and update estimate", async () => {
@@ -177,7 +223,7 @@ describe("Order Entity Use Cases", () => {
       })
       .placeOrder({
         deliveryId: delivery.id,
-        quantities: [{ item: item.id, value: 1 }],
+        quantityIds: [{ item: item.id, value: 1 }],
         // @ts-expect-error onBehalf is not explicitly set as input for the route
         onBehalf: user.uuid,
       });
@@ -204,6 +250,8 @@ describe("Order Entity Use Cases", () => {
   }, 20000);
 
   afterAll(async () => {
+    user.catalogue = []; // if we don't emtpy the catalogue, the user cannot be deleted.
+    await user.save();
     const orders = await Order.find({ where: { user: { uuid: user.uuid } } });
     await Quantity.delete({
       order: { id: In(orders.map((order) => order.id)) },
@@ -214,10 +262,17 @@ describe("Order Entity Use Cases", () => {
         "Example Delivery 1",
         "Example Delivery 2",
         "Example Delivery 3",
+        "Restaurant",
       ]),
     });
     await Item.delete({
-      name: In(["Example Item 1", "Example Item 2", "Example Item 3"]),
+      name: In([
+        "Example Item 1",
+        "Example Item 2",
+        "Example Item 3",
+        "Raviolii",
+        "Papardelle",
+      ]),
     });
     await Session.delete({ id: In([userSessionId, adminSessionId]) });
     await User.delete({ uuid: In([user.uuid, admin.uuid]) });
