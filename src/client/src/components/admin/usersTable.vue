@@ -215,7 +215,7 @@ export default {
   async mounted() {
     this.loading = true;
     const users = await backend.viewUsers.query({ page: 0 });
-    const items = await backend.viewItems.query({ page: 0 });
+    const items = await backend.viewItems.query({ page: "all" });
     this.users = users;
     this.items = items;
     this.loading = false;

@@ -62,15 +62,13 @@ export default {
   async mounted() {
     const toast = useToast();
     this.loading = true;
-    this.items = await backend.viewItems
-      .query({ page: undefined })
-      .catch(() => {
-        toast(
-          "Υπήρξε κάποιο πρόβλημα με την σύνδεση. Τα προιόντα δεν φορτώθηκαν.",
-          { type: TYPE.ERROR },
-        );
-        return [];
-      });
+    this.items = await backend.viewItems.query({ page: 0 }).catch(() => {
+      toast(
+        "Υπήρξε κάποιο πρόβλημα με την σύνδεση. Τα προιόντα δεν φορτώθηκαν.",
+        { type: TYPE.ERROR },
+      );
+      return [];
+    });
     this.loading = false;
   },
 };

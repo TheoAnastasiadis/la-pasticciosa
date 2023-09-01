@@ -133,6 +133,7 @@ export default {
             item: item.id,
             value,
           })),
+          // @ts-expect-error On Behalf is not explicitly declared in the router input
           onBehalf: this.user.uuid,
         })
         .then((order) => {

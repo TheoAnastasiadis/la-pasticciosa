@@ -85,6 +85,23 @@
           </div>
           <div class="w-full">
             <label class="block mb-3 font-medium text-gray-700">
+              Κινητό Τηλέφωνο
+            </label>
+            <Field
+              type="number"
+              name="mobileNumber"
+              class="block w-full rounded-md py-2.5 px-3.5 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+              aria-label="Mobile Number"
+              placeholder="συμπληρώστε το κινητό σας τηλέφωνο"
+            />
+            <div
+              class="mt-3 text-red-600 text-xs leading-snug custom-backend-error"
+            >
+              <ErrorMessage name="mobileNumber"></ErrorMessage>
+            </div>
+          </div>
+          <div class="w-full">
+            <label class="block mb-3 font-medium text-gray-700">
               Επωνυμία Επιχείρησης
             </label>
             <Field
@@ -184,6 +201,15 @@ export default {
               required_error: "Αυτό το πεδίο είναι υποχρεωτικό",
             })
             .email("Βεβαιωθείτε ότι έχετε συμπληρώσει σωστά το email σας."),
+          mobileNumber: z
+            .number({
+              required_error: "Αυτό το πεδίο είναι υποχρεωτικό",
+            })
+            .transform(String)
+            .refine(
+              (number) => number.length === 10 && number.startsWith("69"),
+              "Παρακαλώ βεβαιωθείτε ότι έχετε εισάγει έναν έγκυρο ελληνικό αριθμό.",
+            ),
           password: z
             .string({ required_error: "Αυτό το πεδίο είναι υποχρεωτικό" })
             .min(8, "Οι κωδικοί αποτελούνται από 8 χαρακτήρες και πάνω."),
@@ -218,13 +244,28 @@ export default {
   methods: {
     async onSubmit(values) {
       const toast = useToast();
-      const { userName, email, password, companyName, companyAddress, vat } =
-        values;
+      const {
+        userName,
+        email,
+        password,
+        companyName,
+        companyAddress,
+        vat,
+        mobileNumber,
+      } = values;
 
       this.loading = true; // start of async op
 
       await backend.signUp
-        .mutate({ userName, email, password, companyName, companyAddress, vat })
+        .mutate({
+          userName,
+          email,
+          password,
+          companyName,
+          companyAddress,
+          vat,
+          mobileNumber,
+        })
         .then(() => {
           toast(
             "Η εγγραφή σας πραγματοποιήθηκε με επιτυχία! Συνδεθείτε με τους κωδικούς σας για να αιτηθείτε τοποθεσίες παράδοσης.",

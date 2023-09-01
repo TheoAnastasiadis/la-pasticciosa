@@ -45,7 +45,7 @@
           ><span class="inline-block md:hidden">Υποβλήθηκε: &nbsp;</span
           ><DateChip :date="order.createdAt" />
         </Cell>
-        <Cell v-if="userStore?.user.type === 'admin'">
+        <Cell v-if="userStore?.user?.type === 'admin'">
           <span class="inline-block md:hidden">Από:&nbsp;</span
           ><UserInfo :user="order.user" />
         </Cell>
@@ -120,7 +120,7 @@ import { mapStores } from "pinia";
 import { useUserStore } from "../../stores/user";
 import { TransitionExpand } from "@morev/vue-transitions";
 
-type Order = OutputTypes["viewOrders"];
+type Order = OutputTypes["viewOrders"][number];
 type User = OutputTypes["viewUsers"][number];
 
 export default {

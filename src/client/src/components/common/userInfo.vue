@@ -30,6 +30,18 @@
                       <th
                         class="py-2 px-2 text-xs align-top font-medium leading-snug tracking-wider uppercase text-left border border-gray-200"
                       >
+                        κινητο τηλεφωνο
+                      </th>
+                      <td
+                        class="py-2 px-2 text-sm align-top leading-snug border border-gray-200"
+                      >
+                        {{ user.mobileNumber }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <th
+                        class="py-2 px-2 text-xs align-top font-medium leading-snug tracking-wider uppercase text-left border border-gray-200"
+                      >
                         Επιχειρηση
                       </th>
                       <td

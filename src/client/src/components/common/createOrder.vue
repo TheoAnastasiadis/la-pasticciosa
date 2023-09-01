@@ -9,12 +9,12 @@
       </div>
       <label
         class="block mb-3 font-medium text-gray-700"
-        v-if="userStore.user.type === 'admin'"
+        v-if="userStore?.user?.type === 'admin'"
       >
         Για τον χρήστη: &nbsp;
       </label>
       <select
-        v-if="userStore.user.type === 'admin'"
+        v-if="userStore?.user?.type === 'admin'"
         v-model="selectedUser"
         class="block w-full xt-select rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none max-w-xs mb-3"
         aria-label="Select"
@@ -24,6 +24,37 @@
           {{ user.companyName }}
         </option>
       </select>
+      <div
+        class="w-full mb-3 animate-pulse"
+        v-if="$route.query.user && $route.query.message && $route.query.mobile"
+      >
+        <div class="text-xs text-gray-400 italic mb-1.5 ml-1.5">
+          Νέο μήνυμα από τον χρήστη XAZOS GOUTSOS EE
+        </div>
+        <div class="p-1 flex flex-row items-start space-x-3">
+          <div
+            class="rounded-full bg-gray-200 h-10 w-10 py-2.5 px-2.5 font-bold text-primary-600"
+          >
+            XG
+          </div>
+          <div
+            class="bg-gray-200 px-4 py-2 rounded-tr-full rounded-br-full rounded-bl-full shadow shadow-green-300"
+          >
+            KAΛHΣΠEPA , ΘA MOY ΦEPEIΣ TH ΠEMΠTH 10 bigoli 2 KIΛA angiolotti
+            MANITAPI KAI 2 KIΛA PABIOΛI KATΣIKIΣIO.EYXAPIΣTΩ!
+            <div class="text-xs w-full text-end text-gray-500 italic pr-1.5">
+              Μόλις τώρα <i class="h h-clock-7 text-xs translate-y-[1.5px]" />
+            </div>
+          </div>
+          <button
+            class="bg-green-500 rounded-full px-4 py-3 text-white font-semibold hover:bg-green-600 hover:drop-shadow-sm min-w-fit"
+          >
+            <i class="h h-cpu text-sm"></i>
+            ΑΙ Ανάγνωση
+          </button>
+        </div>
+      </div>
+
       <div
         class="w-full p-5 border border-dashed flex flex-col md:flex-row justify-between md:space-y-0 space-y-2"
       >
@@ -126,7 +157,11 @@ export default {
       try {
         // Fetch the user info
         await backend.viewDeliveries
-          .query({ page: 0, onBehalf: user.uuid })
+          .query({
+            page: "all",
+            // @ts-expect-error onBehalf is not explicitly declared as an input parameter
+            onBehalf: user.uuid,
+          })
           .then((deliveries) => {
             this.deliveries = deliveries;
           })
@@ -139,7 +174,11 @@ export default {
 
         // item info
         await backend.viewItems
-          .query({ page: undefined, onBehalf: user.uuid })
+          .query({
+            page: "all",
+            // @ts-expect-error onBehalf is not explicitly declared as an input parameter
+            onBehalf: user.uuid,
+          })
           .then((items) => {
             this.availableItems = items;
           })
