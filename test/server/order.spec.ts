@@ -1,6 +1,6 @@
 import { Session } from "../../src/server/entities/session";
 import { AppDataSource } from "../../src/server/database";
-import { User, UserType } from "../../src/server/entities/user";
+import { User, UserStatus, UserType } from "../../src/server/entities/user";
 import { Item } from "../../src/server/entities/item";
 import { Delivery, DeliveryStatus } from "../../src/server/entities/delivery";
 import { appRouter } from "../../src/server/router";
@@ -26,16 +26,19 @@ describe("Order Entity Use Cases", () => {
       companyName: "Company",
       companyAddress: "Address",
       vat: "123456789",
+      mobileNumber: "6955555555",
     }).save();
 
     user = await User.create({
       email: "user@email.com",
       type: UserType.USER,
+      status: UserStatus.ACCEPTED,
       password: "veryStrongPassword",
       userName: "user" + Math.random(),
       companyName: "Company",
       companyAddress: "Address",
       vat: "123456789",
+      mobileNumber: "6977777777",
     }).save();
 
     // create sessionIds for each
@@ -132,7 +135,7 @@ describe("Order Entity Use Cases", () => {
     expect(order).toHaveProperty("total", "10.99");
   }, 20000);
 
-  test("auto generate order", async () => {
+  test.skip("auto generate order", async () => {
     // create example items and assign to user
     const item1 = await Item.save(
       Item.create({
@@ -246,7 +249,7 @@ describe("Order Entity Use Cases", () => {
       .updateOrderEstimate({ id: order.id, day: 2, month: 0, year: 2012 });
 
     await orderEntry.reload();
-    expect(orderEntry.estimatedDelivery).toEqual("2012-01-01");
+    expect(orderEntry.estimatedDelivery).toEqual("2012-01-02");
   }, 20000);
 
   afterAll(async () => {

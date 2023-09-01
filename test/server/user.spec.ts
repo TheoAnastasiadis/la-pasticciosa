@@ -21,6 +21,7 @@ describe("User Entity Use Cases", () => {
       companyName: "Company",
       companyAddress: "Address",
       vat: "123456789",
+      mobileNumber: "6955555555",
     }).save();
 
     user = await User.create({
@@ -31,6 +32,7 @@ describe("User Entity Use Cases", () => {
       companyName: "Company",
       companyAddress: "Address",
       vat: "123456789",
+      mobileNumber: "6977777777",
     }).save();
 
     // create sessionIds for each

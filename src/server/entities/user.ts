@@ -76,10 +76,8 @@ export class User extends BaseEntity {
       this.password = bcrypt.hashSync(this.password, appConfig.getSaltRounds());
   };
 
-  validatePassword: (input: string) => boolean = (input) => {
-    console.log(`Comparing input: ${input} with password ${this.password}`);
-    return bcrypt.compareSync(input, this.password);
-  };
+  validatePassword: (input: string) => boolean = (input) =>
+    bcrypt.compareSync(input, this.password);
 
   assignItem: (item: Item) => Promise<void> = async (item) => {
     assert(this.catalogue);

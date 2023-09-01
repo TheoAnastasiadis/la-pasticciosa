@@ -2,7 +2,7 @@ import { User, UserType } from "../../src/server/entities/user";
 import { Session } from "../../src/server/entities/session";
 import { appRouter } from "../../src/server/router";
 import { Delivery, DeliveryStatus } from "../../src/server/entities/delivery";
-import { BaseEntity, In } from "typeorm";
+import { In } from "typeorm";
 import { AppDataSource } from "../../src/server/database";
 
 describe("Delivery Entity Use Cases", () => {
@@ -18,20 +18,22 @@ describe("Delivery Entity Use Cases", () => {
       email: "admin@email.com",
       type: UserType.ADMIN,
       password: "veryStrongPassword",
-      userName: "admin" + Math.random(),
+      userName: "admin_del",
       companyName: "Company",
       companyAddress: "Address",
       vat: "123456789",
+      mobileNumber: "6955555555",
     }).save();
 
     user = await User.create({
       email: "user@email.com",
       type: UserType.USER,
       password: "veryStrongPassword",
-      userName: "user" + Math.random(),
+      userName: "user_del",
       companyName: "Company",
       companyAddress: "Address",
       vat: "123456789",
+      mobileNumber: "6977777777",
     }).save();
 
     // create sessionIds for each
