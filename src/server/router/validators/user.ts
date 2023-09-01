@@ -8,10 +8,17 @@ export const userStatusParser = z.union([
 
 export const userPasswordParser = z.string().min(8).max(20).regex(/^[^$]/); // passwords should not start with `$`
 
+export const phoneParser = z
+  .string()
+  .refine(
+    (phoneNumber) => phoneNumber.length === 10 && phoneNumber.startsWith("69"),
+  );
+
 export const userProps = z.object({
   uuid: z.coerce.string(),
   userName: z.string(),
   email: z.string().email().toLowerCase(),
+  mobileNumber: phoneParser,
   password: userPasswordParser,
   status: userStatusParser,
   type: z.union([z.literal("user"), z.literal("admin")]),

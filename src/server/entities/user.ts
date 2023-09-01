@@ -36,6 +36,9 @@ export class User extends BaseEntity {
   @Column({ unique: true })
   email!: string;
 
+  @Column({ unique: true, default: "699999999" })
+  mobileNumber!: string;
+
   @Column()
   password!: string;
 

@@ -1,4 +1,3 @@
-import { throwNotFoundError } from "../../errors/notFound.error";
 import { Item } from "../../../entities/item";
 import authenticate from "../../middleware/authenticate";
 import authorize from "../../middleware/authorize";
@@ -12,8 +11,7 @@ export const deleteItem = procedure
   .input(z.object({ itemId: z.coerce.string() }))
   .output(z.void())
   .mutation(async ({ input: { itemId } }) => {
-    const item = await Item.findOneByOrFail({ id: itemId }).catch(
-      throwNotFoundError,
+    await Item.findOneByOrFail({ id: itemId }).then(
+      async (item) => await item.softRemove(),
     );
-    await item.softRemove();
   });

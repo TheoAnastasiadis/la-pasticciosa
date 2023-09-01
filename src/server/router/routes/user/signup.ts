@@ -11,12 +11,9 @@ export const signUp = procedure
   .input(requestUserProps)
   .output(userWNoPassword.omit({ catalogue: true }))
   .mutation(async ({ input }) => {
-    const user = await User.save(
-      User.create({
-        ...input,
-        status: UserStatus.REQUESTED,
-        type: UserType.USER,
-      }),
-    ); // password hashing will hapen because of the @beforeInsert hook
-    return user as User & { catalogue: [] };
+    return await User.create({
+      ...input,
+      status: UserStatus.REQUESTED,
+      type: UserType.USER,
+    }).save(); // password hashing will hapen because of the @beforeInsert hook
   });

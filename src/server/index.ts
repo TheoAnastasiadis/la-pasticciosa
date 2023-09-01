@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import { appRouter } from "./router";
 import { createContext } from "./router/setup/context";
 import appConfig from "./config/app.config";
-import { AppDataSource } from "./database/dataSource";
+import { AppDataSource } from "./database";
 import morgan from "morgan";
 import cors from "cors";
 

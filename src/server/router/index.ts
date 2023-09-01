@@ -26,6 +26,7 @@ export const appRouter = router({
   updateOrderStatus: orderRoutes.updateStatus,
   updateOrderEstimate: orderRoutes.updateEstimate,
   viewOrders: orderRoutes.view,
+  autoGenerate: orderRoutes.autoGenerate,
 });
 
 // Export type router type signature,

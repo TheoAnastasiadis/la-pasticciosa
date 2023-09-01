@@ -7,7 +7,6 @@ import { TRPCError } from "@trpc/server";
 import { Session } from "../../../entities/session";
 import moment from "moment";
 import { userProps } from "../../validators";
-import { throwNotFoundError } from "../../errors/notFound.error";
 
 export const login = procedure
   .meta({ secure: false, adminOnly: false })
@@ -16,25 +15,22 @@ export const login = procedure
   .input(userProps.pick({ email: true, password: true }))
   .output(z.void())
   .query(async ({ input, ctx }) => {
-    const user = await User.findOneByOrFail({ email: input.email }).catch(
-      throwNotFoundError,
-    );
+    const user = await User.findOneByOrFail({ email: input.email });
 
-    if (user.validatePassword(input.password)) {
-      const session = await Session.save(
-        Session.create({
-          user,
-          deletedAt: moment().add(1, "M").toDate(),
-        }),
-      );
-      ctx.setCookie("sessionId", session.id, {
-        httpOnly: true,
-        expires: moment().add(1, "M").toDate(),
-      });
-    } else
+    if (!user.validatePassword(input.password))
       throw new TRPCError({
         code: "UNAUTHORIZED",
         message:
           "Email and password do not match. Please check your credentials and try again.",
       });
+
+    const session = await Session.create({
+      user,
+      deletedAt: moment().add(1, "M").toDate(),
+    }).save();
+
+    ctx.setCookie("sessionId", session.id, {
+      httpOnly: true,
+      expires: moment().add(1, "M").toDate(),
+    });
   });

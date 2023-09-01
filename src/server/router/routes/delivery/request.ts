@@ -1,4 +1,3 @@
-import { throwNotFoundError } from "../../errors/notFound.error";
 import { Delivery, DeliveryStatus } from "../../../entities/delivery";
 import { User } from "../../../entities/user";
 import authenticate from "../../middleware/authenticate";
@@ -13,12 +12,10 @@ export const request = procedure
   .input(requestDeliveryProps)
   .output(deliveryWNoUser)
   .mutation(async ({ ctx, input }) => {
-    const user = await User.findOneByOrFail({ uuid: ctx.onBehalf }).catch(
-      throwNotFoundError,
-    );
-
-    const delivery = Delivery.create({ ...input });
-    delivery.state = DeliveryStatus.REQUESTED;
-    delivery.user = user;
-    return await delivery.save();
+    const user = await User.findOneByOrFail({ uuid: ctx.onBehalf });
+    return await Delivery.create({
+      ...input,
+      state: DeliveryStatus.REQUESTED,
+      user,
+    }).save();
   });

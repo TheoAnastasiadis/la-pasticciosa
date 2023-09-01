@@ -11,6 +11,5 @@ export const create = procedure
   .input(createItemProps)
   .output(itemProps)
   .mutation(async ({ input }) => {
-    const item = Item.create({ ...input });
-    return await item.save();
+    return await Item.create({ ...input }).save();
   });

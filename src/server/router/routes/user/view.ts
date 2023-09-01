@@ -1,4 +1,3 @@
-import { throwNotFoundError } from "../../errors/notFound.error";
 import { User, UserStatus } from "../../../entities/user";
 import authenticate from "../../middleware/authenticate";
 import authorize from "../../middleware/authorize";
@@ -14,22 +13,27 @@ export const view = procedure
   .meta({ secure: true, adminOnly: false })
   .use(authenticate)
   .use(authorize)
-  .input(z.object({ page: z.number().optional() }))
+  .input(z.object({ page: z.union([z.number(), z.literal("all")]) }).optional())
   .output(z.array(userWNoPassword))
-  .query(async ({ ctx: { onBehalf }, input: { page } }) => {
+  .query(async ({ ctx: { onBehalf }, input }) => {
     const user = await User.findOneOrFail({
       where: { uuid: onBehalf },
       relations: { catalogue: true },
-    }).catch(throwNotFoundError);
+    });
+
+    const pagination =
+      typeof input?.page === "number"
+        ? { take: PAGINATION_LIMIT, skip: PAGINATION_LIMIT * input.page }
+        : {};
 
     if (user.isAdmin()) {
       // admins can have access to all of the users
       return (
         await User.find({
-          take: PAGINATION_LIMIT,
-          skip: PAGINATION_LIMIT * (page ?? 0),
+          ...pagination,
           relations: { catalogue: true },
           where: { status: Not(UserStatus.REJECTED) },
+          order: { uuid: "DESC" },
         })
       ).map((user) => {
         // @ts-expect-error `User` entity holds rich item info but we only return item ids to the client

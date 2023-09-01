@@ -1,4 +1,3 @@
-import { throwNotFoundError } from "../../errors/notFound.error";
 import { User, type UserStatus } from "../../../entities/user";
 import authenticate from "../../middleware/authenticate";
 import authorize from "../../middleware/authorize";
@@ -17,7 +16,7 @@ export const updateStatus = procedure
     const user = await User.findOneOrFail({
       where: { uuid: input.userId },
       relations: { catalogue: true },
-    }).catch(throwNotFoundError);
+    });
 
     // update record
     await User.update(

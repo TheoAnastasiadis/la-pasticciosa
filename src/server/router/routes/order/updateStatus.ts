@@ -1,5 +1,3 @@
-import { throwDBError } from "../../errors/db.error";
-import { throwNotFoundError } from "../../errors/notFound.error";
 import type { Delivery } from "../../../entities/delivery";
 import type { Item } from "../../../entities/item";
 import { Order } from "../../../entities/order";
@@ -13,6 +11,12 @@ import {
   OrderStatusParser,
   orderWUserDeliveryQuantities,
 } from "../../validators";
+
+type OrderWUserDeliveryQuantities = Order & {
+  user: User;
+  quantities: Array<Quantity & { item: Item }>;
+  delivery: Delivery;
+};
 
 export const updateStatus = procedure
   .meta({ secure: true, adminOnly: true })
@@ -32,16 +36,12 @@ export const updateStatus = procedure
     const order = await Order.findOneOrFail({
       where: { id: orderId },
       relations: { user: true, quantities: { item: true }, delivery: true },
-    }).catch(throwNotFoundError);
+    });
 
     // update db
-    await Order.update({ id: orderId }, { status }).catch(throwDBError);
+    await Order.update({ id: orderId }, { status });
 
     // update object and return
     order.status = status;
-    return order as Order & {
-      user: User;
-      quantities: Array<Quantity & { item: Item }>;
-      delivery: Delivery;
-    };
+    return order as OrderWUserDeliveryQuantities;
   });

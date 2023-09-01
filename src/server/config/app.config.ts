@@ -14,4 +14,5 @@ export default {
       ? process.env.clientUrl
       : "http://localhost:5173") as string,
   getPaginationLimit: () => 20,
+  getOpenAIKey: () => process.env.OPENAI_API_KEY,
 };
