@@ -19,6 +19,7 @@ export default {
   data: () => ({
     timeline1: undefined,
     timeline2: undefined,
+    timeline3: undefined,
     src: "./src/assets/ravioli.png",
   }),
   methods: {
@@ -29,6 +30,9 @@ export default {
           break;
         case 2:
           this.src = "./src/assets/cooked.png";
+          break;
+        case 3:
+          this.src = "./src/assets/wireframe.png";
           break;
         default:
           this.src = "./src/assets/ravioli.png";
@@ -57,6 +61,14 @@ export default {
         onReverseComplete: this.updatePic,
       })
       .to(image, { scale: 1.1 });
+
+    this.timeline3 = gsap
+      .timeline({
+        paused: true,
+        onComplete: this.updatePic,
+        onReverseComplete: this.updatePic,
+      })
+      .to(image, { scale: 1 });
   },
   watch: {
     step(value: number) {
@@ -73,6 +85,8 @@ export default {
           this.timeline2.play();
           break;
         default:
+          this.timeline2.reverse();
+          this.timeline3.play();
           break;
       }
     },

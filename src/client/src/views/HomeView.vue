@@ -43,11 +43,56 @@
       <div class="container">
         <div class="xt-row items-center">
           <div class="w-full md:w-5/12 z-0">
-            <div class="xt-media-container pb-[75%] overflow-hidden">
+            <div class="xt-media-container pb-[75%]">
               <div
-                class="xt-media border-yellow-200 rounded-2xl border-dashed"
+                class="absolute w-full h-full z-below rounded-md opacity-30 grayscale"
+                ref="firstbg"
+              >
+                <img
+                  src="https://www.henkelman.com/media/1014/application-hero-2-2x.jpg?anchor=center&mode=crop&width=2800&height=1760&rnd=132259759480000000"
+                  class="w-full h-full object-cover rounded-2xl"
+                />
+              </div>
+              <div
+                class="xt-media border-yellow-200 rounded-2xl border-dashed flex flex-col items-start overflow-hidden"
                 ref="firstFeatured"
-              ></div>
+              >
+                <div
+                  class="uppercase font-bold text-2xl opacity-80 whitespace-nowrap"
+                  ref="banner1"
+                >
+                  {{
+                    Array(6)
+                      .fill("")
+                      .map((v) => "Βραζουν σε 5'")
+                      .join(" ")
+                  }}
+                </div>
+                <div
+                  class="uppercase font-bold text-3xl opacity-70 whitespace-nowrap tracking-wider mt-1"
+                  ref="banner2"
+                >
+                  {{
+                    Array(6)
+                      .fill("")
+                      .map((v) => "ερχονται μεριδοποιμενα στις αναγκες σας")
+                      .join(" ")
+                  }}
+                </div>
+                <div
+                  class="uppercase font-bold text-3xl opacity-70 whitespace-nowrap tracking-wider mt-auto"
+                  ref="banner3"
+                >
+                  {{
+                    Array(6)
+                      .fill("")
+                      .map(
+                        (v) => "συεσκαυασια vacuum προστατευτικης ατμοσφαιρας",
+                      )
+                      .join(" ")
+                  }}
+                </div>
+              </div>
             </div>
           </div>
           <div class="w-full md:w-7/12 z-10">
@@ -81,11 +126,118 @@
       <div class="container">
         <div class="xt-row items-center">
           <div class="w-full md:w-5/12 z-0 sm:order-2">
-            <div class="xt-media-container pb-[75%] overflow-hidden">
+            <div class="xt-media-container pb-[75%]">
               <div
-                class="xt-media border-yellow-200 rounded-2xl border-dashed"
+                class="xt-media border-yellow-200 border-dashed overflow-hidden flex flex-col justify-between before:bg-gradient-to-r before:from-primary-800 before:to-transparent before:h-full before:w-11 before:absolute before:opacity-100 before:z-above after:bg-gradient-to-l after:from-primary-800 after:to-transparent after:h-full after:w-11 after:absolute after:opacity-100 after:right-0"
                 ref="secondFeatured"
-              ></div>
+              >
+                <div
+                  class="h-1/5 flex flex-row justify-evenly space-x-3"
+                  ref="videoBanner1"
+                >
+                  <div class="h-full aspect-video">
+                    <img
+                      src="https://img.buzzfeed.com/buzzfeed-static/static/2015-09/28/18/enhanced/webdr09/anigif_enhanced-29919-1443478970-5.gif"
+                      class="h-full w-full opacity-75 object-cover"
+                    />
+                  </div>
+                  <div class="h-full aspect-video">
+                    <img
+                      src="https://media.tenor.com/fZrH-b2uqfEAAAAC/pasta-cooking.gif"
+                      class="h-full w-full opacity-75 object-cover"
+                    />
+                  </div>
+                  <div class="h-full aspect-video">
+                    <img
+                      src="https://i.pinimg.com/originals/c2/9c/3c/c29c3c434025f3a30128f82ce6eae2b5.gif"
+                      class="h-full w-full opacity-75 object-cover"
+                    />
+                  </div>
+                  <div class="h-full aspect-video">
+                    <img
+                      src="https://media.tenor.com/tQiMF_8Wy4YAAAAC/ravioli-pasta.gif"
+                      class="h-full w-full opacity-75 object-cover"
+                    />
+                  </div>
+                  <div class="h-full aspect-video">
+                    <img
+                      src="https://img.buzzfeed.com/buzzfeed-static/static/2015-09/28/18/enhanced/webdr09/anigif_enhanced-29919-1443478970-5.gif"
+                      class="h-full w-full opacity-75 object-cover"
+                    />
+                  </div>
+                  <div class="h-full aspect-video">
+                    <img
+                      src="https://media.tenor.com/fZrH-b2uqfEAAAAC/pasta-cooking.gif"
+                      class="h-full w-full opacity-75 object-cover"
+                    />
+                  </div>
+                  <div class="h-full aspect-video">
+                    <img
+                      src="https://i.pinimg.com/originals/c2/9c/3c/c29c3c434025f3a30128f82ce6eae2b5.gif"
+                      class="h-full w-full opacity-75 object-cover"
+                    />
+                  </div>
+                  <div class="h-full aspect-video">
+                    <img
+                      src="https://media.tenor.com/tQiMF_8Wy4YAAAAC/ravioli-pasta.gif"
+                      class="h-full w-full opacity-75 object-cover"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="h-1/5 flex mt-auto flex-row-reverse justify-evenly space-x-3"
+                  ref="videoBanner2"
+                >
+                  <div class="h-full aspect-video">
+                    <img
+                      src="https://img.buzzfeed.com/buzzfeed-static/static/2015-09/28/18/enhanced/webdr09/anigif_enhanced-29919-1443478970-5.gif"
+                      class="h-full w-full opacity-75 object-cover"
+                    />
+                  </div>
+                  <div class="h-full aspect-video">
+                    <img
+                      src="https://media.tenor.com/fZrH-b2uqfEAAAAC/pasta-cooking.gif"
+                      class="h-full w-full opacity-75 object-cover"
+                    />
+                  </div>
+                  <div class="h-full aspect-video">
+                    <img
+                      src="https://i.pinimg.com/originals/c2/9c/3c/c29c3c434025f3a30128f82ce6eae2b5.gif"
+                      class="h-full w-full opacity-75 object-cover"
+                    />
+                  </div>
+                  <div class="h-full aspect-video">
+                    <img
+                      src="https://media.tenor.com/tQiMF_8Wy4YAAAAC/ravioli-pasta.gif"
+                      class="h-full w-full opacity-75 object-cover"
+                    />
+                  </div>
+                  <div class="h-full aspect-video">
+                    <img
+                      src="https://img.buzzfeed.com/buzzfeed-static/static/2015-09/28/18/enhanced/webdr09/anigif_enhanced-29919-1443478970-5.gif"
+                      class="h-full w-full opacity-75 object-cover"
+                    />
+                  </div>
+                  <div class="h-full aspect-video">
+                    <img
+                      src="https://media.tenor.com/fZrH-b2uqfEAAAAC/pasta-cooking.gif"
+                      class="h-full w-full opacity-75 object-cover"
+                    />
+                  </div>
+                  <div class="h-full aspect-video">
+                    <img
+                      src="https://i.pinimg.com/originals/c2/9c/3c/c29c3c434025f3a30128f82ce6eae2b5.gif"
+                      class="h-full w-full opacity-75 object-cover"
+                    />
+                  </div>
+                  <div class="h-full aspect-video">
+                    <img
+                      src="https://media.tenor.com/tQiMF_8Wy4YAAAAC/ravioli-pasta.gif"
+                      class="h-full w-full opacity-75 object-cover"
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div class="w-full md:w-7/12 z-10 sm:order-1">
@@ -118,15 +270,26 @@
       <div class="container">
         <div class="xt-row items-center">
           <div class="w-full md:w-5/12 z-0">
-            <div
-              class="xt-media-container bg-gray-900 pb-[75%] overflow-hidden"
-            >
-              <img
-                class="xt-media object-cover"
-                src="https://images.unsplash.com/photo-1447279506476-3faec8071eee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
-                loading="lazy"
-                alt=""
-              />
+            <div class="xt-media-container pb-[75%]" ref="wireframe">
+              <p
+                class="uppercase font-mono text-lg font-semibold relative top-12 left-44"
+              >
+                Η pasta στα μετρα σας
+              </p>
+              <div
+                class="absolute w-full h-full z-below rounded-md opacity-30 grayscale"
+                ref="firstbg"
+              >
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/en/b/be/Locator_Grid.png"
+                  class="w-full h-full object-cover rounded-2xl grayscale"
+                />
+              </div>
+              <p class="absolute left-6 -bottom-3 font-mono">
+                <li>Το σχήμα που ψάχνετε</li>
+                <li>Γέμιση κατόπιν παραγγελίας ή δική σας παραγωγής</li>
+                <li>Gourmet υλικά & ειδικές ανάγκες</li>
+              </p>
             </div>
           </div>
           <div class="w-full md:w-7/12 z-10">
@@ -445,12 +608,30 @@
 import Pasta from "../components/reusables/interactives/pasta.vue";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
+import Lenis from "@studio-freight/lenis";
 gsap.registerPlugin(ScrollTrigger);
 
 export default {
   components: { Pasta },
   data: () => ({ step: 0 }),
   mounted() {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
+      direction: "vertical",
+      gestureDirection: "vertical",
+      smooth: true,
+      smoothTouch: false,
+      touchMultiplier: 2,
+    });
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
     const {
       animated,
       firstFeaturedContainer,
@@ -458,8 +639,86 @@ export default {
       secondFeatured,
       thirdFeatured,
       hero,
+      banner1,
+      banner2,
+      banner3,
+      firstbg,
+      videoBanner1,
+      videoBanner2,
+      wireframe,
     } = this.$refs;
 
+    // first featured banners animation
+    gsap
+      .timeline({ scrollTrigger: { trigger: banner1, start: "top center" } })
+      .from(banner1, { opacity: 0, duration: 6 }, 0)
+      .to(
+        banner1,
+        {
+          x: -banner1.offsetWidth / 6,
+          repeat: -1,
+          duration: 5,
+          ease: "linear",
+        },
+        0,
+      )
+      .from(banner2, { opacity: 0, duration: 6 }, 0)
+      .to(
+        banner2,
+        {
+          x: -banner2.offsetWidth / 6,
+          repeat: -1,
+          duration: 15,
+          ease: "linear",
+        },
+        0,
+      )
+      .from(banner3, { opacity: 0, duration: 3 }, 1)
+      .to(
+        banner3,
+        {
+          x: -banner3.offsetWidth / 6,
+          repeat: -1,
+          duration: 10,
+          ease: "linear",
+        },
+        0,
+      );
+
+    // first featured background animation
+    gsap
+      .timeline({
+        scrollTrigger: {
+          trigger: firstFeatured,
+          scrub: true,
+        },
+      })
+      .fromTo(firstbg, { x: -100, y: -100 }, { x: 50, y: 50 });
+
+    // second featured video animation
+    gsap
+      .timeline({ scrollTrigger: { trigger: secondFeatured }, repeat: -1 })
+      .to(
+        videoBanner1,
+        { x: -videoBanner1.offsetWidth / 2, duration: 8, ease: "linear" },
+        0,
+      )
+      .to(
+        videoBanner2,
+        { x: +videoBanner2.offsetWidth / 2, duration: 8, ease: "linear" },
+        0,
+      );
+
+    // wireframe animation
+    gsap
+      .timeline({ scrollTrigger: { trigger: thirdFeatured, scrub: true } })
+      .fromTo(
+        wireframe,
+        { perspectiveOrigin: "top" },
+        { perspectiveOrigin: "right" },
+      );
+
+    // animated pasta
     gsap
       .timeline({})
       .from(animated, { rotation: 180, x: -500, duration: 1 })
@@ -471,14 +730,14 @@ export default {
         top:
           firstFeatured.getBoundingClientRect().top +
           firstFeatured.getBoundingClientRect().height / 2 -
-          (animated.getBoundingClientRect().width * 4) / 5,
+          animated.getBoundingClientRect().width / 2,
         scrollTrigger: {
           trigger: firstFeatured,
           start: "top bottom",
           end: "25% center",
           toggleActions: "play pause resume reset",
           scrub: 0.5,
-          markers: true,
+          markers: false,
         },
         onComplete: () => {
           this.step = 1;
@@ -504,7 +763,7 @@ export default {
         left:
           secondFeatured.getBoundingClientRect().left +
           secondFeatured.getBoundingClientRect().width / 2 +
-          animated.getBoundingClientRect().width / 2,
+          animated.getBoundingClientRect().width,
         top:
           secondFeatured.getBoundingClientRect().top +
           secondFeatured.getBoundingClientRect().height / 2 -
@@ -512,16 +771,53 @@ export default {
         scrollTrigger: {
           trigger: secondFeatured,
           start: "top center",
-          end: "30% center",
+          end: "20% center",
           toggleActions: "play pause resume reset",
           scrub: 0.5,
-          markers: true,
+          markers: false,
         },
         onComplete: () => {
           this.step = 2;
         },
         onReverseComplete: () => {
           this.step = 1;
+        },
+      },
+    );
+
+    gsap.timeline({}).fromTo(
+      animated,
+      {
+        left:
+          secondFeatured.getBoundingClientRect().left +
+          secondFeatured.getBoundingClientRect().width / 2 +
+          animated.getBoundingClientRect().width,
+        top:
+          secondFeatured.getBoundingClientRect().top +
+          secondFeatured.getBoundingClientRect().height / 2 -
+          animated.getBoundingClientRect().width / 2,
+      },
+      {
+        left:
+          thirdFeatured.getBoundingClientRect().left +
+          animated.getBoundingClientRect().width / 2,
+        top:
+          thirdFeatured.getBoundingClientRect().top +
+          thirdFeatured.getBoundingClientRect().height / 2 -
+          animated.getBoundingClientRect().width / 2,
+        scrollTrigger: {
+          trigger: thirdFeatured,
+          start: "top center",
+          end: "20% center",
+          toggleActions: "play pause resume reset",
+          scrub: 0.5,
+          markers: false,
+        },
+        onComplete: () => {
+          this.step = 3;
+        },
+        onReverseComplete: () => {
+          this.step = 2;
         },
       },
     );
