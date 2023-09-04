@@ -1,15 +1,530 @@
-<template><p>This will include the home page</p></template>
+<template>
+  <div ref="animated" class="absolute top-[250px] left-[400px] z-above">
+    <Pasta :step="step" />
+  </div>
+  <div class="hero relative overflow-hidden -mt-5" ref="hero">
+    <div class="xt-media-container bg-gray-200 w-full h-full absolute">
+      <img
+        class="xt-media object-cover"
+        src="https://images.unsplash.com/photo-1565607052745-35f8c6ba59b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1864&q=80"
+        loading="lazy"
+        alt=""
+      />
+      <div
+        class="absolute inset-0 bg-gradient-to-l from-black opacity-70"
+      ></div>
+    </div>
+    <div class="flex relative min-h-screen">
+      <div
+        class="relative px-8 py-16 md:px-24 lg:py-20 xl:py-24 my-auto mx-auto md:mr-0 max-w-2xl text-white xt-links-inverse text-center md:text-right group"
+      >
+        <h2 class="xt-h1 normal-case">
+          Εξελίξτε το μενού σας με φρέσκα ζυμαρικά!
+        </h2>
+        <h3 class="xt-p">
+          Με τα προϊόντα μας μπορείτε να δημιουργήσετε ευφάνταστα πιάτα που θα
+          προσελκύσουν νέους πελάτες αλλά θα κάνουν και τους υπάρχοντες να
+          έρχονται συχνότερα.
+        </h3>
+        <a
+          href="/"
+          class="xt-button py-2.5 px-3.5 text-sm rounded-md font-medium leading-snug tracking-wider uppercase text-white bg-primary-500 transition hover:text-white hover:bg-primary-600 active:text-white active:bg-primary-700 on:text-white on:bg-primary-600"
+        >
+          Ζητηστε προσφορα
+        </a>
+      </div>
+    </div>
+  </div>
+  <div
+    class="featured inline-block w-full bg-primary-800 text-white xt-links-inverse"
+    ref="featured"
+  >
+    <a href="/" class="featured-item block my-28">
+      <div class="container">
+        <div class="xt-row items-center">
+          <div class="w-full md:w-5/12 z-0">
+            <div class="xt-media-container pb-[75%] overflow-hidden">
+              <div
+                class="xt-media border-yellow-200 rounded-2xl border-dashed"
+                ref="firstFeatured"
+              ></div>
+            </div>
+          </div>
+          <div class="w-full md:w-7/12 z-10">
+            <div class="featured-content pt-16 md:pt-0 md:pl-12">
+              <div class="xt-h1 mb-6 md:-ml-32">Εύκολη διαχείρηση</div>
+              <div class="leading-loose">
+                <p>
+                  <strong>Έρχονται μεριδοποιημένα</strong> και συσκευασμένα σε
+                  προστατευτική ατμόσφαιρα για να διατηρούνται στο ψυγείο ή/και
+                  την κατάψυξη για μεγάλο χρονικό διάστημα. Δεν χρειάζονται
+                  εξειδικευμένο προσωπικό ή ειδικό εξοπλισμό για την παρασκευή
+                  τους.
+                </p>
+                <div
+                  class="xt-button button--line px-0 text-xs font-medium leading-snug tracking-wider uppercase"
+                >
+                  <span
+                    class="button--line-design absolute left-0 w-4 border-t border-current opacity-50"
+                  ></span>
+                  <span class="button--line-content pl-8">
+                    ΖΗΤΗΣΤΕ ΠΡΟΣΦΟΡΑ
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+    <a href="/" class="featured-item block my-28" ref="secondFeatured">
+      <div class="container">
+        <div class="xt-row items-center">
+          <div class="w-full md:w-5/12 z-0 sm:order-2">
+            <div class="xt-media-container pb-[75%] overflow-hidden">
+              <div
+                class="xt-media border-yellow-200 rounded-2xl border-dashed"
+                ref="secondFeatured"
+              ></div>
+            </div>
+          </div>
+          <div class="w-full md:w-7/12 z-10 sm:order-1">
+            <div class="featured-content pt-16 md:pt-0 md:pr-12">
+              <div class="xt-h1 mb-6">Πρωτότυπες γεύσεις</div>
+              <div class="leading-loose md:-mr-32 md:pl-12">
+                <p>
+                  Οι συνταγές που έχουμε δημιουργήσει και που μας αρέσει να
+                  ανανεώνουμε βασίζονται στην γαστρονομική παράδοση και σέβονται
+                  την εποχικότητα των υλικών. Ο συνδυασμός των γεύσεων και των
+                  σχημάτων θα ικανοποιήσει και τον πιο απαιτητικό ουρανίσκο.
+                </p>
+                <div
+                  class="xt-button button--line px-0 text-xs font-medium leading-snug tracking-wider uppercase"
+                >
+                  <span
+                    class="button--line-design absolute left-0 w-4 border-t border-current opacity-50"
+                  ></span>
+                  <span class="button--line-content pl-8">
+                    ΛΑΒΕΤΕ ΠΡΟΣΦΟΡΑ
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+    <a href="/" class="featured-item block my-28" ref="thirdFeatured">
+      <div class="container">
+        <div class="xt-row items-center">
+          <div class="w-full md:w-5/12 z-0">
+            <div
+              class="xt-media-container bg-gray-900 pb-[75%] overflow-hidden"
+            >
+              <img
+                class="xt-media object-cover"
+                src="https://images.unsplash.com/photo-1447279506476-3faec8071eee?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+                loading="lazy"
+                alt=""
+              />
+            </div>
+          </div>
+          <div class="w-full md:w-7/12 z-10">
+            <div class="featured-content pt-16 md:pt-0 md:pl-12">
+              <div class="xt-h1 mb-6 md:-ml-32">Custom-made orders</div>
+              <div class="leading-loose">
+                <p>
+                  Η μεγάλη ποικιλία προϊόντων και η ευελιξία στην παραγωγή τους
+                  καλύπτει κάθε ιδιαίτερη απαίτηση των πελατών μας ανάλογα με τη
+                  χρονική περίοδο, τις διατροφικές συνήθειες αλλά και τις
+                  κουζίνες που θα εξυπηρετηθούν.
+                </p>
+                <div
+                  class="xt-button button--line px-0 text-xs font-medium leading-snug tracking-wider uppercase"
+                >
+                  <span
+                    class="button--line-design absolute left-0 w-4 border-t border-current opacity-50"
+                  ></span>
+                  <span class="button--line-content pl-8">
+                    ΠΕΙΤΕ ΜΑΣ ΤΙ ΧΡΕΙΑΖΕΣΤΕ
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="block my-28">
+    <div class="container">
+      <div class="xt-row items-center">
+        <div class="w-full z-10">
+          <div class="featured-content pt-16 md:pt-0 md:pl-12">
+            <div>
+              <div class="text-base font-semibold leading-7 text-primary-600">
+                Σας αντιμετωπίζουμε σαν επαγγελματίες
+              </div>
+              <div class="xt-h2 mb-6 m-0">Περιγράψτε τις ανάγκες σας.</div>
+            </div>
+            <div class="flex flex-row">
+              <div class="w-6/12"></div>
+              <div class="w-6/12">
+                <div
+                  class="xt-card shadow-md rounded-2xl text-gray-900 xt-links-default bg-gray-100"
+                >
+                  <div class="p-7 sm:p-9 text-base">
+                    <div class="xt-h3">Επιλογές</div>
+                    <label class="block mb-3 font-medium text-gray-700">
+                      Είδος Ζυμαρικού
+                    </label>
+                    <select
+                      class="block w-full xt-select rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+                      aria-label="Είδος Ζυμαρικού"
+                    >
+                      <option selected value="">Είδος Ζυμαρικού</option>
+                      <option>Απλό</option>
+                      <option>Γεμιστό</option>
+                    </select>
+                    <label class="block mb-3 font-medium text-gray-700">
+                      Τύπος Πιάτου
+                    </label>
+                    <select
+                      class="block w-full xt-select rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none"
+                      aria-label="Είδος Ζυμαρικού"
+                    >
+                      <option selected value="">Είδος Ζυμαρικού</option>
+                      <option>Απλό</option>
+                      <option>Γεμιστό</option>
+                    </select>
+                    <label class="block mb-3 font-medium text-gray-700">
+                      Γέμιση
+                    </label>
+                    <textarea
+                      class="block w-full h-20 max-h-48 rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none resize-vertical"
+                      aria-label="Textarea"
+                      placeholder="Textarea"
+                    ></textarea>
+                    <div class="w-ful">
+                      <button
+                        type="submit"
+                        class="xt-button mx-auto py-2.5 px-3.5 text-sm rounded-md font-medium leading-snug tracking-wider uppercase text-white bg-primary-500 transition hover:text-white hover:bg-primary-600 active:text-white active:bg-primary-700 on:text-white on:bg-primary-600"
+                      >
+                        ζητηστε προσφορά
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="block my-28 px-10">
+    <div class="container bg-white rounded-xl bg-opacity-70">
+      <div class="overflow-hidden bg-white py-24 sm:py-32">
+        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+          <div
+            class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2"
+          >
+            <div class="lg:pr-8 lg:pt-4">
+              <div class="lg:max-w-lg">
+                <h2 class="text-base font-semibold leading-7 text-primary-600">
+                  Σας αντιμετωπίζουμε σαν επαγγελματίες
+                </h2>
+                <p
+                  class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl"
+                >
+                  Σύγχρονη πλατφόρμα B2B
+                </p>
+                <p class="mt-6 text-lg leading-8 text-gray-600">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                  Maiores impedit perferendis suscipit eaque, iste dolor
+                  cupiditate blanditiis ratione.
+                </p>
+                <dl
+                  class="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none"
+                >
+                  <div class="relative pl-9">
+                    <dt class="inline font-semibold text-gray-900">
+                      <svg
+                        class="absolute left-1 top-1 h-5 w-5 text-indigo-600"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M5.5 17a4.5 4.5 0 01-1.44-8.765 4.5 4.5 0 018.302-3.046 3.5 3.5 0 014.504 4.272A4 4 0 0115 17H5.5zm3.75-2.75a.75.75 0 001.5 0V9.66l1.95 2.1a.75.75 0 101.1-1.02l-3.25-3.5a.75.75 0 00-1.1 0l-3.25 3.5a.75.75 0 101.1 1.02l1.95-2.1v4.59z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      Push to deploy.
+                    </dt>
+                    <dd class="inline">
+                      Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                      Maiores impedit perferendis suscipit eaque, iste dolor
+                      cupiditate blanditiis ratione.
+                    </dd>
+                  </div>
+                  <div class="relative pl-9">
+                    <dt class="inline font-semibold text-gray-900">
+                      <svg
+                        class="absolute left-1 top-1 h-5 w-5 text-indigo-600"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          d="M10 1a4.5 4.5 0 00-4.5 4.5V9H5a2 2 0 00-2 2v6a2 2 0 002 2h10a2 2 0 002-2v-6a2 2 0 00-2-2h-.5V5.5A4.5 4.5 0 0010 1zm3 8V5.5a3 3 0 10-6 0V9h6z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      SSL certificates.
+                    </dt>
+                    <dd class="inline">
+                      Anim aute id magna aliqua ad ad non deserunt sunt. Qui
+                      irure qui lorem cupidatat commodo.
+                    </dd>
+                  </div>
+                  <div class="relative pl-9">
+                    <dt class="inline font-semibold text-gray-900">
+                      <svg
+                        class="absolute left-1 top-1 h-5 w-5 text-indigo-600"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M4.632 3.533A2 2 0 016.577 2h6.846a2 2 0 011.945 1.533l1.976 8.234A3.489 3.489 0 0016 11.5H4c-.476 0-.93.095-1.344.267l1.976-8.234z"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          d="M4 13a2 2 0 100 4h12a2 2 0 100-4H4zm11.24 2a.75.75 0 01.75-.75H16a.75.75 0 01.75.75v.01a.75.75 0 01-.75.75h-.01a.75.75 0 01-.75-.75V15zm-2.25-.75a.75.75 0 00-.75.75v.01c0 .414.336.75.75.75H13a.75.75 0 00.75-.75V15a.75.75 0 00-.75-.75h-.01z"
+                          clip-rule="evenodd"
+                        />
+                      </svg>
+                      Database backups.
+                    </dt>
+                    <dd class="inline">
+                      Ac tincidunt sapien vehicula erat auctor pellentesque
+                      rhoncus. Et magna sit morbi lobortis.
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+            <img
+              src="https://tailwindui.com/img/component-images/dark-project-app-screenshot.png"
+              alt="Product screenshot"
+              class="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
+              width="2432"
+              height="1442"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="block my-28 px-10">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-wrap text-left lg:text-left">
+          <div class="w-full lg:w-6/12 px-4">
+            <h4 class="text-3xl">Ας έρθουμε σε επικοινωνία!</h4>
+            <h5 class="text-lg mt-0 mb-2">
+              Επικοινωνήστε σε οποιοδήποτε από τα παρακάτω δίκτυα, και θα σας
+              απαντήσουμε άμεσα!
+            </h5>
+            <div class="mt-6 lg:mb-0 mb-6">
+              <button
+                class="bg-white text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                type="button"
+              >
+                <i class="fab fa-twitter"></i></button
+              ><button
+                class="bg-white text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                type="button"
+              >
+                <i class="fab fa-facebook-square"></i></button
+              ><button
+                class="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                type="button"
+              >
+                <i class="fab fa-dribbble"></i></button
+              ><button
+                class="bg-white text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+                type="button"
+              >
+                <i class="fab fa-github"></i>
+              </button>
+            </div>
+          </div>
+          <div class="w-full lg:w-6/12 px-4">
+            <div class="flex flex-wrap items-top mb-6">
+              <div class="w-full lg:w-4/12 px-4 ml-auto">
+                <span class="block uppercase text-sm font-semibold mb-2"
+                  >Χρήσιμοι Σύνδεσμοι</span
+                >
+                <ul class="list-unstyled">
+                  <li>
+                    <a
+                      class="pb-2 text-sm hover:text-primary-500"
+                      href="https://www.creative-tim.com/presentation?ref=njs-profile"
+                      >About Us</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="pb-2 text-sm hover:text-primary-500"
+                      href="https://www.creative-tim.com/presentation?ref=njs-profile"
+                      >About Us</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="pb-2 text-sm hover:text-primary-500"
+                      href="https://www.creative-tim.com/presentation?ref=njs-profile"
+                      >About Us</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="pb-2 text-sm hover:text-primary-500"
+                      href="https://www.creative-tim.com/presentation?ref=njs-profile"
+                      >About Us</a
+                    >
+                  </li>
+                </ul>
+              </div>
+              <div class="w-full lg:w-4/12 px-4">
+                <span
+                  class="block uppercase text-blueGray-500 text-sm font-semibold mb-2"
+                  >Περισσότερα</span
+                >
+                <ul class="list-unstyled">
+                  <li>
+                    <a
+                      class="pb-2 text-sm hover:text-primary-500"
+                      href="https://www.creative-tim.com/presentation?ref=njs-profile"
+                      >About Us</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="pb-2 text-sm hover:text-primary-500"
+                      href="https://www.creative-tim.com/presentation?ref=njs-profile"
+                      >About Us</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="pb-2 text-sm hover:text-primary-500"
+                      href="https://www.creative-tim.com/presentation?ref=njs-profile"
+                      >About Us</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="pb-2 text-sm hover:text-primary-500"
+                      href="https://www.creative-tim.com/presentation?ref=njs-profile"
+                      >About Us</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
 <script lang="ts">
-import { mapStores } from "pinia";
-import { useUserStore } from "../stores/user";
+import Pasta from "../components/reusables/interactives/pasta.vue";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/all";
+gsap.registerPlugin(ScrollTrigger);
 
 export default {
-  computed: {
-    ...mapStores(useUserStore),
-  },
+  components: { Pasta },
+  data: () => ({ step: 0 }),
   mounted() {
-    if (this.userStore.user) this.$router.push("/dashboard");
-    else this.$router.push("/login");
+    const {
+      animated,
+      firstFeaturedContainer,
+      firstFeatured,
+      secondFeatured,
+      thirdFeatured,
+      hero,
+    } = this.$refs;
+
+    gsap
+      .timeline({})
+      .from(animated, { rotation: 180, x: -500, duration: 1 })
+      .to(animated, {
+        left:
+          firstFeatured.getBoundingClientRect().left +
+          firstFeatured.getBoundingClientRect().width / 2 -
+          animated.getBoundingClientRect().width / 2,
+        top:
+          firstFeatured.getBoundingClientRect().top +
+          firstFeatured.getBoundingClientRect().height / 2 -
+          (animated.getBoundingClientRect().width * 4) / 5,
+        scrollTrigger: {
+          trigger: firstFeatured,
+          start: "top bottom",
+          end: "25% center",
+          toggleActions: "play pause resume reset",
+          scrub: 0.5,
+          markers: true,
+        },
+        onComplete: () => {
+          this.step = 1;
+        },
+        onReverseComplete: () => {
+          this.step = 0;
+        },
+      });
+
+    gsap.timeline({}).fromTo(
+      animated,
+      {
+        left:
+          firstFeatured.getBoundingClientRect().left +
+          firstFeatured.getBoundingClientRect().width / 2 -
+          animated.getBoundingClientRect().width / 2,
+        top:
+          firstFeatured.getBoundingClientRect().top +
+          firstFeatured.getBoundingClientRect().height / 2 -
+          animated.getBoundingClientRect().width / 2,
+      },
+      {
+        left:
+          secondFeatured.getBoundingClientRect().left +
+          secondFeatured.getBoundingClientRect().width / 2 +
+          animated.getBoundingClientRect().width / 2,
+        top:
+          secondFeatured.getBoundingClientRect().top +
+          secondFeatured.getBoundingClientRect().height / 2 -
+          animated.getBoundingClientRect().width / 2,
+        scrollTrigger: {
+          trigger: secondFeatured,
+          start: "top center",
+          end: "30% center",
+          toggleActions: "play pause resume reset",
+          scrub: 0.5,
+          markers: true,
+        },
+        onComplete: () => {
+          this.step = 2;
+        },
+        onReverseComplete: () => {
+          this.step = 1;
+        },
+      },
+    );
   },
 };
 </script>

@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import HomeView from "../views/HomeView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,23 +6,42 @@ const router = createRouter({
     {
       path: "/",
       name: "home",
-      component: HomeView,
+      components: {
+        default: async () => await import("../views/HomeView.vue"),
+        header: async () =>
+          await import(
+            "../components/reusables/top-level/headers/landingPage.vue"
+          ),
+      },
     },
     {
       path: "/login",
       name: "login",
-      component: async () => await import("../views/LoginView.vue"),
+      components: {
+        default: async () => await import("../views/LoginView.vue"),
+      },
     },
     {
       path: "/signup",
       name: "signup",
-      component: async () => await import("../views/SignupView.vue"),
+      components: {
+        default: async () => await import("../views/SignupView.vue"),
+        header: async () =>
+          await import(
+            "../components/reusables/top-level/headers/platform.vue"
+          ),
+      },
     },
     {
       path: "/dashboard",
       name: "dashboard",
       redirect: (to) => "dashboard/orders",
-      component: async () => await import("../views/DashboardView.vue"),
+      components: {
+        header: async () =>
+          await import(
+            "../components/reusables/top-level/headers/platform.vue"
+          ),
+      },
       children: [
         {
           path: "orders",
