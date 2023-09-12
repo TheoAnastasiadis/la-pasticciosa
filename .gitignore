@@ -1,7 +1,8 @@
 # server
 node_modules
-.env
+.env*
 build
+.firebase*
 
 # client
 ## Logs
