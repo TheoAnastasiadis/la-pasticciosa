@@ -5,15 +5,13 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "build:server": "npm run lint & tsc",
-    "lint": "npx eslint \"src/**\" --fix --ignore-path .gitignore",
+    "lint": "bash ./bin/lint.sh",
+    "build:server": "bash ./bin/build.server.sh",
     "test:server": "npx jest",
+    "dev:server": "npm run build:server && cp .env.local ./build/ && firebase emulators:start --only functions",
+    "build:client": "vite build",
     "dev:client": "vite",
-    "dev:server": "rm -rf build && tsc --build && ts-add-js-extension --dir=build && node ./build/index.js",
-    "build:client": "run-p type-check build-only",
-    "preview:client": "vite preview",
-    "build-only:client": "vite build",
-    "type-check:client": "vue-tsc --noEmit -p tsconfig.app.json --composite false"
+    "deploy:client": "bash ./bin/deploy.hosting.sh"
   },
   "repository": {
     "type": "git",
@@ -69,7 +67,10 @@
   "dependencies": {
     "@babel/core": "^7.20.5",
     "@babel/preset-env": "^7.20.2",
+    "@inotom/vue-curve-text": "^2.0.0",
     "@morev/vue-transitions": "^2.3.6",
+    "@splinetool/loader": "^0.9.437",
+    "@splinetool/runtime": "^0.9.437",
     "@studio-freight/lenis": "^1.0.19",
     "@trpc/client": "^10.34.0",
     "@trpc/server": "^10.34.0",
@@ -83,6 +84,8 @@
     "cssnano": "^5.1.14",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "firebase-admin": "^11.10.1",
+    "firebase-functions": "^4.4.1",
     "fuse.js": "^6.6.2",
     "lenis": "^0.0.2",
     "moment": "^2.29.4",
@@ -92,6 +95,7 @@
     "postcss-import": "^15.0.1",
     "reflect-metadata": "^0.1.13",
     "regenerator-runtime": "^0.13.11",
+    "three": "^0.156.1",
     "trpc": "^0.11.3",
     "typeorm": "^0.3.17",
     "vee-validate": "^4.11.1",
