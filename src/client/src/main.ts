@@ -11,6 +11,8 @@ import VueTailwindDatepicker from "vue-tailwind-datepicker";
 
 import "@morev/vue-transitions/styles";
 
+import CurveText from "@inotom/vue-curve-text";
+
 import "./app.css";
 
 const app = createApp(App);
