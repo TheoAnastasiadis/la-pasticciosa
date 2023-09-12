@@ -19,6 +19,10 @@ const router = createRouter({
       name: "login",
       components: {
         default: async () => await import("../views/LoginView.vue"),
+        header: async () =>
+          await import(
+            "../components/reusables/top-level/headers/platform.vue"
+          ),
       },
     },
     {
@@ -41,6 +45,7 @@ const router = createRouter({
           await import(
             "../components/reusables/top-level/headers/platform.vue"
           ),
+        default: async () => await import("../views/DashboardView.vue"),
       },
       children: [
         {
