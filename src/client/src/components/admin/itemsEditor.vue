@@ -76,7 +76,7 @@
 
 <script lang="ts">
 import { useToast, TYPE } from "vue-toastification";
-import { backend, type OutputTypes } from "../../services/backend";
+import { backend, type OutputTypes } from "../../services/data";
 import itemCreator from "./itemCreator.vue";
 import Loader from "../reusables/loaders/containerLoader.vue";
 

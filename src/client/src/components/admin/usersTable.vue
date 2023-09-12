@@ -186,7 +186,7 @@
 
 <script lang="ts">
 import Fuse from "fuse.js";
-import { backend, type OutputTypes } from "../../services/backend";
+import { backend, type OutputTypes } from "../../services/data";
 import { useToast, TYPE } from "vue-toastification";
 import loader from "../reusables/loaders/containerLoader.vue";
 import Table from "../reusables/table/table.vue";

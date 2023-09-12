@@ -77,7 +77,7 @@
 
 <script lang="ts">
 import { TYPE, useToast } from "vue-toastification";
-import { OutputTypes, backend } from "../../services/backend";
+import { OutputTypes, backend } from "../../services/data";
 import Table from "../reusables/table/table.vue";
 import Row from "../reusables/table/row.vue";
 import Cell from "../reusables/table/cell.vue";
