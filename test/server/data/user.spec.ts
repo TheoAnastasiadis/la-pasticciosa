@@ -1,8 +1,8 @@
 import { In } from "typeorm";
-import { AppDataSource } from "../../src/server/database";
-import { Session } from "../../src/server/entities/session";
-import { User, UserStatus, UserType } from "../../src/server/entities/user";
-import { appRouter } from "../../src/server/router";
+import { AppDataSource } from "../../../src/server/database";
+import { Session } from "../../../src/server/entities/session";
+import { User, UserStatus, UserType } from "../../../src/server/entities/user";
+import { appRouter } from "../../../src/server/data/router";
 
 describe("User Entity Use Cases", () => {
   let adminSessionId: string;

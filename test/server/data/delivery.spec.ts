@@ -1,9 +1,12 @@
-import { User, UserType } from "../../src/server/entities/user";
-import { Session } from "../../src/server/entities/session";
-import { appRouter } from "../../src/server/router";
-import { Delivery, DeliveryStatus } from "../../src/server/entities/delivery";
+import { User, UserType } from "../../../src/server/entities/user";
+import { Session } from "../../../src/server/entities/session";
+import { appRouter } from "../../../src/server/data/router";
+import {
+  Delivery,
+  DeliveryStatus,
+} from "../../../src/server/entities/delivery";
 import { In } from "typeorm";
-import { AppDataSource } from "../../src/server/database";
+import { AppDataSource } from "../../../src/server/database";
 
 describe("Delivery Entity Use Cases", () => {
   let adminSessionId: string;
