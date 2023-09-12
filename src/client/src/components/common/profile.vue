@@ -129,7 +129,7 @@
 </template>
 <script lang="ts">
 import { mapStores } from "pinia";
-import { ClientError, OutputTypes, backend } from "../../services/backend";
+import { ClientError, OutputTypes, backend } from "../../services/data";
 import { useUserStore } from "../../stores/user";
 import Table from "../reusables/table/table.vue";
 import Row from "../reusables/table/row.vue";

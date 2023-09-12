@@ -115,7 +115,7 @@
 
 <script lang="ts">
 import { mapStores } from "pinia";
-import { OutputTypes, backend } from "../../services/backend";
+import { OutputTypes, backend } from "../../services/data";
 import { useUserStore } from "../../stores/user";
 import { TYPE, useToast } from "vue-toastification";
 import Loader from "../reusables/loaders/containerLoader.vue";

@@ -109,7 +109,7 @@ import Table from "../reusables/table/table.vue";
 import Row from "../reusables/table/row.vue";
 import Cell from "../reusables/table/cell.vue";
 import DateChip from "./dateChip.vue";
-import { backend, OutputTypes } from "../../services/backend";
+import { backend, OutputTypes } from "../../services/data";
 import { useToast, TYPE } from "vue-toastification";
 import OrderStatusChip from "./orderStatusChip.vue";
 import OrderDeliveryChip from "./orderDeliveryChip.vue";
@@ -156,7 +156,8 @@ export default {
       .then((orders) => {
         this.orders = orders;
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log(e)
         toast("Υπήρξε κάποιο πρόβλημα και οι παραγγελίες δεν φορτώθηκαν.", {
           type: TYPE.ERROR,
         });

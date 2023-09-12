@@ -49,10 +49,12 @@
           class="py-2 px-4 text-xs align-top font-medium leading-snug tracking-wider uppercase text-left border border-gray-200"
         >
           {{
-            quantities
-              .map(({ item, value }) => parseFloat(item.price) * value)
-              .reduce((a, b) => a + b, 0)
-              .toFixed(2)
+            typeof quantities === "undefined"
+              ? []
+              : quantities
+                  .map(({ item, value }) => parseFloat(item.price) * value)
+                  .reduce((a, b) => a + b, 0)
+                  .toFixed(2)
           }}
           &euro;
         </td>

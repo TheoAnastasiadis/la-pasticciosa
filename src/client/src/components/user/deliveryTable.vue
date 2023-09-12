@@ -81,7 +81,7 @@
 
 <script lang="ts">
 import deliveryCreator from "./deliveryCreator.vue";
-import { OutputTypes, backend } from "../../services/backend";
+import { OutputTypes, backend } from "../../services/data";
 import Tooltip from "../reusables/interactives/tooltip.vue";
 
 type Delivery = OutputTypes["requestDelivery"];

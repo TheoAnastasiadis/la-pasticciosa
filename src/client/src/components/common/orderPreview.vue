@@ -105,7 +105,7 @@
 
 <script lang="ts">
 import { useToast, TYPE } from "vue-toastification";
-import { backend, OutputTypes } from "../../services/backend";
+import { backend, OutputTypes } from "../../services/data";
 import Loader from "../reusables/loaders/buttonLoader.vue";
 import ContainerLoader from "../reusables/loaders/containerLoader.vue";
 import Overlay from "../reusables/interactives/overlay.vue";
@@ -120,6 +120,7 @@ export default {
     agreed: false,
     order: undefined as Order | undefined,
     show: 0,
+    quantities: [],
   }),
   methods: {
     async placeOrder() {
@@ -133,7 +134,6 @@ export default {
             item: item.id,
             value,
           })),
-          // @ts-expect-error On Behalf is not explicitly declared in the router input
           onBehalf: this.user.uuid,
         })
         .then((order) => {

@@ -75,7 +75,7 @@
 </template>
 
 <script lang="ts">
-import { OutputTypes, backend } from "../../services/backend";
+import { OutputTypes, backend } from "../../services/data";
 import Drop from "../reusables/interactives/drop.vue";
 import Card from "../reusables/content/card.vue";
 import Action from "../reusables/content/action.vue";

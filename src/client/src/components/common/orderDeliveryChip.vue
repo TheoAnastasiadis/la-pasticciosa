@@ -68,7 +68,7 @@ import "moment/dist/locale/el";
 import ButtonLoader from "../reusables/loaders/buttonLoader.vue";
 import Drop from "../reusables/interactives/drop.vue";
 import Card from "../reusables/content/card.vue";
-import { backend } from "../../services/backend";
+import { backend } from "../../services/data";
 import { TYPE, useToast } from "vue-toastification";
 import { mapStores } from "pinia";
 import { useUserStore } from "../../stores/user";

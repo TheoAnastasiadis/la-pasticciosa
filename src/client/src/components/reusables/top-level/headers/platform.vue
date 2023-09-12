@@ -71,7 +71,7 @@
 <script lang="ts">
 import { mapStores } from "pinia";
 import { useUserStore } from "../../../../stores/user";
-import { backend } from "../../../../services/backend";
+import { backend } from "../../../../services/data";
 
 export default {
   computed: {

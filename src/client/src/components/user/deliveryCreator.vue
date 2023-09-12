@@ -95,7 +95,7 @@
 import { toTypedSchema } from "@vee-validate/zod";
 import { Form, Field, ErrorMessage } from "vee-validate";
 import { z } from "zod";
-import { backend, type OutputTypes } from "../../services/backend";
+import { backend, type OutputTypes } from "../../services/data";
 import { useToast, TYPE } from "vue-toastification";
 import Loader from "../reusables/loaders/buttonLoader.vue";
 
