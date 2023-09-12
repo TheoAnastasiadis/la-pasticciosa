@@ -183,7 +183,7 @@ import { Field, Form, ErrorMessage } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import { z } from "zod";
 import { useToast, TYPE } from "vue-toastification";
-import { backend, type ClientError } from "../services/backend";
+import { backend, type ClientError } from "../services/data";
 import loader from "../components/reusables/loaders/buttonLoader.vue";
 
 export default {

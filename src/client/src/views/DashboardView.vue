@@ -1,6 +1,6 @@
 <template>
-  <Nav :header="adminHeader" v-if="userStore.user?.type === 'admin'" />
-  <Nav v-else :header="userHeader" />
+  <Nav :header="adminHeader" v-if="userStore.user?.type === 'admin'"></Nav>
+  <Nav v-else :header="userHeader"></Nav>
 </template>
 
 <script lang="ts">

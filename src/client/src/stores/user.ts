@@ -1,5 +1,5 @@
 import { defineStore, mapActions } from "pinia";
-import { OutputTypes } from "../services/backend";
+import { OutputTypes } from "../services/data";
 
 type User = OutputTypes["viewUsers"][number];
 

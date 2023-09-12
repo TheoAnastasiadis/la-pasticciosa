@@ -88,7 +88,7 @@ import { Field, Form, ErrorMessage } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import { z } from "zod";
 import { useToast, TYPE } from "vue-toastification";
-import { backend, type ClientError } from "../services/backend";
+import { backend, type ClientError } from "../services/data";
 import { useUserStore } from "../stores/user";
 import { mapActions, mapStores } from "pinia";
 import loader from "../components/reusables/loaders/buttonLoader.vue";
@@ -149,7 +149,7 @@ export default {
       const user = users.find((user) => user.email === email);
       this.userStore.login(user);
       this.loading = false;
-      this.$router.push("/");
+      this.$router.push("/dashboard");
     },
     ...mapActions(useUserStore, ["login"]),
   },
