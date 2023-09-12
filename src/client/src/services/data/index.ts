@@ -3,19 +3,13 @@ import {
   createTRPCProxyClient,
   httpBatchLink,
 } from "@trpc/client";
-import type { AppRouter } from "../../../../server/router";
+import type { AppRouter } from "../../../../server/data/router";
 import { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 
 export const backend = createTRPCProxyClient<AppRouter>({
   links: [
     httpBatchLink({
-      url: "http://localhost:8080/data",
-      fetch(url, options) {
-        return fetch(url, {
-          ...options,
-          credentials: "include",
-        });
-      },
+      url: import.meta.env.VITE_BASE_URL + "data",
     }),
   ],
 });
