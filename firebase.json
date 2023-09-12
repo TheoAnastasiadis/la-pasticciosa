@@ -1,0 +1,22 @@
+{
+  "$schema": "https://raw.githubusercontent.com/invertase/react-native-firebase/main/packages/app/firebase-schema.json",
+  "hosting": {
+    "public": "./src/client/dist",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "/data/**",
+        "function": {
+          "functionId": "data"
+        }
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "functions": [
+    { "source": "build", "codebase": "default", "runtime": "nodejs18" }
+  ]
+}
