@@ -7,10 +7,14 @@ export const useUserStore = defineStore("user", {
   state: () => {
     let user: User | undefined;
 
-    user =
-      localStorage.getItem("user") !== null
-        ? JSON.parse(localStorage.getItem("user") as string)
-        : undefined;
+    try {
+      user =
+        localStorage.getItem("user") !== null
+          ? JSON.parse(localStorage.getItem("user") as string)
+          : undefined;
+    } catch (e) {
+      localStorage.removeItem("user");
+    }
 
     return { user };
   },
