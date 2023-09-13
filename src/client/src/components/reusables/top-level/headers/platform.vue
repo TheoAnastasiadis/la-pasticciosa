@@ -71,7 +71,7 @@
 <script lang="ts">
 import { mapStores } from "pinia";
 import { useUserStore } from "../../../../stores/user";
-import { backend } from "../../../../services/data";
+import auth from "../../../../services/auth";
 
 export default {
   computed: {
@@ -79,9 +79,9 @@ export default {
   },
   methods: {
     async logout() {
-      await backend.logOut.query();
+      await auth.logout();
       this.userStore.logout();
-      this.$router.push("/");
+      this.$router.push({ name: "home" });
     },
   },
 };
