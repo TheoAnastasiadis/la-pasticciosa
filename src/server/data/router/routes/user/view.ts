@@ -3,7 +3,7 @@ import authenticate from "../../middleware/authenticate";
 import authorize from "../../middleware/authorize";
 import { procedure } from "../../setup";
 import { z } from "zod";
-import { userWNoPassword } from "../../validators";
+import { userWNoPassword } from "../../../../validators";
 import appConfig from "../../../../config/app.config";
 import { Not } from "typeorm";
 

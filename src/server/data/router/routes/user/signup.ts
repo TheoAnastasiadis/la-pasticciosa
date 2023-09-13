@@ -2,7 +2,7 @@ import { User, UserStatus, UserType } from "../../../../entities/user";
 import authenticate from "../../middleware/authenticate";
 import authorize from "../../middleware/authorize";
 import { procedure } from "../../setup";
-import { requestUserProps, userWNoPassword } from "../../validators";
+import { requestUserProps, userWNoPassword } from "../../../../validators";
 
 export const signUp = procedure
   .meta({ secure: false, adminOnly: false })

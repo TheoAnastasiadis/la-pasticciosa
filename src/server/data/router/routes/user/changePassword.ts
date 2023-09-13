@@ -4,7 +4,7 @@ import authenticate from "../../middleware/authenticate";
 import authorize from "../../middleware/authorize";
 import { procedure } from "../../setup";
 import { z } from "zod";
-import { userPasswordParser } from "../../validators";
+import { userPasswordParser } from "../../../../validators";
 
 export const changePassword = procedure
   .meta({ secure: true, adminOnly: false })

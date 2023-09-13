@@ -9,7 +9,7 @@ import type { Item } from "../../../../entities/item";
 import type { Delivery } from "../../../../entities/delivery";
 import type { Quantity } from "../../../../entities/quantity";
 import type { User } from "../../../../entities/user";
-import { orderWUserDeliveryQuantities } from "../../validators";
+import { orderWUserDeliveryQuantities } from "../../../../validators";
 
 type OrderWUserDeliveryQuantities = Order & {
   user: User;

@@ -10,7 +10,7 @@ import { z } from "zod";
 import {
   OrderStatusParser,
   orderWUserDeliveryQuantities,
-} from "../../validators";
+} from "../../../../validators";
 
 type OrderWUserDeliveryQuantities = Order & {
   user: User;

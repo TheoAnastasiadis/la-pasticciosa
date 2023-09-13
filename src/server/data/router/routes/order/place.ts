@@ -9,7 +9,7 @@ import type { Quantity } from "../../../../entities/quantity";
 import {
   RequestQuantityProps,
   orderWUserDeliveryQuantities,
-} from "../../validators";
+} from "../../../../validators";
 import { z } from "zod";
 import businessLogic from "../../../businessLogic/order";
 import { AppDataSource } from "../../../../database";

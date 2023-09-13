@@ -5,7 +5,7 @@ import { procedure } from "../../setup";
 import { User } from "../../../../entities/user";
 import { Item } from "../../../../entities/item";
 import { In } from "typeorm";
-import { itemProps } from "../../validators";
+import { itemProps } from "../../../../validators";
 import appConfig from "../../../../config/app.config";
 
 const PAGINATION_LIMIT = appConfig.getPaginationLimit();

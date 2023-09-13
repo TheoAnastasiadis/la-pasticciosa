@@ -7,7 +7,7 @@ import authenticate from "../../middleware/authenticate";
 import authorize from "../../middleware/authorize";
 import { procedure } from "../../setup";
 import { z } from "zod";
-import { orderWUserDeliveryQuantities } from "../../validators";
+import { orderWUserDeliveryQuantities } from "../../../../validators";
 import appConfig from "../../../../config/app.config";
 
 const PAGINATION_LIMIT = appConfig.getPaginationLimit();

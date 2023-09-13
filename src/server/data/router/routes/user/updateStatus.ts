@@ -3,7 +3,7 @@ import authenticate from "../../middleware/authenticate";
 import authorize from "../../middleware/authorize";
 import { procedure } from "../../setup";
 import { z } from "zod";
-import { userStatusParser, userWNoPassword } from "../../validators";
+import { userStatusParser, userWNoPassword } from "../../../../validators";
 
 export const updateStatus = procedure
   .meta({ secure: true, adminOnly: true })

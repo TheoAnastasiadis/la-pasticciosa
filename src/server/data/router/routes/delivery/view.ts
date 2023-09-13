@@ -4,7 +4,7 @@ import authorize from "../../middleware/authorize";
 import { procedure } from "../../setup";
 import { Delivery } from "../../../../entities/delivery";
 import { User } from "../../../../entities/user";
-import { deliveryWUser } from "../../validators";
+import { deliveryWUser } from "../../../../validators";
 import appConfig from "../../../../config/app.config";
 
 const PAGINATION_LIMIT = appConfig.getPaginationLimit();

@@ -3,7 +3,7 @@ import { User } from "../../../../entities/user";
 import authenticate from "../../middleware/authenticate";
 import authorize from "../../middleware/authorize";
 import { procedure } from "../../setup";
-import { deliveryWNoUser, requestDeliveryProps } from "../../validators";
+import { deliveryWNoUser, requestDeliveryProps } from "../../../../validators";
 
 export const request = procedure
   .meta({ secure: true, adminOnly: false })

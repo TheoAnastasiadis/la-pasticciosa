@@ -6,7 +6,7 @@ import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { Session } from "../../../../entities/session";
 import moment from "moment";
-import { userProps } from "../../validators";
+import { userProps } from "../../../../validators";
 
 export const login = procedure
   .meta({ secure: false, adminOnly: false })
