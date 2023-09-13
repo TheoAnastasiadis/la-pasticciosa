@@ -92,6 +92,7 @@ import { backend, type ClientError } from "../services/data";
 import { useUserStore } from "../stores/user";
 import { mapActions, mapStores } from "pinia";
 import loader from "../components/reusables/loaders/buttonLoader.vue";
+import auth from "../services/auth";
 
 export default {
   data() {
@@ -120,36 +121,42 @@ export default {
       const { email, password } = values;
 
       this.loading = true; // start of async op
+      let success = true;
 
-      await backend.logIn
-        .query({ email, password })
-        .catch((error: ClientError) => {
-          if (error.message === "Failed to fetch") {
-            toast(
-              "Πρόβλημα στην σύνδεση με τον διακομιστή. Παρακαλώ προσπαθήστε ξανά.",
-              {
-                type: TYPE.ERROR,
-              },
-            );
-          } else {
-            toast(error.message, { type: TYPE.ERROR });
-          }
-          this.loading = false;
-        });
-
-      const users = await backend.viewUsers.query({ page: 0 }).catch(() => {
-        toast(
-          "Πρόβλημα στην σύνδεση με τον διακομιστή. Παρακαλώ προσπαθήστε ξανά.",
-          { type: TYPE.ERROR },
-        );
+      await auth.login(email, password).catch((error) => {
+        if (error.message === "Failed to fetch") {
+          toast(
+            "Πρόβλημα στην σύνδεση με τον διακομιστή. Παρακαλώ προσπαθήστε ξανά.",
+            {
+              type: TYPE.ERROR,
+            },
+          );
+        } else {
+          toast(
+            "Τα στοιχεία σύνδεσης δεν είναι σωστά. Παρακαλώ βεβαιωθείτε ότι το email και ο κωδικός πρόσβασης ταιριάζουν.",
+            { type: TYPE.ERROR },
+          );
+        }
         this.loading = false;
-        return [];
+        success = false;
       });
 
-      const user = users.find((user) => user.email === email);
-      this.userStore.login(user);
-      this.loading = false;
-      this.$router.push("/dashboard");
+      if (success)
+        await backend.viewUsers
+          .query({ page: 0 })
+          .then((users) => {
+            const user = users.find((user) => user.email === email);
+            this.userStore.login(user);
+            this.loading = false;
+            this.$router.push("/dashboard");
+          })
+          .catch(() => {
+            toast(
+              "Πρόβλημα στην σύνδεση με τον διακομιστή. Παρακαλώ προσπαθήστε ξανά.",
+              { type: TYPE.ERROR },
+            );
+            this.loading = false;
+          });
     },
     ...mapActions(useUserStore, ["login"]),
   },
