@@ -11,6 +11,12 @@
         }
       },
       {
+        "source": "/auth/**",
+        "function": {
+          "functionId": "auth"
+        }
+      },
+      {
         "source": "**",
         "destination": "/index.html"
       }
