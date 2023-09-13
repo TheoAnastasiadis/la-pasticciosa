@@ -23,6 +23,9 @@ export default defineConfig({
     },
   },
   server: {
-    proxy: { "/data": process.env.DEV_DATA_URL as string },
+    proxy: {
+      "/data": process.env.DEV_DATA_URL as string,
+      "/auth": process.env.DEV_AUTH_URL as string,
+    },
   },
 });
