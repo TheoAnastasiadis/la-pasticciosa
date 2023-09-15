@@ -8,7 +8,7 @@
       </h3>
       <Form
         class="text-sm"
-        @submit="onSubmit"
+        @submit="login"
         :validation-schema="schema"
         v-slot="{ errors }"
       >
@@ -23,6 +23,7 @@
               class="block w-full rounded-md py-2.5 px-3.5 text-white placeholder-white placeholder-opacity-75 bg-primary-800 bg-opacity-25 transition focus:bg-opacity-50 focus:outline-none"
               aria-label="email"
               placeholder="διεύθυνση ηλεκτρονικού ταχυδρομείου"
+              v-bind="email"
             />
             <div
               class="mt-3 text-red-400 text-xs leading-snug custom-backend-error"
@@ -40,6 +41,7 @@
               class="block w-full rounded-md py-2.5 px-3.5 text-white placeholder-white placeholder-opacity-75 bg-primary-800 bg-opacity-25 transition focus:bg-opacity-50 focus:outline-none"
               aria-label="Password"
               placeholder="κωδικός πρόσβασης"
+              v-bind="password"
             />
             <div
               class="mt-3 text-red-400 text-xs leading-snug custom-backend-error"
@@ -68,6 +70,48 @@
       </Form>
     </div>
   </div>
+  <h6 class="mx-auto md:w-6/12 myb-3 mt-5 text-center">
+    Ή επιλέξτε ένα από τα παρακάτω
+  </h6>
+  <div
+    class="p-4 grid grid-cols-1 md:grid-cols-2 w-12/12 md:w-6/12 mx-auto space-x-0 md:space-x-2 space-y-4 md:space-y-0"
+  >
+    <div class="rounded-md w-full">
+      <a
+        href="/auth/login/google"
+        class="px-4 py-2 flex gap-2 border-slate-200 rounded-lg text-slate-700 hover:text-slate-900 hover:shadow transition ease-in w-full justify-center bg-slate-100 hover:bg-slate-200 cursor-pointer"
+      >
+        <img
+          class="w-6 h-6"
+          src="https://www.svgrepo.com/show/475656/google-color.svg"
+          loading="lazy"
+          alt="google logo"
+        />
+        <span>Σύνδεση μέσω Google</span>
+      </a>
+    </div>
+    <div class="rounded-md w-full">
+      <a
+        type="button"
+        href="/auth/login/facebook"
+        class="py-2 px-4 max-w-md flex justify-center items-center hover:bg-[#3b5998] bg-[#4267B3] focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg hover:shadow cursor-pointer"
+      >
+        <svg
+          width="20"
+          height="20"
+          fill="currentColor"
+          class="mr-2"
+          viewBox="0 0 1792 1792"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M1343 12v264h-157q-86 0-116 36t-30 108v189h293l-39 296h-254v759h-306v-759h-255v-296h255v-218q0-186 104-288.5t277-102.5q147 0 228 12z"
+          ></path>
+        </svg>
+        Σύνδεση μέσω Facebook
+      </a>
+    </div>
+  </div>
   <div class="flex-auto w-12/12 md:w-6/12 mx-auto p-4 md:p-7 sm:p-9 text-base">
     <p>
       Δεν είστε ακόμη χρήστης της πλατφόρμας; Εγγραφείτε με τον
@@ -83,83 +127,12 @@
 }
 </style>
 
-<script lang="ts">
+<script setup lang="ts">
 import { Field, Form, ErrorMessage } from "vee-validate";
-import { toTypedSchema } from "@vee-validate/zod";
-import { z } from "zod";
-import { useToast, TYPE } from "vue-toastification";
-import { backend, type ClientError } from "../services/data";
-import { useUserStore } from "../stores/user";
-import { mapActions, mapStores } from "pinia";
 import loader from "../components/reusables/loaders/buttonLoader.vue";
-import auth from "../services/auth";
+import { useLogin } from "../composables/auth/login";
+import { useLoginForm } from "../composables/forms/login";
 
-export default {
-  data() {
-    return {
-      loading: false,
-      schema: toTypedSchema(
-        z.object({
-          email: z
-            .string({
-              required_error: "Αυτό το πεδίο είναι υποχρεωτικό",
-            })
-            .email("Βεβαιωθείτε ότι έχετε συμπληρώσει σωστά το email σας."),
-          password: z
-            .string({ required_error: "Αυτό το πεδίο είναι υποχρεωτικό" })
-            .min(8, "Οι κωδικοί αποτελούνται από 8 χαρακτήρες και πάνω."),
-        }),
-      ),
-    };
-  },
-  computed: {
-    ...mapStores(useUserStore),
-  },
-  methods: {
-    async onSubmit(values) {
-      const toast = useToast();
-      const { email, password } = values;
-
-      this.loading = true; // start of async op
-      let success = true;
-
-      await auth.login(email, password).catch((error) => {
-        if (error.message === "Failed to fetch") {
-          toast(
-            "Πρόβλημα στην σύνδεση με τον διακομιστή. Παρακαλώ προσπαθήστε ξανά.",
-            {
-              type: TYPE.ERROR,
-            },
-          );
-        } else {
-          toast(
-            "Τα στοιχεία σύνδεσης δεν είναι σωστά. Παρακαλώ βεβαιωθείτε ότι το email και ο κωδικός πρόσβασης ταιριάζουν.",
-            { type: TYPE.ERROR },
-          );
-        }
-        this.loading = false;
-        success = false;
-      });
-
-      if (success)
-        await backend.viewUsers
-          .query({ page: 0 })
-          .then((users) => {
-            const user = users.find((user) => user.email === email);
-            this.userStore.login(user);
-            this.loading = false;
-            this.$router.push("/dashboard");
-          })
-          .catch(() => {
-            toast(
-              "Πρόβλημα στην σύνδεση με τον διακομιστή. Παρακαλώ προσπαθήστε ξανά.",
-              { type: TYPE.ERROR },
-            );
-            this.loading = false;
-          });
-    },
-    ...mapActions(useUserStore, ["login"]),
-  },
-  components: { Field, Form, ErrorMessage, loader },
-};
+const { email, password, schema } = useLoginForm();
+const { loading, login } = useLogin(email, password);
 </script>
