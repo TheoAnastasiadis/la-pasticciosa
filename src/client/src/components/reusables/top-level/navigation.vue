@@ -50,16 +50,18 @@
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { TransitionExpand } from "@morev/vue-transitions";
+import { ref } from "vue";
+import { useUserStore } from "../../../stores/user";
 
-export default {
-  props: { header: Array },
-  data: () => ({
-    open: true,
-  }),
-  components: { TransitionExpand },
-};
+const userStore = useUserStore();
+userStore.login();
+
+const { header } = defineProps<{
+  header: Array<{ title: string; icon: string; hash: string }>;
+}>();
+const open = ref(true);
 </script>
 
 <style scoped>
