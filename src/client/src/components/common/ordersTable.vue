@@ -30,7 +30,7 @@
       </button>
       <TransitionExpand appear>
         <div class="mb-5 mt-2" v-if="placingOrder">
-          <CreateOrder @order-placed="orderPlaced" :user="user" />
+          <CreateOrder @order-placed="orderPlaced" ref="selectedUser" />
         </div>
       </TransitionExpand>
     </div>
@@ -103,96 +103,57 @@
 }
 </style>
 
-<script lang="ts">
+<script setup lang="ts">
 import CreateOrder from "./createOrder.vue";
 import Table from "../reusables/table/table.vue";
 import Row from "../reusables/table/row.vue";
 import Cell from "../reusables/table/cell.vue";
 import DateChip from "./dateChip.vue";
 import { backend, OutputTypes } from "../../services/data";
-import { useToast, TYPE } from "vue-toastification";
 import OrderStatusChip from "./orderStatusChip.vue";
 import OrderDeliveryChip from "./orderDeliveryChip.vue";
 import OrderTable from "./orderTable.vue";
 import UserInfo from "./userInfo.vue";
 import Loader from "../reusables/loaders/containerLoader.vue";
-import { mapStores } from "pinia";
 import { useUserStore } from "../../stores/user";
 import { TransitionExpand } from "@morev/vue-transitions";
+import { Ref, ref } from "vue";
 
-type Order = OutputTypes["viewOrders"][number];
-type User = OutputTypes["viewUsers"][number];
+type User = OutputTypes["viewUsers"][number]
+type Order = OutputTypes["viewOrders"][number]
 
-export default {
-  components: {
-    CreateOrder,
-    Table,
-    Row,
-    Cell,
-    DateChip,
-    OrderStatusChip,
-    OrderDeliveryChip,
-    OrderTable,
-    UserInfo,
-    Loader,
-    TransitionExpand,
-  },
-  data: () => ({
-    placingOrder: false,
-    orders: [] as Order[],
-    loading: false,
-    user: undefined as User | undefined,
-  }),
-  async mounted() {
-    this.loading = true;
-    const toast = useToast();
 
-    //update user info
-    if (this.userStore.user.type === "user") this.user = this.userStore.user;
+const useOrderTable = (user: Ref<User | undefined>) => {
+  const orders = ref<Order[]>([])
+    const loading = ref(false);
 
-    // fetch orders
-    await backend.viewOrders
-      .query({page: 0})
-      .then((orders) => {
-        this.orders = orders;
-      })
-      .catch((e) => {
-        console.log(e)
-        toast("Υπήρξε κάποιο πρόβλημα και οι παραγγελίες δεν φορτώθηκαν.", {
-          type: TYPE.ERROR,
-        });
-      })
-      .finally(() => {
-        this.loading = false;
-      });
-  },
-  methods: {
-    orderUpdated(order) {
-      order.user = this.user;
-      this.orders = this.orders.map((o) => {
+  const loadOrders = (page: Ref<number>) => {
+    loading.value = true;
+    backend.viewOrders.query({page: page.value}).then(result => orders.value = result).catch(() => {}).finally(() => {loading.value = false;})}
+
+  const orderUpdated = (order: Order) => {
+    if (user.value) order.user = user.value;
+    orders.value = orders.value.map((o) => {
         if (o.id == order.id) o = order;
         return o;
-      });
-    },
-    orderPlaced(order) {
-      this.orders.unshift(order);
-      this.placingOrder = false;
-    },
-  },
-  computed: {
-    ...mapStores(useUserStore),
-    columns() {
-      if (this.userStore.user.type === "user")
-        return ["Ημ/νια υποβολης", "συνολο", "κατασταση", "εκτ. παραδοση"];
-      else
-        return [
-          "Ημ/νια υποβολης",
-          "χρηστης",
-          "συνολο",
-          "κατασταση",
-          "εκτ. παραδοση",
-        ];
-    },
-  },
-};
+    });}
+
+    const orderPlaced = (order: Order) => {
+      orders.value.unshift(order);
+      placingOrder.value = false;
+    }
+
+    return {orders, loadOrders, orderUpdated, orderPlaced, loading}
+}
+
+const placingOrder = ref(false);
+const page = ref(0);
+const userStore = useUserStore();
+
+const columns = userStore?.user?.type === "user" ? ["Ημ/νια υποβολης", "συνολο", "κατασταση", "εκτ. παραδοση"] : ["Ημ/νια υποβολης",  "χρηστης","συνολο", "κατασταση",  "εκτ. παραδοση"]
+
+const selectedUser = ref<User>();
+const {orderUpdated, orderPlaced, orders, loadOrders, loading} = useOrderTable(selectedUser);
+
+loadOrders(page);
 </script>
