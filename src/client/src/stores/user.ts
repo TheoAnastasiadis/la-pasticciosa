@@ -1,5 +1,5 @@
 import { defineStore, mapActions } from "pinia";
-import { OutputTypes } from "../services/data";
+import { OutputTypes, backend } from "../services/data";
 
 type User = OutputTypes["viewUsers"][number];
 
@@ -19,9 +19,10 @@ export const useUserStore = defineStore("user", {
     return { user };
   },
   actions: {
-    login(user: User) {
-      this.user = user;
+    async login() {
+      const user = await backend.profile.query();
       localStorage.setItem("user", JSON.stringify(user));
+      this.user = user;
     },
     logout() {
       this.user = undefined;
