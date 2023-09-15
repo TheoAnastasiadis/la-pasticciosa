@@ -120,7 +120,6 @@ export default {
     agreed: false,
     order: undefined as Order | undefined,
     show: 0,
-    quantities: [],
   }),
   methods: {
     async placeOrder() {
@@ -130,10 +129,11 @@ export default {
       await backend.placeOrder
         .mutate({
           deliveryId: this.selectedDelivery.id,
-          quantities: this.quantities.map(({ item, value }) => ({
+          quantityIds: this.quantities.map(({ item, value }) => ({
             item: item.id,
             value,
           })),
+          //@ts-expect-error onBehalf is not explicitly defined as an input
           onBehalf: this.user.uuid,
         })
         .then((order) => {
