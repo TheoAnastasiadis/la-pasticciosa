@@ -6,11 +6,13 @@ export default {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "same-origin",
     });
   },
   async logout() {
     return await fetch("/auth/logout", {
       method: "post",
+      credentials: "same-origin",
     });
   },
 };
