@@ -7,11 +7,10 @@ import * as deliveryRoutes from "./routes/delivery";
 export const appRouter = router({
   // User Routes
   signUp: userRoutes.signUp,
-  logIn: userRoutes.login,
-  logOut: userRoutes.logout,
   updateUserStatus: userRoutes.updateStatus,
   viewUsers: userRoutes.view,
   changePassword: userRoutes.changePassword,
+  profile: userRoutes.profile,
   // Items Routes
   toggleAssignment: itemRoutes.toggleAssignment,
   createItem: itemRoutes.create,
