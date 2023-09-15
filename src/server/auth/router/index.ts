@@ -2,8 +2,8 @@ import express from "express";
 import login from "./routes/login";
 import logout from "./routes/logout";
 
-import googleAuth from "../middleware/authFunctions/google";
-import localAuth from "../middleware/authFunctions/local";
+import googleAuth from "../middleware/auth/authFunctions/google";
+import localAuth from "../middleware/auth/authFunctions/local";
 
 const router = express();
 
