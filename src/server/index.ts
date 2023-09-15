@@ -7,7 +7,7 @@ import dataApp from "./data";
 import authApp from "./auth";
 
 /** Init */
-await AppDataSource.initialize();
+await AppDataSource.initialize().catch(console.error);
 initializeApp();
 
 /** Mount */
