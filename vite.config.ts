@@ -6,7 +6,7 @@ import vue from "@vitejs/plugin-vue";
 import { babel } from "@rollup/plugin-babel";
 
 import { config } from "dotenv";
-config();
+config({ debug: true, path: ".env.local" });
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -24,8 +24,14 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/data": process.env.DEV_DATA_URL as string,
-      "/auth": process.env.DEV_AUTH_URL as string,
+      "/data": {
+        target: process.env.EMULATORS_URL as string,
+        rewrite: (path) => path.replace("/data", "/data/data"),
+      },
+      "/auth": {
+        target: process.env.EMULATORS_URL as string,
+        rewrite: (path) => path.replace("/auth", "/auth/auth"),
+      },
     },
   },
 });
