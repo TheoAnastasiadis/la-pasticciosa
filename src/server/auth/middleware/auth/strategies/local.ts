@@ -1,5 +1,5 @@
 import { Strategy as LocalStrategy } from "passport-local";
-import { User } from "../../../entities/user";
+import { User } from "../../../../entities/user";
 
 export default new LocalStrategy({ usernameField: "email" }, function (
   email,

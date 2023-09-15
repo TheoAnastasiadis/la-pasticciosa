@@ -1,7 +1,7 @@
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import appConfig from "../../../config/app.config";
-import { User } from "../../../entities/user";
 import { In } from "typeorm";
+import appConfig from "../../../../config/app.config";
+import { User } from "../../../../entities/user";
 
 export default new GoogleStrategy(
   {
