@@ -3,64 +3,41 @@
   <Nav v-else :header="userHeader"></Nav>
 </template>
 
-<script lang="ts">
-import UsersTable from "../components/admin/usersTable.vue";
-import ItemsEditor from "../components/admin/itemsEditor.vue";
-import LocationsTable from "../components/admin/locationsTable.vue";
-import DeliveryTable from "../components/user/deliveryTable.vue";
-import { mapStores } from "pinia";
-import { useUserStore } from "../stores/user";
+<script setup lang="ts">
 import Nav from "../components/reusables/top-level/navigation.vue";
-import ItemsViewer from "../components/user/itemsViewer.vue";
-import Profile from "../components/common/profile.vue";
-import OrdersTable from "../components/common/ordersTable.vue";
+import { useUserStore } from "../stores/user";
 
-export default {
-  data: () => ({
-    adminHeader: [
-      { title: "Παραγγελίες", icon: "truck", hash: "orders" },
-      { title: "Χρήστες", icon: "users", hash: "users" },
-      { title: "Προϊόντα", icon: "package", hash: "items" },
-      {
-        title: "Τοποθεσίες Παράδοσης",
-        icon: "navigator-2",
-        hash: "deliveries",
-      },
-      { title: "Προφίλ", icon: "user", hash: "profile" },
-      {
-        title: "Βοήθεια",
-        icon: "book",
-        hash: "help",
-      },
-    ],
-    userHeader: [
-      { title: "Παραγγελίες", icon: "truck", hash: "orders" },
-      { title: "Κατάλογος", icon: "book", hash: "catalogue" },
-      {
-        title: "Τοποθεσίες Παράδοσης",
-        icon: "navigator-2",
-        hash: "locations",
-      },
-      { title: "Προφίλ", icon: "user", hash: "profile" },
-      {
-        title: "Βοήθεια",
-        icon: "book",
-        hash: "help",
-      },
-    ],
-  }),
-  computed: {
-    ...mapStores(useUserStore),
+const userStore = useUserStore();
+
+const adminHeader = [
+  { title: "Παραγγελίες", icon: "truck", hash: "orders" },
+  { title: "Χρήστες", icon: "users", hash: "users" },
+  { title: "Προϊόντα", icon: "package", hash: "items" },
+  {
+    title: "Τοποθεσίες Παράδοσης",
+    icon: "navigator-2",
+    hash: "deliveries",
   },
-  components: {
-    UsersTable,
-    ItemsEditor,
-    LocationsTable,
-    DeliveryTable,
-    Nav,
-    ItemsViewer,
-    Profile,
-    OrdersTable,
+  { title: "Προφίλ", icon: "user", hash: "profile" },
+  {
+    title: "Βοήθεια",
+    icon: "book",
+    hash: "help",
   },
-};
+];
+const userHeader = [
+  { title: "Παραγγελίες", icon: "truck", hash: "orders" },
+  { title: "Κατάλογος", icon: "book", hash: "catalogue" },
+  {
+    title: "Τοποθεσίες Παράδοσης",
+    icon: "navigator-2",
+    hash: "locations",
+  },
+  { title: "Προφίλ", icon: "user", hash: "profile" },
+  {
+    title: "Βοήθεια",
+    icon: "book",
+    hash: "help",
+  },
+];
 </script>
