@@ -16,8 +16,7 @@ export default function (
   })
     .save()
     .then((session) => {
-      console.log("sessionId", session.id);
-      res.cookie("sessionId", session.id, {
+      res.cookie("__session", session.id, {
         httpOnly: true,
         expires: moment().add(1, "M").toDate(),
       });

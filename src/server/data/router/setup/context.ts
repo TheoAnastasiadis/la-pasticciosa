@@ -12,7 +12,7 @@ export async function createContext({
   res,
 }: trpcExpress.CreateExpressContextOptions): Promise<Context> {
   return {
-    sessionId: req.cookies.sessionId,
+    sessionId: req.cookies.__session,
     setCookie: res.cookie.bind(res),
   };
 }
