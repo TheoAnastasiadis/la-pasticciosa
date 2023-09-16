@@ -36,6 +36,7 @@
     </div>
 
     <Table :columns="columns" include-index>
+      <template #pagination><Pagination :page="page" @prev="decrement()" @next="increment()"/></template>
       <Row v-for="order in orders" :colspan="columns.length + 1">
         <template #head
           ><span class="inline-block md:hidden">Παραγγελια #</span
@@ -109,7 +110,7 @@ import Table from "../reusables/table/table.vue";
 import Row from "../reusables/table/row.vue";
 import Cell from "../reusables/table/cell.vue";
 import DateChip from "./dateChip.vue";
-import { backend, OutputTypes } from "../../services/data";
+import { type OutputTypes } from "../../services/data";
 import OrderStatusChip from "./orderStatusChip.vue";
 import OrderDeliveryChip from "./orderDeliveryChip.vue";
 import OrderTable from "./orderTable.vue";
@@ -117,43 +118,22 @@ import UserInfo from "./userInfo.vue";
 import Loader from "../reusables/loaders/containerLoader.vue";
 import { useUserStore } from "../../stores/user";
 import { TransitionExpand } from "@morev/vue-transitions";
-import { Ref, ref } from "vue";
+import { ref } from "vue";
+import Pagination from "../reusables/table/pagination.vue"
+import { usePagination } from "../../composables/table/pagination";
+import { useOrders } from "../../services/data/orders";
 
 type User = OutputTypes["viewUsers"][number]
-type Order = OutputTypes["viewOrders"][number]
-
-
-const useOrderTable = (user: Ref<User | undefined>) => {
-  const orders = ref<Order[]>([])
-    const loading = ref(false);
-
-  const loadOrders = (page: Ref<number>) => {
-    loading.value = true;
-    backend.viewOrders.query({page: page.value}).then(result => orders.value = result).catch(() => {}).finally(() => {loading.value = false;})}
-
-  const orderUpdated = (order: Order) => {
-    if (user.value) order.user = user.value;
-    orders.value = orders.value.map((o) => {
-        if (o.id == order.id) o = order;
-        return o;
-    });}
-
-    const orderPlaced = (order: Order) => {
-      orders.value.unshift(order);
-      placingOrder.value = false;
-    }
-
-    return {orders, loadOrders, orderUpdated, orderPlaced, loading}
-}
 
 const placingOrder = ref(false);
-const page = ref(0);
 const userStore = useUserStore();
+const {page, watchPage, increment, decrement} = usePagination()
 
 const columns = userStore?.user?.type === "user" ? ["Ημ/νια υποβολης", "συνολο", "κατασταση", "εκτ. παραδοση"] : ["Ημ/νια υποβολης",  "χρηστης","συνολο", "κατασταση",  "εκτ. παραδοση"]
 
 const selectedUser = ref<User>();
-const {orderUpdated, orderPlaced, orders, loadOrders, loading} = useOrderTable(selectedUser);
+const {orderUpdated, orderPlaced, orders, loadOrders, loading} = useOrders(selectedUser, placingOrder);
 
-loadOrders(page);
+loadOrders(page.value);
+watchPage(loadOrders);
 </script>

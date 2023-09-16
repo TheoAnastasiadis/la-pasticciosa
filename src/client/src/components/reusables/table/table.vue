@@ -21,6 +21,9 @@
         <slot></slot>
       </tbody>
     </table>
+    <div v-if="$slots.pagination">
+      <slot name="pagination"></slot>
+    </div>
   </div>
 </template>
 
