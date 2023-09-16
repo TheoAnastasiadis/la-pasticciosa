@@ -10,4 +10,6 @@ export default {
   getGoogleClientId: () => process.env.GOOGLE_CLIENT_ID as string,
   getGoogleClientSecret: () => process.env.GOOGLE_CLIENT_SECRET as string,
   getSentryDsn: () => process.env.SENTRY_DSN as string,
+  getFacebookAppId: () => process.env.FACEBOOK_APP_ID as string,
+  getFacebookAppSecret: () => process.env.FACEBOOK_APP_SECRET as string,
 };
