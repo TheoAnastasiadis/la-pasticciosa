@@ -12,7 +12,6 @@ export default new GoogleStrategy(
     state: false,
   },
   (accessToken, refreshToken, profile, done) => {
-    console.info("redirection complete");
     User.findOneBy({
       email: In(
         profile.emails
