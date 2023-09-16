@@ -5,7 +5,7 @@ import authenticate from "../../middleware/authenticate";
 import authorize from "../../middleware/authorize";
 import { procedure } from "../../setup";
 import { Order, OrderStatus } from "../../../../entities/order";
-import type { Quantity } from "../../../../entities/quantity";
+import { Quantity } from "../../../../entities/quantity";
 import {
   RequestQuantityProps,
   orderWUserDeliveryQuantities,
@@ -13,6 +13,7 @@ import {
 import { z } from "zod";
 import businessLogic from "../../../businessLogic/order";
 import { AppDataSource } from "../../../../database";
+import { TRPCError } from "@trpc/server";
 
 const orderInput = z.object({
   quantityIds: z.array(RequestQuantityProps),
@@ -57,14 +58,36 @@ export const placeOrder = procedure
     const total = businessLogic.calculateTotal(quantities);
 
     // update the db and return result as response
-    return (await AppDataSource.manager
-      .create(Order, {
+    const runner = AppDataSource.createQueryRunner();
+    await runner.startTransaction();
+    let order: Order | undefined;
+    try {
+      order = runner.manager.create(Order, {
         total,
         estimatedDelivery: undefined,
         status: OrderStatus.PENDING,
         user,
         delivery,
-        quantities,
-      })
-      .save()) as OrderWUserDeliveryQuantities;
+      });
+      await order.save();
+      const orderQuantities = quantities.map(({ item, value }) =>
+        runner.manager.create(Quantity, { item, value, order }),
+      );
+      await Promise.all(
+        orderQuantities.map(async (quantity) => await quantity.save()),
+      );
+      order.quantities = orderQuantities;
+      await order.save();
+    } catch (e) {
+      await runner.rollbackTransaction();
+    } finally {
+      await runner.release();
+    }
+
+    if (typeof order === "undefined")
+      throw new TRPCError({
+        code: "INTERNAL_SERVER_ERROR",
+        message: "Database could not succeed in placing the new order.",
+      });
+    return order as OrderWUserDeliveryQuantities;
   });
