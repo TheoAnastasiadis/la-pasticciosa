@@ -12,4 +12,5 @@ export default {
   getSentryDsn: () => process.env.SENTRY_DSN as string,
   getFacebookAppId: () => process.env.FACEBOOK_APP_ID as string,
   getFacebookAppSecret: () => process.env.FACEBOOK_APP_SECRET as string,
+  getViberAuthToken: () => process.env.VIBER_BOT_SECRET as string,
 };
