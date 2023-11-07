@@ -21,7 +21,7 @@ module.exports = {
   ],
   content: [
     "./node_modules/xtendui/src/*.mjs",
-    "./src/**/*.{html,js,vue,ts}",
+    "./src/**/*.{html,js,vue,ts,pug}",
     "./node_modules/vue-tailwind-datepicker/**/*.js",
   ],
   theme: {
