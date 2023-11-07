@@ -13,4 +13,8 @@ export default {
   getFacebookAppId: () => process.env.FACEBOOK_APP_ID as string,
   getFacebookAppSecret: () => process.env.FACEBOOK_APP_SECRET as string,
   getViberAuthToken: () => process.env.VIBER_BOT_SECRET as string,
+  getEmailServer: () => process.env.SMTP_SERVER as string,
+  getSenderEmailAddress: () => process.env.SENDER_EMAIL_ADDRESS as string,
+  getReplyEmailAddress: () => process.env.REPLY_EMAIL_ADDRESS as string,
+  getEmailPassword: () => process.env.EMAIL_PASSWORD as string,
 };
