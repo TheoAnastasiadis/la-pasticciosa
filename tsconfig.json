@@ -14,8 +14,9 @@
     "noFallthroughCasesInSwitch": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
   "include": ["src/server/**/*.ts"],
-  "exclude": ["test/", "src/client/**/*", "vite.config.ts", "node_modules"]
+  "exclude": ["test/", "src/client/**/*", "vite.config.ts", "node_modules/**"]
 }
