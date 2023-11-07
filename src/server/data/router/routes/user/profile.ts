@@ -5,7 +5,7 @@ import authorize from "../../middleware/authorize";
 import { procedure } from "../../setup";
 
 export const profile = procedure
-  .meta({ secure: true, adminOnly: true })
+  .meta({ secure: true, adminOnly: false })
   .use(authenticate)
   .use(authorize)
   .output(userWNoPasswordOrCatalogue)
