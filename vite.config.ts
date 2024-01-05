@@ -6,7 +6,7 @@ import vue from "@vitejs/plugin-vue";
 import { babel } from "@rollup/plugin-babel";
 
 import { config } from "dotenv";
-config({ debug: true, path: ".env.local" });
+config({ debug: true });
 
 // https://vitejs.dev/config/
 export default defineConfig({
