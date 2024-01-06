@@ -1,6 +1,7 @@
 {
   "extends": "../tsconfig.json",
   "include": ["../node_modules/cypress", "**/*.cy.ts", "/seed"],
+  "exclude": [],
   "compilerOptions": {
     "noEmit": false,
     "target": "es5",
