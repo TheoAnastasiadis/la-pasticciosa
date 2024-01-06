@@ -11,7 +11,9 @@
     "dev:server": "bash ./bin/dev.server.sh",
     "build:client": "vite build",
     "dev:client": "vite",
-    "deploy:client": "bash ./bin/deploy.hosting.sh"
+    "deploy:client": "bash ./bin/deploy.hosting.sh",
+    "e2e:setup": "bash bin/build.seed.sh 'setup'",
+    "e2e:teardown": "bash bin/build.seed.sh 'teardown'"
   },
   "repository": {
     "type": "git",
