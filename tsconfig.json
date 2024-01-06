@@ -17,6 +17,12 @@
     "esModuleInterop": true,
     "skipLibCheck": true
   },
-  "include": ["src/server/**/*.ts", "cypress/"],
-  "exclude": ["test/", "src/client/**/*", "vite.config.ts", "node_modules/**"]
+  "include": ["src/server/**/*.ts", "cypress"],
+  "exclude": [
+    "test/",
+    "src/client/**/*",
+    "vite.config.ts",
+    "node_modules/**",
+    "cypress"
+  ]
 }
