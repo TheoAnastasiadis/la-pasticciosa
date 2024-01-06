@@ -40,9 +40,7 @@
       <div class="w-full md:w-9/12">
         <RouterView v-slot="{ Component, route }">
           <TransitionExpand appear>
-            <KeepAlive>
-              <component :is="Component" :key="route.path" />
-            </KeepAlive>
+            <component :is="Component" :key="route.path" />
           </TransitionExpand>
         </RouterView>
       </div>
@@ -53,10 +51,6 @@
 <script setup lang="ts">
 import { TransitionExpand } from "@morev/vue-transitions";
 import { ref } from "vue";
-import { useUserStore } from "../../../stores/user";
-
-const userStore = useUserStore();
-userStore.login();
 
 const { header } = defineProps<{
   header: Array<{ title: string; icon: string; hash: string }>;

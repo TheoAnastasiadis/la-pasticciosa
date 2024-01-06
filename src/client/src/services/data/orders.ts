@@ -14,6 +14,7 @@ export function useOrders(
   const toast = useToast();
 
   const loadOrders = (page: number) => {
+    console.log(page);
     loading.value = true;
     data.viewOrders
       .query({ page: page })

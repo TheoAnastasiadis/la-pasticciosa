@@ -118,7 +118,7 @@ import UserInfo from "./userInfo.vue";
 import Loader from "../reusables/loaders/containerLoader.vue";
 import { useUserStore } from "../../stores/user";
 import { TransitionExpand } from "@morev/vue-transitions";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import Pagination from "../reusables/table/pagination.vue"
 import { usePagination } from "../../composables/table/pagination";
 import { useOrders } from "../../services/data/orders";
@@ -129,7 +129,7 @@ const placingOrder = ref(false);
 const userStore = useUserStore();
 const {page, watchPage, increment, decrement} = usePagination()
 
-const columns = userStore?.user?.type === "user" ? ["Ημ/νια υποβολης", "συνολο", "κατασταση", "εκτ. παραδοση"] : ["Ημ/νια υποβολης",  "χρηστης","συνολο", "κατασταση",  "εκτ. παραδοση"]
+const columns = userStore?.user?.type === "admin" ? ["Ημ/νια υποβολης", "χρηστης","συνολο", "κατασταση", "εκτ. παραδοση"] : ["Ημ/νια υποβολης",  "συνολο", "κατασταση",  "εκτ. παραδοση"]
 
 const selectedUser = ref<User>();
 const {orderUpdated, orderPlaced, orders, loadOrders, loading} = useOrders(selectedUser, placingOrder);

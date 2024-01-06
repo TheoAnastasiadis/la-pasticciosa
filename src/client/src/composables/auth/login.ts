@@ -2,6 +2,7 @@ import { Ref, ref } from "vue";
 import { useToast, TYPE } from "vue-toastification";
 import { useRouter } from "vue-router";
 import auth from "../../services/auth";
+import { useUserStore } from "../../stores/user";
 
 export function useLogin(email: Ref, password: Ref) {
   const toast = useToast();
@@ -13,6 +14,8 @@ export function useLogin(email: Ref, password: Ref) {
     await auth
       .login(email.value.value, password.value.value)
       .then(() => {
+        const userStore = useUserStore();
+        userStore.login();
         router.push("/dashboard");
       })
       .catch((error) => {

@@ -8,6 +8,7 @@
           type="button"
           class="xt-button xt-dismiss absolute z-above top-0 right-0 p-5 text-2xl"
           aria-label="Close"
+          ref="closeButton"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -71,6 +72,7 @@
                       data-xt-textareaautosize
                       class="block mb-3 w-full h-20 max-h-48 rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none resize-vertical"
                       v-bind="field"
+                      aria-label="Description"
                     ></textarea>
                   </Field>
                   <div
@@ -256,6 +258,7 @@ export default {
         });
         toast("Το προϊόν προστέθηκε στον κατάλογο", { type: TYPE.DEFAULT });
         this.$emit("itemCreated", item);
+        this.$refs.closeButton.click();
       } catch (error) {
         toast("Υπήρξε κάποιο πρόβλημα και το προϊόνα δεν προστέθηκε.", {
           type: TYPE.ERROR,

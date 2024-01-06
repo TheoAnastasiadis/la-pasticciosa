@@ -1,3 +1,5 @@
+import { useUserStore } from "../../stores/user";
+
 export default {
   async login(email: string, password: string) {
     return await fetch("/auth/login", {
@@ -10,9 +12,11 @@ export default {
     });
   },
   async logout() {
-    return await fetch("/auth/logout", {
+    await fetch("/auth/logout", {
       method: "post",
       credentials: "same-origin",
     });
+    const userStore = useUserStore();
+    userStore.logout();
   },
 };

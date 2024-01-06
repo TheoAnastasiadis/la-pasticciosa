@@ -4,6 +4,7 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted } from "vue";
 import Nav from "../components/reusables/top-level/navigation.vue";
 import { useUserStore } from "../stores/user";
 
