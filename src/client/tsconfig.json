@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig.json",
+  "include": ["/**/*.ts"],
+  "exclude": [],
+  "compilerOptions": {
+    "isolatedModules": true,
+    "strict": true,
+    "noEmit": false,
+    "target": "es5",
+    "lib": ["es5", "dom"],
+    "sourceMap": true
+  }
+}
