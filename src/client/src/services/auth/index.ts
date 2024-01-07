@@ -1,8 +1,9 @@
 import { useUserStore } from "../../stores/user";
+import router from "../../router";
 
 export default {
   async login(email: string, password: string) {
-    return await fetch("/auth/login", {
+    await fetch("/auth/login", {
       method: "post",
       body: JSON.stringify({ email, password }),
       headers: {
@@ -10,6 +11,9 @@ export default {
       },
       credentials: "same-origin",
     });
+    const userStore = useUserStore();
+    await userStore.login();
+    await router.push({ name: "dashboard" });
   },
   async logout() {
     await fetch("/auth/logout", {
@@ -18,5 +22,6 @@ export default {
     });
     const userStore = useUserStore();
     userStore.logout();
+    await router.push({ name: "login" });
   },
 };

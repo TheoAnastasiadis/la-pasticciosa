@@ -1,23 +1,15 @@
 import { Ref, ref } from "vue";
 import { useToast, TYPE } from "vue-toastification";
-import { useRouter } from "vue-router";
 import auth from "../../services/auth";
-import { useUserStore } from "../../stores/user";
 
 export function useLogin(email: Ref, password: Ref) {
   const toast = useToast();
-  const router = useRouter();
   const loading = ref(false);
   const login = async () => {
     loading.value = true;
 
     await auth
       .login(email.value.value, password.value.value)
-      .then(() => {
-        const userStore = useUserStore();
-        userStore.login();
-        router.push("/dashboard");
-      })
       .catch((error) => {
         if (error.message === "Failed to fetch") {
           toast(
