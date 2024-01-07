@@ -90,7 +90,7 @@ export default {
   async mounted() {
     this.loading = true;
     const deliveries = await backend.viewDeliveries.query({
-      page: undefined,
+      page: "all",
     });
     this.locations = deliveries;
     this.loading = false;

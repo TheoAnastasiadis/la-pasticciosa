@@ -5,13 +5,13 @@
       :class="{
         'bg-slate-200 ': deliveryString === 'N/A',
         'bg-primary-200 ': deliveryString !== 'N/A',
-        'rounded-r-lg': userStore.user.type === 'user',
+        'rounded-r-lg': userStore.user?.type === 'user',
       }"
     >
       <div class="my-auto leading-snug">{{ deliveryString }}</div>
     </div>
 
-    <Drop v-if="userStore.user.type === 'admin'">
+    <Drop v-if="userStore.user?.type === 'admin'">
       <template #trigger>
         <button
           type="submit"

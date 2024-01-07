@@ -7,13 +7,13 @@
         'bg-orange-200': order.status === 'pending',
         'bg-primary-200': order.status === 'in_preparation',
         'bg-slate-200': order.status === 'complete',
-        'rounded-r-lg': userStore.user.type === 'user',
+        'rounded-r-lg': userStore.user?.type === 'user',
       }"
     >
       <div class="my-auto leading-snug">{{ orderStatus }}</div>
     </div>
 
-    <Drop v-if="userStore.user.type === 'admin'">
+    <Drop v-if="userStore.user?.type === 'admin'">
       <template #trigger>
         <button
           type="submit"
