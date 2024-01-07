@@ -20,7 +20,7 @@ export default function (
         httpOnly: true,
         expires: moment().add(1, "M").toDate(),
       });
-      res.redirect("/dashboard");
+      res.send();
     })
     .catch(next);
 }
