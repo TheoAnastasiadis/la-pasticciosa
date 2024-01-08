@@ -354,10 +354,55 @@ describe("template spec", () => {
     /* ==== End Cypress Studio ==== */
   });
 
-  it("change password succesfully", () => {
-    throw new Error("Not Implemented Yet");
+  it("change password", () => {
+    /* ==== Generated with Cypress Studio ==== */
+    cy.visit("http://localhost:5173/login");
+    cy.get(".xt-row > :nth-child(1) > .w-full").type("cypressuser@example.com");
+    cy.get(".xt-row > :nth-child(2) > .w-full").type("123456abcde");
+    cy.get(".xt-loader").click();
+    cy.get('[href="/dashboard/profile"]').click();
+    cy.get(".xt-row > :nth-child(1) > .w-full").type("123456abcde");
+    cy.get('[aria-label="New Password"]').type("123456edcba");
+    cy.get('[aria-label="Password Repeat"]').type("123456edcba");
+    cy.get(".xt-loader").click();
+    cy.get(".rounded-full > .h").click();
+    cy.get(".xt-list > .text-red-600").click();
+    cy.wait(10000);
+    cy.get(".xt-row > :nth-child(1) > .w-full").type("cypressuser@example.com");
+    cy.get(".xt-row > :nth-child(2) > .w-full").type("123456edcba");
+    cy.get(".xt-loader").click();
+    cy.location("pathname").should("eq", "/dashboard/orders");
+    /* ==== End Cypress Studio ==== */
   });
-  it("unassign item from user", () => {
-    throw new Error("Not Implemented Yet");
+  it("delete item", () => {
+    cy.visit("http://localhost:5173/login");
+    cy.get(".xt-row > :nth-child(1) > .w-full").type(
+      "cypressadmin@example.com",
+    );
+    cy.get(".xt-row > :nth-child(2) > .w-full").type("123456abcde");
+    cy.get(".xt-loader").click();
+    cy.get('[href="/dashboard/items"]').click();
+    /* ==== Generated with Cypress Studio ==== */
+    cy.get(
+      ":nth-child(1) > .listing-item > div.w-full > .xt-button > .text-sm",
+    ).click();
+    cy.get('[href="/dashboard/users"]').click();
+    cy.get(
+      ":nth-child(1) > :nth-child(3) > [data-xt-drop=\"{ position: 'auto-end', duration: 500 }\"]",
+    ).click();
+    cy.get(
+      ":nth-child(1) > :nth-child(3) > [data-xt-drop=\"{ position: 'auto-end', duration: 500 }\"]",
+    ).should("include.text", "Κατάλογος:  0");
+    cy.get(":nth-child(2) > :nth-child(2) > :nth-child(3)").click();
+    cy.get(
+      ":nth-child(2) > :nth-child(3) > [data-xt-drop=\"{ position: 'auto-end', duration: 500 }\"]",
+    ).should("include.text", "Κατάλογος:  0");
+    cy.get(
+      ".xt-overflow-sub > :nth-child(1) > :nth-child(2) > :nth-child(3) > :nth-child(3)",
+    ).click();
+    cy.get(
+      ":nth-child(3) > :nth-child(3) > [data-xt-drop=\"{ position: 'auto-end', duration: 500 }\"]",
+    ).should("include.text", "Κατάλογος:  0");
+    /* ==== End Cypress Studio ==== */
   });
 });
