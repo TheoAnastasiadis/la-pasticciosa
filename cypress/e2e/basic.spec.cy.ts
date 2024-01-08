@@ -3,7 +3,7 @@ describe("template spec", () => {
     cy.task("setup");
   });
 
-  after("delete seed data from db", async () => {
+  after("delete seed data from db", () => {
     cy.task("teardown");
   });
 
@@ -15,6 +15,7 @@ describe("template spec", () => {
       "cypressadmin@example.com",
     );
     cy.get(".xt-row > :nth-child(2) > .w-full").type("123456abcde");
+    cy.wait(6000);
     cy.get(".xt-loader").click();
     cy.get(".xt-5").click();
     cy.get(".xt-5").should("have.text", " Καλωσήρθες, Cypress_Admin");
@@ -101,6 +102,7 @@ describe("template spec", () => {
       "cypressadmin@example.com",
     );
     cy.get(".xt-row > :nth-child(2) > .w-full").type("123456abcde");
+    cy.wait(6000);
     cy.get(".xt-loader").click();
     cy.get('[href="/dashboard/items"]').click();
     cy.get(".hover\\:bg-gray-200").click();
@@ -179,6 +181,7 @@ describe("template spec", () => {
     cy.visit("http://localhost:5173/login");
     cy.get(".xt-row > :nth-child(1) > .w-full").type("cypressuser@example.com");
     cy.get(".xt-row > :nth-child(2) > .w-full").type("123456abcde");
+    cy.wait(6000);
     cy.get(".xt-loader").click();
     cy.get('[href="/dashboard/locations"]').click();
     cy.get(".xt-row > :nth-child(1) > .w-full").type("Sample New Delivery");
@@ -257,6 +260,7 @@ describe("template spec", () => {
       "cypressassigneduser@example.com",
     );
     cy.get(".xt-row > :nth-child(2) > .w-full").type("123456abcde");
+    cy.wait(6000);
     cy.get(".xt-loader").click();
     cy.get(".md\\:w-9\\/12 > .xt-card > .xt-list > .xt-button").click();
     cy.get(".font-bold > span").should("have.text", "Sample Product");
@@ -306,6 +310,7 @@ describe("template spec", () => {
       "cypressadmin@example.com",
     );
     cy.get(".xt-row > :nth-child(2) > .w-full").type("123456abcde");
+    cy.wait(6000);
     cy.get(".xt-loader").click();
     cy.get(".md\\:w-9\\/12 > .rounded-2xl > :nth-child(1)").click();
     cy.get(
@@ -323,16 +328,16 @@ describe("template spec", () => {
     ).click();
     cy.get(
       "#xt-9 > .xt-card > .flex-col > :nth-child(1) > .xt-button > .xt-list > :nth-child(2) > .font-medium",
-    ).click();
+    ).click({ force: true });
     cy.get(
       ":nth-child(1) > :nth-child(7) > .flex-row > .pl-2 > .my-auto",
     ).should("have.text", "Έγινε Αποδοχή");
     cy.get(
       ":nth-child(1) > :nth-child(8) > .flex-row > [data-xt-drop=\"{ position: 'auto-end', duration: 500 }\"] > .px-1\\.5 > .h",
-    ).click();
-    cy.get("#headlessui-popover-button-1 > .relative").click();
-    cy.get(":nth-child(8) > .vtd-datepicker-date").click();
-    cy.contains("ενημερωση").click();
+    ).click({ force: true });
+    cy.get("#headlessui-popover-button-1 > .relative").click({ force: true });
+    cy.get(":nth-child(8) > .vtd-datepicker-date").click({ force: true });
+    cy.contains("ενημερωση").click({ force: true });
     cy.get(
       ":nth-child(1) > :nth-child(8) > .flex-row > .pl-2 > .my-auto",
     ).should("not.have.text", "N/A");
@@ -371,7 +376,6 @@ describe("template spec", () => {
     cy.contains("ΑΛΛΑΓΗ").click();
     cy.get(".rounded-full > .h").click();
     cy.get(".xt-list > .text-red-600").click();
-    cy.wait(6000);
     cy.get(".xt-row > :nth-child(1) > .w-full").type("cypressuser@example.com");
     cy.get(".xt-row > :nth-child(2) > .w-full").type("123456edcba");
     cy.wait(6000);

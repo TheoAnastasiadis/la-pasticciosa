@@ -134,9 +134,9 @@ export const setup = async () => {
 };
 
 export const teardown = async () => {
-  if (!AppDataSource.isInitialized) await AppDataSource.initialize();
   await deleteSeedNewOrders();
-  await deleteSeedProduct();
+  await Promise.all([deleteSeedProduct(), deleteSeedNewProduct()]);
+  await Promise.all([deleteSeedNewDelivery(), deleteSeedDelivery()]);
   const assignedUser = await User.findOneBy({
     userName: "Cypress_Assigned_User",
   });
@@ -145,13 +145,10 @@ export const teardown = async () => {
     assignedUser.catalogue = [];
     await assignedUser.save();
   }
-  await Promise.allSettled([
+  await Promise.all([
     deleteSeedAdministrator(),
     deleteSeedUser(),
     deleteSeedNewUser(),
-    deleteSeedNewProduct(),
-    deleteSeedNewDelivery(),
     deleteSeedAssignedUser(),
-    deleteSeedDelivery(),
   ]);
 };
