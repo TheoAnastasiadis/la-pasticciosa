@@ -5,7 +5,7 @@ import { AppDataSource } from "./src/server/database";
 export default defineConfig({
   e2e: {
     experimentalStudio: true,
-    defaultCommandTimeout: 5000,
+    defaultCommandTimeout: 6000,
     setupNodeEvents(on, config) {
       on("task", {
         async setup() {

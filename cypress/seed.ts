@@ -134,14 +134,17 @@ export const setup = async () => {
 };
 
 export const teardown = async () => {
+  if (!AppDataSource.isInitialized) await AppDataSource.initialize();
   await deleteSeedNewOrders();
   await deleteSeedProduct();
-  const assignedUser = await User.findOneByOrFail({
+  const assignedUser = await User.findOneBy({
     userName: "Cypress_Assigned_User",
   });
   // unassign all items so that the user can be deleted
-  assignedUser.catalogue = [];
-  await assignedUser.save();
+  if (assignedUser) {
+    assignedUser.catalogue = [];
+    await assignedUser.save();
+  }
   await Promise.allSettled([
     deleteSeedAdministrator(),
     deleteSeedUser(),
