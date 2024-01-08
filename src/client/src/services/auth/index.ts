@@ -20,8 +20,9 @@ export default {
       method: "post",
       credentials: "same-origin",
     });
+    router.push({ name: "login" }).then(() => {
+      userStore.logout();
+    });
     const userStore = useUserStore();
-    userStore.logout();
-    await router.push({ name: "login" });
   },
 };

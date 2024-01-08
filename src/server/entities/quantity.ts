@@ -4,7 +4,7 @@ import {
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
-  Relation,
+  type Relation,
 } from "typeorm";
 import { Item } from "./item";
 import { Order } from "./order";

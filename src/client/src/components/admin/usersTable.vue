@@ -214,10 +214,14 @@ export default {
   }),
   async mounted() {
     this.loading = true;
-    const users = await backend.viewUsers.query({ page: 0 });
-    const items = await backend.viewItems.query({ page: "all" });
-    this.users = users;
-    this.items = items;
+    const users = await backend.viewUsers
+      .query({ page: 0 })
+      .catch((e) => console.error("users did not load"));
+    const items = await backend.viewItems
+      .query({ page: "all" })
+      .catch((e) => console.error("items did not load"));
+    this.users = users || [];
+    this.items = items || [];
     this.loading = false;
   },
   computed: {
