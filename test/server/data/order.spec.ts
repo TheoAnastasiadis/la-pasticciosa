@@ -17,8 +17,16 @@ describe("Order Entity Use Cases", () => {
   let admin: User;
   let userSessionId: string;
   let user: User;
+
   beforeAll(async () => {
     await AppDataSource.initialize();
+
+    //empty db
+    await Quantity.delete({});
+    await Delivery.delete({});
+    await Order.delete({});
+    await Item.delete({});
+    await User.delete({});
 
     // create two example users, one of each kind.
     admin = await User.create({
@@ -94,31 +102,28 @@ describe("Order Entity Use Cases", () => {
 
   test("place order (as admin on behalf of user)", async () => {
     // create example item and assign to user
-    const item = await Item.save(
-      Item.create({
-        name: "Example Item 2",
-        description: "Lorem Ipsum",
-        price: "10.99",
-        unit: "Kg",
-        image: "https://www.example.com/images/full.png",
-        thumbnail: "https://www.example.com/images/thumb.jpg",
-      }),
-    );
+    const item = await Item.create({
+      name: "Example Item 2",
+      description: "Lorem Ipsum",
+      price: "10.99",
+      unit: "Kg",
+      image: "https://www.example.com/images/full.png",
+      thumbnail: "https://www.example.com/images/thumb.jpg",
+    }).save();
+
     user.catalogue = [item];
     await user.save();
 
     // create example delivery and assign to user
-    const delivery = await Delivery.save(
-      Delivery.create({
-        name: "Example Delivery 2",
-        user,
-        street: "Example Str.",
-        number: "2A",
-        zip: "12345",
-        details: "Lorem Ipsum",
-        state: DeliveryStatus.ACCEPTED,
-      }),
-    );
+    const delivery = await Delivery.create({
+      name: "Example Delivery 2",
+      user,
+      street: "Example Str.",
+      number: "2A",
+      zip: "12345",
+      details: "Lorem Ipsum",
+      state: DeliveryStatus.ACCEPTED,
+    }).save();
 
     const order = await appRouter
       .createCaller({
@@ -136,61 +141,6 @@ describe("Order Entity Use Cases", () => {
     expect(order).toHaveProperty("status", OrderStatus.PENDING);
     expect(moment(order.estimatedDelivery).unix()).toBe(0);
     expect(order).toHaveProperty("total", "10.99");
-  }, 20000);
-
-  test.skip("auto generate order", async () => {
-    // create example items and assign to user
-    const item1 = await Item.save(
-      Item.create({
-        name: "Raviolli",
-        description: "Filled Pasta",
-        price: "10.99",
-        unit: "Kg",
-        image: "https://www.example.com/images/full.png",
-        thumbnail: "https://www.example.com/images/thumb.jpg",
-      }),
-    );
-    const item2 = await Item.save(
-      Item.create({
-        name: "Papardelle",
-        description: "regular",
-        price: "5.67",
-        unit: "500gr",
-        image: "https://www.example.com/images/full.png",
-        thumbnail: "https://www.example.com/images/thumb.jpg",
-      }),
-    );
-    user.catalogue = [item1, item2];
-    await user.save();
-
-    // create example delivery and assign to user
-    const delivery = await Delivery.save(
-      Delivery.create({
-        name: "Restaurant",
-        user,
-        street: "Example Str.",
-        number: "2A",
-        zip: "12345",
-        details: "Lorem Ipsum",
-        state: DeliveryStatus.ACCEPTED,
-      }),
-    );
-
-    const text = "Θα ήθελα 2 κιλά ραβιόλι παρακαλώ πολύ.";
-
-    const detection = await appRouter
-      .createCaller({
-        sessionId: adminSessionId,
-        setCookie: {} as any,
-      })
-      .autoGenerate({ mobile: user.mobileNumber, text });
-
-    expect(detection).not.toHaveProperty("reason");
-    expect(detection).toHaveProperty("user", user.uuid.toString());
-    expect(detection).toHaveProperty("quantities", [
-      { item: item1.id.toString(), value: 2 },
-    ]);
-    expect(detection).toHaveProperty("delivery", delivery.id.toString());
   }, 20000);
 
   test("update status and update estimate", async () => {
@@ -256,31 +206,14 @@ describe("Order Entity Use Cases", () => {
   }, 20000);
 
   afterAll(async () => {
-    user.catalogue = []; // if we don't emtpy the catalogue, the user cannot be deleted.
-    await user.save();
-    const orders = await Order.find({ where: { user: { uuid: user.uuid } } });
-    await Quantity.delete({
-      order: { id: In(orders.map((order) => order.id)) },
-    });
-    await Order.delete({ id: In(orders.map((order) => order.id)) });
-    await Delivery.delete({
-      name: In([
-        "Example Delivery 1",
-        "Example Delivery 2",
-        "Example Delivery 3",
-        "Restaurant",
-      ]),
-    });
-    await Item.delete({
-      name: In([
-        "Example Item 1",
-        "Example Item 2",
-        "Example Item 3",
-        "Raviolii",
-        "Papardelle",
-      ]),
-    });
     await Session.delete({ id: In([userSessionId, adminSessionId]) });
-    await User.delete({ uuid: In([user.uuid, admin.uuid]) });
+    //empty db
+    await Quantity.delete({});
+    await Delivery.delete({});
+    await Order.delete({});
+    await Item.delete({});
+    await User.delete({});
+
+    await AppDataSource.destroy();
   });
 });

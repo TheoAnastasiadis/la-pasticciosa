@@ -4,6 +4,9 @@ import { Item } from "../../../src/server/entities/item";
 import { Session } from "../../../src/server/entities/session";
 import { User, UserType } from "../../../src/server/entities/user";
 import { appRouter } from "../../../src/server/data/router";
+import { Quantity } from "../../../src/server/entities/quantity";
+import { Delivery } from "../../../src/server/entities/delivery";
+import { Order } from "../../../src/server/entities/order";
 
 describe("Item Entity Use Cases", () => {
   let adminSessionId: string;
@@ -12,6 +15,13 @@ describe("Item Entity Use Cases", () => {
   let user: User;
   beforeAll(async () => {
     await AppDataSource.initialize();
+
+    //empty db
+    await Quantity.delete({});
+    await Delivery.delete({});
+    await Order.delete({});
+    await Item.delete({});
+    await User.delete({});
 
     // create two example users, one of each kind.
     admin = await User.create({
@@ -169,16 +179,15 @@ describe("Item Entity Use Cases", () => {
   }, 10000);
 
   afterAll(async () => {
-    await Item.delete({
-      name: In([
-        "Example Item 1",
-        "Example Item 2",
-        "Example Item 3",
-        "Example Item 4",
-        "Example Item 5",
-      ]),
-    });
     await Session.delete({ id: In([userSessionId, adminSessionId]) });
-    await User.delete({ uuid: In([user.uuid, admin.uuid]) });
+
+    //empty db
+    await Quantity.delete({});
+    await Delivery.delete({});
+    await Order.delete({});
+    await Item.delete({});
+    await User.delete({});
+
+    await AppDataSource.destroy();
   });
 });

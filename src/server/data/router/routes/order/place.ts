@@ -58,36 +58,26 @@ export const placeOrder = procedure
     const total = businessLogic.calculateTotal(quantities);
 
     // update the db and return result as response
-    const runner = AppDataSource.createQueryRunner();
-    await runner.startTransaction();
-    let order: Order | undefined;
-    try {
-      order = runner.manager.create(Order, {
-        total,
-        estimatedDelivery: undefined,
-        status: OrderStatus.PENDING,
-        user,
-        delivery,
-      });
-      await order.save();
-      const orderQuantities = quantities.map(({ item, value }) =>
-        runner.manager.create(Quantity, { item, value, order }),
-      );
-      await Promise.all(
-        orderQuantities.map(async (quantity) => await quantity.save()),
-      );
-      order.quantities = orderQuantities;
-      await order.save();
-    } catch (e) {
-      await runner.rollbackTransaction();
-    } finally {
-      await runner.release();
-    }
+    const order = await AppDataSource.manager.transaction(async (manager) => {
+      return await manager
+        .create(Order, {
+          total,
+          estimatedDelivery: undefined,
+          status: OrderStatus.PENDING,
+          user,
+          delivery,
+          quantities: quantities.map(({ item, value }) =>
+            manager.create(Quantity, { item, value }),
+          ),
+        })
+        .save();
+    });
 
     if (typeof order === "undefined")
       throw new TRPCError({
         code: "INTERNAL_SERVER_ERROR",
         message: "Database could not succeed in placing the new order.",
       });
+
     return order as OrderWUserDeliveryQuantities;
   });

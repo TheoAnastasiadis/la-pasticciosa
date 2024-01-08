@@ -7,6 +7,9 @@ import {
 } from "../../../src/server/entities/delivery";
 import { In } from "typeorm";
 import { AppDataSource } from "../../../src/server/database";
+import { Quantity } from "../../../src/server/entities/quantity";
+import { Order } from "../../../src/server/entities/order";
+import { Item } from "../../../src/server/entities/item";
 
 describe("Delivery Entity Use Cases", () => {
   let adminSessionId: string;
@@ -15,6 +18,13 @@ describe("Delivery Entity Use Cases", () => {
   let user: User;
   beforeAll(async () => {
     await AppDataSource.initialize();
+
+    //empty db
+    await Quantity.delete({});
+    await Delivery.delete({});
+    await Order.delete({});
+    await Item.delete({});
+    await User.delete({});
 
     // create two example users, one of each kind.
     admin = await User.create({
@@ -186,17 +196,14 @@ describe("Delivery Entity Use Cases", () => {
   }, 20000);
 
   afterAll(async () => {
-    await Delivery.delete({
-      name: In([
-        "Example Delivery 1",
-        "Example Delivery 2",
-        "Example Delivery 3",
-        "Example Delivery 4",
-        "Example Delivery 5",
-        "Example Delivery 6",
-      ]),
-    });
     await Session.delete({ id: In([userSessionId, adminSessionId]) });
-    await User.delete({ uuid: In([user.uuid, admin.uuid]) });
+    //empty db
+    await Quantity.delete({});
+    await Delivery.delete({});
+    await Order.delete({});
+    await Item.delete({});
+    await User.delete({});
+
+    await AppDataSource.destroy();
   });
 });

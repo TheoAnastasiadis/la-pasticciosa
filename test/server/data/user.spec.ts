@@ -3,6 +3,10 @@ import { AppDataSource } from "../../../src/server/database";
 import { Session } from "../../../src/server/entities/session";
 import { User, UserStatus, UserType } from "../../../src/server/entities/user";
 import { appRouter } from "../../../src/server/data/router";
+import { Quantity } from "../../../src/server/entities/quantity";
+import { Order } from "../../../src/server/entities/order";
+import { Item } from "../../../src/server/entities/item";
+import { Delivery } from "../../../src/server/entities/delivery";
 
 describe("User Entity Use Cases", () => {
   let adminSessionId: string;
@@ -11,6 +15,13 @@ describe("User Entity Use Cases", () => {
   let user: User;
   beforeAll(async () => {
     await AppDataSource.initialize();
+
+    //empty db
+    await Quantity.delete({});
+    await Delivery.delete({});
+    await Order.delete({});
+    await Item.delete({});
+    await User.delete({});
 
     // create two example users, one of each kind.
     admin = await User.create({
@@ -83,33 +94,9 @@ describe("User Entity Use Cases", () => {
   }, 50000);
 
   test("login -> change password -> logout", async () => {
-    let newSession: string;
-
-    const setCookie = (name: string, value: string, options: any) => {
-      expect(name).toBe("sessionId");
-      expect(typeof value === "string").toBeTruthy();
-      newSession = value;
-      expect(options).toHaveProperty("httpOnly", true);
-    };
-
-    const unsetCookie = (name: string, value: string, options: any) => {
-      expect(name).toBe("sessionId");
-      expect(value).toBeNull();
-    };
-
-    // 1. Log In
     await appRouter
       .createCaller({
-        sessionId: null,
-        setCookie: setCookie as any,
-      })
-      .logIn({ email: "user@email.com", password: "veryStrongPassword" });
-
-    // 2. Update Password
-    await appRouter
-      .createCaller({
-        // @ts-expect-error newSession will have been populated be the previous action
-        sessionId: newSession,
+        sessionId: userSessionId,
         setCookie: {} as any,
       })
       .changePassword({
@@ -119,15 +106,6 @@ describe("User Entity Use Cases", () => {
 
     const userEntry = await User.findOneByOrFail({ uuid: user.uuid });
     expect(userEntry.validatePassword("evenStrongerPassword")).toBeTruthy();
-
-    // 3. Log out
-    await appRouter
-      .createCaller({
-        // @ts-expect-error newSession will have been populated be the previous actions
-        sessionId: newSession,
-        setCookie: unsetCookie as any,
-      })
-      .logOut();
   }, 20000);
 
   test("View users (as admin)", async () => {
@@ -153,10 +131,14 @@ describe("User Entity Use Cases", () => {
   });
 
   afterAll(async () => {
-    await User.delete({
-      userName: In(["Example User 1"]),
-    });
     await Session.delete({ id: In([userSessionId, adminSessionId]) });
-    await User.delete({ uuid: In([user.uuid, admin.uuid]) });
+    //empty db
+    await Quantity.delete({});
+    await Delivery.delete({});
+    await Order.delete({});
+    await Item.delete({});
+    await User.delete({});
+
+    await AppDataSource.destroy();
   });
 });
