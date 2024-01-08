@@ -39,7 +39,7 @@ const createSeedAssignedUser = async () => {
     password: "123456abcde",
     type: UserType.USER,
     status: UserStatus.ACCEPTED,
-    companyName: "User Company",
+    companyName: "Assigned User Company",
     companyAddress: "Default Address",
     mobileNumber: "6921345633",
     vat: "123546339",
@@ -117,7 +117,6 @@ const deleteSeedNewOrders = async () => {
 };
 
 export const setup = async () => {
-  await AppDataSource.initialize();
   await Promise.allSettled([
     createSeedAdministrator(),
     createSeedUser(),
@@ -132,13 +131,17 @@ export const setup = async () => {
     Item.findOneByOrFail({ name: "Sample Product" }),
   ]);
   await Promise.all([createSeedDelivery(user), user.assignItem(item)]);
-  await AppDataSource.destroy();
 };
 
 export const teardown = async () => {
-  await AppDataSource.initialize();
   await deleteSeedNewOrders();
   await deleteSeedProduct();
+  const assignedUser = await User.findOneByOrFail({
+    userName: "Cypress_Assigned_User",
+  });
+  // unassign all items so that the user can be deleted
+  assignedUser.catalogue = [];
+  await assignedUser.save();
   await Promise.allSettled([
     deleteSeedAdministrator(),
     deleteSeedUser(),
@@ -148,5 +151,4 @@ export const teardown = async () => {
     deleteSeedAssignedUser(),
     deleteSeedDelivery(),
   ]);
-  await AppDataSource.destroy();
 };

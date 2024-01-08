@@ -1,10 +1,10 @@
 describe("template spec", () => {
   before("seed database for e2e tests", () => {
-    cy.exec("npm run e2e:setup");
+    cy.task("setup");
   });
 
   after("delete seed data from db", async () => {
-    cy.exec("npm run e2e:teardown");
+    cy.task("teardown");
   });
 
   /* ==== Test Created with Cypress Studio ==== */
@@ -85,6 +85,7 @@ describe("template spec", () => {
       "cypress_new_user@example.com",
     );
     cy.get(".xt-row > :nth-child(2) > .w-full").type("abcde123456");
+    cy.wait(6000);
     cy.get(".xt-loader").click();
     cy.get(".xt-5").should("have.text", " Καλωσήρθες, Cypress_New_User");
     cy.get('[href="/dashboard/profile"]').click();
@@ -165,6 +166,7 @@ describe("template spec", () => {
     cy.get(".text-red-600").click();
     cy.get(".xt-row > :nth-child(1) > .w-full").type("cypressuser@example.com");
     cy.get(".xt-row > :nth-child(2) > .w-full").type("123456abcde");
+    cy.wait(6000);
     cy.get(".xt-loader").click();
     cy.get('[href="/dashboard/catalogue"]').click();
     cy.get(".listing-item").should("have.length", 2);
@@ -199,6 +201,7 @@ describe("template spec", () => {
       "cypressadmin@example.com",
     );
     cy.get(".xt-row > :nth-child(2) > .w-full").type("123456abcde");
+    cy.wait(6000);
     cy.get(".xt-loader").click();
     cy.get('[href="/dashboard/deliveries"]').click();
     cy.get(
@@ -237,6 +240,7 @@ describe("template spec", () => {
     cy.get(".text-red-600").click();
     cy.get(".xt-row > :nth-child(1) > .w-full").type("cypressuser@example.com");
     cy.get(".xt-row > :nth-child(2) > .w-full").type("123456abcde");
+    cy.wait(6000);
     cy.get(".xt-loader").click();
     cy.get('[href="/dashboard/locations"]').click();
     /* ==== End Cypress Studio ==== */
@@ -297,7 +301,7 @@ describe("template spec", () => {
     /* ==== Generated with Cypress Studio ==== */
     cy.get(".rounded-full > .h").click();
     cy.get(".text-red-600").click();
-    cy.wait(10000);
+    cy.wait(6000);
     cy.get(".xt-row > :nth-child(1) > .w-full").type(
       "cypressadmin@example.com",
     );
@@ -306,7 +310,7 @@ describe("template spec", () => {
     cy.get(".md\\:w-9\\/12 > .rounded-2xl > :nth-child(1)").click();
     cy.get(
       ':nth-child(1) > :nth-child(3) > [data-xt-tooltip=""] > .underline',
-    ).should("have.text", "User Company");
+    ).should("have.text", "Assigned User Company");
     cy.get(":nth-child(1) > :nth-child(5) > .font-semibold").should(
       "have.text",
       "Σύνολο: 30.00 €",
@@ -341,7 +345,7 @@ describe("template spec", () => {
       "cypressassigneduser@example.com",
     );
     cy.get(".xt-row > :nth-child(2) > .w-full").type("123456abcde");
-    cy.wait(10000);
+    cy.wait(6000);
     cy.get(".xt-loader").click();
     cy.get(":nth-child(6) > .xt-list > .py-1 > .my-auto").should(
       "have.text",
@@ -364,12 +368,13 @@ describe("template spec", () => {
     cy.get(".xt-row > :nth-child(1) > .w-full").type("123456abcde");
     cy.get('[aria-label="New Password"]').type("123456edcba");
     cy.get('[aria-label="Password Repeat"]').type("123456edcba");
-    cy.get(".xt-loader").click();
+    cy.contains("ΑΛΛΑΓΗ").click();
     cy.get(".rounded-full > .h").click();
     cy.get(".xt-list > .text-red-600").click();
-    cy.wait(10000);
+    cy.wait(6000);
     cy.get(".xt-row > :nth-child(1) > .w-full").type("cypressuser@example.com");
     cy.get(".xt-row > :nth-child(2) > .w-full").type("123456edcba");
+    cy.wait(6000);
     cy.get(".xt-loader").click();
     cy.location("pathname").should("eq", "/dashboard/orders");
     /* ==== End Cypress Studio ==== */
@@ -390,19 +395,12 @@ describe("template spec", () => {
     cy.get(
       ":nth-child(1) > :nth-child(3) > [data-xt-drop=\"{ position: 'auto-end', duration: 500 }\"]",
     ).click();
-    cy.get(
-      ":nth-child(1) > :nth-child(3) > [data-xt-drop=\"{ position: 'auto-end', duration: 500 }\"]",
-    ).should("include.text", "Κατάλογος:  0");
-    cy.get(":nth-child(2) > :nth-child(2) > :nth-child(3)").click();
-    cy.get(
-      ":nth-child(2) > :nth-child(3) > [data-xt-drop=\"{ position: 'auto-end', duration: 500 }\"]",
-    ).should("include.text", "Κατάλογος:  0");
-    cy.get(
-      ".xt-overflow-sub > :nth-child(1) > :nth-child(2) > :nth-child(3) > :nth-child(3)",
-    ).click();
-    cy.get(
-      ":nth-child(3) > :nth-child(3) > [data-xt-drop=\"{ position: 'auto-end', duration: 500 }\"]",
-    ).should("include.text", "Κατάλογος:  0");
+    cy.contains(/^Cypress_User/)
+      .parents("tr")
+      .get(
+        ".xt-overflow-sub > :nth-child(1) > :nth-child(2) > :nth-child(3) > :nth-child(3)",
+      )
+      .should("include.text", "Κατάλογος:  1");
     /* ==== End Cypress Studio ==== */
   });
 });
