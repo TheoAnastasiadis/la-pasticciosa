@@ -1,24 +1,25 @@
 import { Strategy as LocalStrategy } from "passport-local";
 import { User } from "../../../../entities/user";
+import type { VerifyFunction } from "passport-facebook";
 
-export default new LocalStrategy({ usernameField: "email" }, function (
-  email,
-  password,
-  done,
-) {
+export function verify(
+  email: string,
+  password: string,
+  done: Parameters<VerifyFunction>[3],
+): void {
   User.findOneBy({ email })
     .then((user: User | null) => {
       if (user === null) {
-        console.log("user is null");
         done(null, false);
         return;
       }
       if (!user.validatePassword(password)) {
-        console.log("password doesn't match");
         done(null, false);
         return;
       }
       done(null, user);
     })
     .catch(done);
-});
+}
+
+export default new LocalStrategy({ usernameField: "email" }, verify);
