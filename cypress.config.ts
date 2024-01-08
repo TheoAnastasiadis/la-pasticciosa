@@ -20,8 +20,11 @@ export default defineConfig({
         },
         async teardown() {
           await AppDataSource.initialize();
-          await teardown();
-          await AppDataSource.destroy();
+          try {
+            await teardown();
+          } finally {
+            await AppDataSource.destroy();
+          }
           return null;
         },
       });
