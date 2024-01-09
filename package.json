@@ -15,7 +15,8 @@
     "deploy:client": "bash ./bin/deploy.hosting.sh",
     "e2e:setup": "bash bin/build.seed.sh 'setup'",
     "e2e:teardown": "bash bin/build.seed.sh 'teardown'",
-    "unit": "npx jest --runInBand"
+    "test:unit": "npx jest --runInBand",
+    "test:e2e": "npx cypress run"
   },
   "repository": {
     "type": "git",

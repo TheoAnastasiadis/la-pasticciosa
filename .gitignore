@@ -1,8 +1,10 @@
 # server
 node_modules
-.env*
+.env
 build
-.firebase*
+.firebase
+.firebaserc
+firebase-*
 Compiled-HTML
 
 # client
@@ -14,6 +16,8 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
+src/client/.env.local
+src/client/.env.production
 
 .DS_Store
 dist
