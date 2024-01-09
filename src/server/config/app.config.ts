@@ -22,6 +22,7 @@ export default {
     process.env.NODE_ENV !== "production"
       ? (process.env.DEV_CLIENT_URL as string)
       : (process.env.CLIENT_URL as string),
+  getStagingUrl: () => process.env.STAGING_CLIENT_URL as string,
   getPaginationLimit: () => 20,
   getGoogleClientId: () => process.env.GOOGLE_CLIENT_ID as string,
   getGoogleClientSecret: () => process.env.GOOGLE_CLIENT_SECRET as string,
