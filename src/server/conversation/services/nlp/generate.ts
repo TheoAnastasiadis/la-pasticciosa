@@ -3,12 +3,58 @@ import type { Item } from "../../../entities/item";
 import type { User } from "../../../entities/user";
 import type { z } from "zod";
 import schema from "./schema";
+import aiplatform, { helpers } from "@google-cloud/aiplatform";
+import appConfig from "../../../config/app.config";
 
 async function generateResponse(
   prompt: string,
   message: string,
 ): Promise<string> {
-  return await Promise.resolve("");
+  const project = appConfig.getProjectId();
+  const location = "us-central1";
+
+  // prediction service
+  const { PredictionServiceClient } = aiplatform.v1;
+
+  // endpoint selection
+  const clientOptions = {
+    apiEndpoint: "us-central1-aiplatform.googleapis.com",
+  };
+  const publisher = "google";
+  const model = "chat-bison";
+  const predictionServiceClient = new PredictionServiceClient(clientOptions);
+  await predictionServiceClient.initialize();
+  const endpoint = `projects/${project}/locations/${location}/publishers/${publisher}/models/${model}`;
+
+  // create request
+  const instanceValue = helpers.toValue({
+    context: prompt,
+    messages: [{ author: "user", content: message }],
+  }) as Record<string, any>;
+  const instances = [instanceValue];
+
+  const parameters = helpers.toValue({
+    temperature: 0.2,
+    maxOutputTokens: 256,
+    topP: 0.95,
+    topK: 40,
+  });
+
+  const request = {
+    endpoint,
+    instances,
+    parameters,
+  };
+
+  // generate
+  const [response] = await predictionServiceClient.predict(request);
+
+  try {
+    return (helpers.fromValue(response.predictions?.[0] as any) as any)
+      .candidates[0].content;
+  } catch (e) {
+    return "";
+  }
 }
 
 function createPrompt(
@@ -22,7 +68,7 @@ function createPrompt(
       
       The JSON responses must conform to the following schema:
       
-      order: {quantities: Array<{itemId: string, value: integer}>, deliveryLocationId: string, deliveryDate: timestamp}
+      order: {quantities: Array<{itemId: string, value: integer}>, deliveryLocationId: string}
       
       The available items are: 
       ${JSON.stringify(
@@ -49,14 +95,19 @@ function createPrompt(
       # Important No. 2
       If the customer does not provide an explicit delivery destination, pick the most likely from the list.
       
-      If the customer's direct intention is not to place an order OR if you do not have enough information, you reply with an empty JSON \\"{}\\". Do not answer questions and do not output any other than JSON.`;
+      If the customer's direct intention is not to place an order OR if you do not have enough information, you reply with an empty JSON \\"{}\\". Do not answer questions and do not output anything other than JSON.`;
 }
 
 function parseResponse(generation: string): z.infer<typeof schema> | false {
+  // strip markup
+  generation = generation.replace("```json", "");
+  generation = generation.replace("```", "");
+
+  // parse
   const parsedResponse = JSON.parse(generation);
 
   // empty response, not an order request by the client
-  if (Object.keys(parseResponse).length === 0) return false;
+  if (Object.keys(parsedResponse).length === 0) return false;
 
   const data = schema.parse(parsedResponse);
   return data;
