@@ -78,6 +78,7 @@
   "dependencies": {
     "@babel/core": "^7.20.5",
     "@babel/preset-env": "^7.20.2",
+    "@google-cloud/aiplatform": "^3.10.0",
     "@inotom/vue-curve-text": "^2.0.0",
     "@maizzle/framework": "^4.6.0",
     "@morev/vue-transitions": "^2.3.6",
