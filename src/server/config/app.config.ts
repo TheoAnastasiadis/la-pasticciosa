@@ -34,4 +34,8 @@ export default {
   getSenderEmailAddress: () => process.env.SENDER_EMAIL_ADDRESS as string,
   getReplyEmailAddress: () => process.env.REPLY_EMAIL_ADDRESS as string,
   getEmailPassword: () => process.env.EMAIL_PASSWORD as string,
+  getProjectId: () =>
+    process.env.NODE_ENV === "production"
+      ? (process.env.PROJECT_ID as string)
+      : (process.env.STAGING_PROJECT_ID as string),
 };
