@@ -52,3 +52,6 @@ yarn-error.log
 cypress/seed_build
 cypress/screenshots
 cypress/downloads
+
+#gcloud
+gcloud_*
