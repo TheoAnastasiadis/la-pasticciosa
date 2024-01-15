@@ -84,7 +84,7 @@
     "@morev/vue-transitions": "^2.3.6",
     "@sentry/node": "^7.69.0",
     "@splinetool/loader": "^0.9.437",
-    "@splinetool/runtime": "^0.9.437",
+    "@splinetool/runtime": "^0.9.526",
     "@studio-freight/lenis": "^1.0.19",
     "@trpc/client": "^10.43.1",
     "@trpc/server": "^10.43.1",
