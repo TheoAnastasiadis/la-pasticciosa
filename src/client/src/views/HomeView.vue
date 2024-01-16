@@ -1,9 +1,9 @@
 <template>
-  <div ref="animated" class="absolute top-[25vh] left-[25vw] z-overlay">
+  <div ref="animated" class="absolute top-[25vh] left-[25vw] z-10">
     <Pasta :step="step" />
   </div>
-  <div class="hero relative overflow-hidden -mt-5" ref="hero">
-    <div class="absolute top-1/2 z-above md:pl-5">
+  <div class="relative overflow-hidden -mt-5 z-[9]" ref="hero">
+    <div class="absolute top-1/2 md:pl-5">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         width="48px"
@@ -135,25 +135,31 @@
     </div>
   </div>
   <div
-    class="featured inline-block w-full bg-primary-800 text-white xt-links-inverse"
+    class="featured w-full bg-primary-800 text-white xt-links-inverse z-10"
     ref="featured"
   >
-    <a href="/" class="featured-item block my-28">
+    <a href="/" class="featured-item block pt-28 mb-28">
       <div class="container">
         <div class="xt-row items-center">
-          <div class="w-full md:w-5/12 z-0">
+          <div class="w-full md:w-5/12">
             <div class="xt-media-container pb-[75%]">
-              <div
-                class="absolute w-full h-full z-below rounded-md opacity-30 grayscale"
-                ref="firstbg"
-              >
+              <div class="absolute w-full h-full z-[9]" ref="firstbg">
                 <img
-                  src="https://www.henkelman.com/media/1014/application-hero-2-2x.jpg?anchor=center&mode=crop&width=2800&height=1760&rnd=132259759480000000"
-                  class="w-full h-full object-cover rounded-2xl"
+                  src="/whole.jpg"
+                  class="w-full h-full object-cover rounded-2xl absolute top-0 z-20 saturate-50"
                 />
               </div>
               <div
-                class="xt-media border-yellow-200 rounded-2xl border-dashed flex flex-col items-start overflow-hidden"
+                class="absolute w-full h-full rounded-md z-20"
+                ref="firstbgCover"
+              >
+                <img
+                  src="/top_refined.png"
+                  class="w-full h-full object-cover absolute top-0 z-20 saturate-50"
+                />
+              </div>
+              <div
+                class="xt-media border-yellow-200 rounded-2xl border-dashed flex flex-col items-start overflow-hidden z-above"
                 ref="firstFeatured"
               >
                 <div
@@ -227,7 +233,7 @@
           <div class="w-full md:w-5/12 z-0 sm:order-2">
             <div class="xt-media-container pb-[75%]">
               <div
-                class="xt-media border-yellow-200 border-dashed overflow-hidden flex flex-col justify-between before:bg-gradient-to-r before:from-primary-800 before:to-transparent before:h-full before:w-11 before:absolute before:opacity-100 before:z-above after:bg-gradient-to-l after:from-primary-800 after:to-transparent after:h-full after:w-11 after:absolute after:opacity-100 after:right-0"
+                class="xt-media border-yellow-200 border-dashed overflow-hidden flex flex-col justify-between before:bg-gradient-to-r before:from-primary-800 before:to-transparent before:h-full before:w-11 before:absolute before:opacity-100 before:z-above after:bg-gradient-to-l after:from-primary-800 after:to-transparent after:h-full after:w-11 after:absolute after:opacity-100 after:right-0 z-10"
                 ref="secondFeatured"
               >
                 <div
@@ -283,6 +289,10 @@
                     />
                   </div>
                 </div>
+                <img
+                  src="/bg2.png"
+                  class="absolute h-full w-full object-cover z-below saturate-50"
+                />
                 <div
                   class="h-1/5 flex mt-auto flex-row-reverse justify-evenly space-x-3"
                   ref="videoBanner2"
@@ -366,7 +376,7 @@
       </div>
     </a>
     <a href="/" class="featured-item block my-28">
-      <div class="container">
+      <div class="container pb-28">
         <div class="xt-row items-center">
           <div class="w-full md:w-5/12 z-0">
             <div class="xt-media-container pb-[75%]" ref="thirdFeatured">
@@ -538,7 +548,7 @@
       </div>
     </a>
   </div>
-  <div class="block my-5 md:my-28">
+  <div class="block my-5 md:my-28 relative z-[9]">
     <div class="container">
       <div class="xt-row items-center">
         <div class="w-full z-10">
@@ -891,6 +901,7 @@ export default {
       banner2,
       banner3,
       firstbg,
+      firstbgCover,
       videoBanner1,
       videoBanner2,
       wireframe,
@@ -944,7 +955,8 @@ export default {
           scrub: true,
         },
       })
-      .fromTo(firstbg, { x: -100, y: -100 }, { x: 50, y: 50 });
+      .fromTo(firstbg, { x: -100, y: -100 }, { x: 50, y: 50 }, 0)
+      .fromTo(firstbgCover, { x: -100, y: -100 }, { x: 50, y: 50 }, 0);
 
     // second featured video animation
     gsap
@@ -1015,23 +1027,9 @@ export default {
         (thirdFeatured.offsetHeight - animated.offsetHeight) / 2,
     };
 
-    const stagePosition = {
-      left:
-        stage.getBoundingClientRect().left -
-        stage.offsetWidth / 2 -
-        Math.abs(stage.offsetWidth - animated.offsetWidth) / 2,
-      top:
-        stage.getBoundingClientRect().top +
-        window.scrollY -
-        stage.offsetHeight / 2 -
-        Math.abs(stage.offsetHeight - animated.offsetHeight) / 2,
-    };
-    console.log(stage.getBoundingClientRect(), stage.offsetWidth);
-    console.log(stagePosition);
-
     gsap.to(animated, { ...previewPosition, duration: 1 });
 
-    gsap.timeline({}).fromTo(animated, previewPosition, {
+    gsap.timeline().fromTo(animated, previewPosition, {
       ...firstFeaturedPosition,
       scrollTrigger: {
         trigger: firstFeatured,
@@ -1082,24 +1080,6 @@ export default {
       },
       onReverseComplete: () => {
         this.step = 2;
-      },
-    });
-
-    gsap.timeline({}).fromTo(animated, thirdFeaturedPosition, {
-      ...stagePosition,
-      scrollTrigger: {
-        trigger: catalogueExplore,
-        toggleActions: "play pause resume reset",
-        start: "top center",
-        end: "20% center",
-        scrub: 0.5,
-        markers: false,
-      },
-      onComplete: () => {
-        this.step = 4;
-      },
-      onReverseComplete: () => {
-        this.step = 3;
       },
     });
   },

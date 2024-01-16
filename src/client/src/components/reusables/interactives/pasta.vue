@@ -1,65 +1,55 @@
 <template>
-  <div class="static">
-    <div class="relative top-0 left-0 w-[200px] md:w-[400px] aspect-square">
-      <canvas width="100%" height="100%" ref="canvas"></canvas>
-      <div class="w-full text-center -translate-y-28 text-sm text-slate-200">
-        Ravioli
-      </div>
-    </div>
+  <div class="relative top-0 left-0 w-[200px] md:w-[400px] aspect-square">
+    <canvas width="100%" height="100%" ref="canvas"></canvas>
   </div>
 </template>
 
-<script lang="ts">
+<script setup lang="ts">
 import { gsap } from "gsap";
-import { Application } from "@splinetool/runtime";
+import { Application, SPEObject } from "@splinetool/runtime";
+import { onMounted, ref, toRef, toRefs, watch } from "vue";
 
-export default {
-  props: {
-    step: {
-      type: Number,
-      default: 0,
-    },
-  },
-  data: () => ({
-    timeline1: undefined,
-    timeline2: undefined,
-    timeline3: undefined,
-    src: "./src/assets/ravioli.png",
-    app: undefined,
-    pasta: undefined,
-    wireframe: undefined,
-  }),
-  async mounted() {
-    const { canvas } = this.$refs;
+const props = defineProps<{ step: number }>();
+const canvas = ref<HTMLCanvasElement>({} as HTMLCanvasElement);
+let rotation: gsap.core.Timeline;
+let bounce: gsap.core.Timeline;
 
-    // start the application and load the scene
-    const app = new Application(canvas);
-    await app.load("./ravioli.splinecode");
+onMounted(async () => {
+  const spline = new Application(canvas.value);
+  await spline.load(
+    "https://prod.spline.design/fgM-dsEgPqlVVRXh/scene.splinecode",
+  );
+  const pasta = spline.findObjectById(
+    "806f3f16-5bc8-4ae2-8b4b-3531be43a40c",
+  ) as SPEObject;
+  gsap.set(pasta.rotation as any, { x: 0, y: 0, z: 0 });
 
-    app.setZoom(0.8);
-    this.app = app;
-    this.pasta = app.findObjectByName("pasta_object");
-    this.wireframe = app.findObjectByName("wireframe");
+  rotation = gsap.timeline({ paused: true }).to(pasta.rotation as any, {
+    x: 0,
+    y: Math.PI * 4,
+    z: 0,
+    repeat: -1,
+    duration: 30,
+  });
 
-    gsap.set(this.wireframe.scale, { x: 0, y: 0, z: 0 });
+  bounce = gsap
+    .timeline({ paused: true, repeat: -1, defaults: { duration: 0.5 } })
+    .to(pasta.position, { y: 10 })
+    .to(pasta.position, { y: 0 });
+});
 
-    this.transitionToWireframe = gsap
-      .timeline({ paused: true })
-      .to(this.wireframe.scale, { x: 1, y: 1, z: 1 }, 0)
-      .to(this.pasta.scale, { y: 0, x: 0, z: 0 }, 0);
-  },
-  watch: {
-    step(value: number) {
-      switch (value) {
-        case 3:
-          this.transitionToWireframe.play();
-          break;
+watch(toRef(props, "step"), (value) => {
+  console.log(value);
+  switch (value) {
+    case 1:
+      rotation.pause();
+      // bounce.play();
+      break;
 
-        default:
-          this.transitionToWireframe.reverse();
-          break;
-      }
-    },
-  },
-};
+    default:
+      rotation.play();
+      bounce.pause();
+      break;
+  }
+});
 </script>
