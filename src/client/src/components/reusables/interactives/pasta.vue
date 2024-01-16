@@ -1,16 +1,19 @@
 <template>
-  <div class="relative top-0 left-0 w-[200px] md:w-[400px] aspect-square">
-    <canvas width="100%" height="100%" ref="canvas"></canvas>
+  <div ref="animated" class="absolute top-[25vh] left-[25vw] z-10">
+    <div class="relative top-0 left-0 w-[200px] md:w-[400px] aspect-square">
+      <canvas width="100%" height="100%" ref="canvas"></canvas>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { gsap } from "gsap";
 import { Application, SPEObject } from "@splinetool/runtime";
-import { onMounted, ref, toRef, toRefs, watch } from "vue";
+import { onMounted, ref, toRef, watch } from "vue";
 
 const props = defineProps<{ step: number }>();
 const canvas = ref<HTMLCanvasElement>({} as HTMLCanvasElement);
+const animated = ref<HTMLDivElement>({} as HTMLDivElement);
 let rotation: gsap.core.Timeline;
 let bounce: gsap.core.Timeline;
 
@@ -51,5 +54,15 @@ watch(toRef(props, "step"), (value) => {
       bounce.pause();
       break;
   }
+});
+
+defineExpose({
+  getWidth() {
+    return animated.value.offsetWidth;
+  },
+  getHeight() {
+    return animated.value.offsetHeight;
+  },
+  element: animated,
 });
 </script>
