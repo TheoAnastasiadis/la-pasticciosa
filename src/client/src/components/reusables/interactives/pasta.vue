@@ -1,5 +1,8 @@
 <template>
-  <div ref="animated" class="absolute top-[25vh] left-[25vw] z-10">
+  <div
+    ref="animated"
+    class="fixed md:absolute top-[calc(50vh-100px)] md:top-[calc(50vh-200px)] left-0 z-10"
+  >
     <div class="relative top-0 left-0 w-[200px] md:w-[400px] aspect-square">
       <canvas width="100%" height="100%" ref="canvas"></canvas>
     </div>
@@ -27,7 +30,7 @@ onMounted(async () => {
   ) as SPEObject;
   gsap.set(pasta.rotation as any, { x: 0, y: 0, z: 0 });
 
-  rotation = gsap.timeline({ paused: true }).to(pasta.rotation as any, {
+  rotation = gsap.timeline({ paused: false }).to(pasta.rotation as any, {
     x: 0,
     y: Math.PI * 4,
     z: 0,
@@ -51,18 +54,12 @@ watch(toRef(props, "step"), (value) => {
 
     default:
       rotation.play();
-      bounce.pause();
+      // bounce.pause();
       break;
   }
 });
 
 defineExpose({
-  getWidth() {
-    return animated.value.offsetWidth;
-  },
-  getHeight() {
-    return animated.value.offsetHeight;
-  },
   element: animated,
 });
 </script>
