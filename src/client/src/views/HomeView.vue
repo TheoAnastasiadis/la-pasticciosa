@@ -1,6 +1,6 @@
 <template>
   <Pasta :step="step" ref="animated" />
-  <Hero />
+  <Hero ref="hero" />
   <Featured ref="featured" />
   <Catalogue />
   <Platform />
@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import Pasta from "../components/reusables/interactives/pasta.vue";
-import { gsap } from "gsap";
+import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import Lenis from "@studio-freight/lenis";
 import Hero from "../components/reusables/top-level/homepage/hero.vue";
@@ -17,16 +17,17 @@ import Featured from "../components/reusables/top-level/homepage/featured.vue";
 import Catalogue from "../components/reusables/top-level/homepage/catalogue.vue";
 import Platform from "../components/reusables/top-level/homepage/platform.vue";
 import Contact from "../components/reusables/top-level/homepage/contact.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, type Ref } from "vue";
 
 gsap.registerPlugin(ScrollTrigger);
 const step = ref(0);
 const animated = ref<typeof Pasta>();
+const hero = ref<typeof Hero>();
 const featured = ref<typeof Featured>();
 
 onMounted(() => {
   const lenis = new Lenis({
-    duration: 2,
+    duration: 3,
     easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
     // @ts-expect-error type declarations are lacking
     direction: "vertical",
@@ -43,174 +44,105 @@ onMounted(() => {
 
   requestAnimationFrame(raf);
 
-  // // first featured banners animation
-  // gsap
-  //   .timeline({ scrollTrigger: { trigger: banner1, start: "top center" } })
-  //   .from(banner1, { opacity: 0, duration: 6 }, 0)
-  //   .to(
-  //     banner1,
-  //     {
-  //       x: -banner1.offsetWidth / 6,
-  //       repeat: -1,
-  //       duration: 5,
-  //       ease: "linear",
-  //     },
-  //     0,
-  //   )
-  //   .from(banner2, { opacity: 0, duration: 6 }, 0)
-  //   .to(
-  //     banner2,
-  //     {
-  //       x: -banner2.offsetWidth / 6,
-  //       repeat: -1,
-  //       duration: 15,
-  //       ease: "linear",
-  //     },
-  //     0,
-  //   )
-  //   .from(banner3, { opacity: 0, duration: 3 }, 1)
-  //   .to(
-  //     banner3,
-  //     {
-  //       x: -banner3.offsetWidth / 6,
-  //       repeat: -1,
-  //       duration: 10,
-  //       ease: "linear",
-  //     },
-  //     0,
-  //   );
+  console.log(featured.value);
 
-  // // first featured background animation
-  // gsap
-  //   .timeline({
-  //     scrollTrigger: {
-  //       trigger: firstFeatured,
-  //       scrub: true,
-  //     },
-  //   })
-  //   .fromTo(firstbg, { x: -100, y: -100 }, { x: 50, y: 50 }, 0)
-  //   .fromTo(firstbgCover, { x: -100, y: -100 }, { x: 50, y: 50 }, 0);
+  const steps = [hero, ...featured.value?.steps];
 
-  // // second featured video animation
-  // gsap
-  //   .timeline({ scrollTrigger: { trigger: secondFeatured }, repeat: -1 })
-  //   .to(
-  //     videoBanner1,
-  //     { x: -videoBanner1.offsetWidth / 2, duration: 8, ease: "linear" },
-  //     0,
-  //   )
-  //   .to(
-  //     videoBanner2,
-  //     { x: +videoBanner2.offsetWidth / 2, duration: 8, ease: "linear" },
-  //     0,
-  //   );
+  const snappingPoints: { left: number; top: number }[] = steps.map(
+    (step: Ref<{ background: HTMLElement }>, i) => ({
+      left:
+        window.innerWidth < 768
+          ? animated.value?.element.getBoundingClientRect().width / 2
+          : step.value.background.getBoundingClientRect().left +
+            (step.value.background.getBoundingClientRect().width -
+              animated.value?.element.getBoundingClientRect().width) /
+              2 +
+            [0, 50, -50, 50][i],
+      top:
+        window.innerWidth < 768
+          ? window.innerHeight / 2
+          : window.scrollY +
+            step.value.background.getBoundingClientRect().y +
+            (step.value.background.getBoundingClientRect().height -
+              animated.value?.element.getBoundingClientRect().height) /
+              2,
+    }),
+  );
 
-  // // wireframe animation
-  // gsap
-  //   .timeline({ scrollTrigger: { trigger: thirdFeatured, scrub: true } })
-  //   .fromTo(wireframe, { rotateX: -5 }, { rotateX: 15 });
-
-  // // catalogue explore animation
-  // gsap.from(stage, {
-  //   scale: 0,
-  //   duration: 2,
-  //   scrollTrigger: {
-  //     trigger: catalogueExplore,
-  //   },
-  // });
-
-  // // animated pasta
-  const firstFeaturedPosition = {
-    left:
-      featured.value?.elements[0].value.getBoundingClientRect().left +
-      (featured.value?.elements[0].value.offsetWidth -
-        animated.value?.getWidth()) /
-        2,
-    top:
-      featured.value?.elements[0].value.getBoundingClientRect().top +
-      window.scrollY +
-      (featured.value?.elements[0].value.offsetHeight -
-        animated.value?.getHeight()) /
-        2,
-  };
-
-  // const secondFeaturedPosition = {
-  //   left:
-  //     secondFeatured.getBoundingClientRect().left +
-  //     (firstFeatured.offsetWidth - animated.offsetWidth) / 2,
-  //   top:
-  //     secondFeatured.getBoundingClientRect().top +
-  //     window.scrollY +
-  //     (secondFeatured.offsetHeight - animated.offsetHeight) / 2,
-  // };
-
-  // const thirdFeaturedPosition = {
-  //   left:
-  //     thirdFeatured.getBoundingClientRect().left +
-  //     (firstFeatured.offsetWidth - animated.offsetWidth) / 2,
-  //   top:
-  //     thirdFeatured.getBoundingClientRect().top +
-  //     window.scrollY +
-  //     (thirdFeatured.offsetHeight - animated.offsetHeight) / 2,
-  // };
-
-  gsap.to(animated.value?.element, {
-    ...firstFeaturedPosition,
-    duration: 1,
+  // 0th step
+  gsap.set(animated.value?.element, {
+    ...snappingPoints[0],
   });
 
-  // gsap.timeline().fromTo(animated, previewPosition, {
-  //   ...firstFeaturedPosition,
-  //   scrollTrigger: {
-  //     trigger: firstFeatured,
-  //     start: "top bottom",
-  //     end: "25% center",
-  //     toggleActions: "play pause resume reset",
-  //     scrub: 0.5,
-  //     markers: false,
-  //   },
-  //   onComplete: () => {
-  //     this.step = 1;
-  //   },
-  //   onReverseComplete: () => {
-  //     this.step = 0;
-  //   },
-  // });
+  // 1st step
+  gsap
+    .timeline({
+      scrollTrigger: {
+        trigger: steps[1].value.background,
+        start: "0% bottom",
+        end: "50% 80%",
+        scrub: 1,
+        toggleActions: "play pause resume reset",
+      },
+    })
+    .set(animated.value?.element, {
+      ...snappingPoints[0],
+    })
+    .to(animated.value?.element, {
+      ...snappingPoints[1],
+      onComplete() {
+        step.value = 1;
+      },
+    });
 
-  // gsap.timeline({}).fromTo(animated, firstFeaturedPosition, {
-  //   ...secondFeaturedPosition,
-  //   scrollTrigger: {
-  //     trigger: secondFeatured,
-  //     start: "top center",
-  //     end: "20% center",
-  //     toggleActions: "play pause resume reset",
-  //     scrub: 0.5,
-  //     markers: false,
-  //   },
-  //   onComplete: () => {
-  //     this.step = 2;
-  //   },
-  //   onReverseComplete: () => {
-  //     this.step = 1;
-  //   },
-  // });
+  // 2nd step
+  gsap
+    .timeline({
+      scrollTrigger: {
+        trigger: steps[2].value.background,
+        start: "0% 90%",
+        end: "50% 80%",
+        scrub: 1,
+        toggleActions: "play pause resume reset",
+      },
+    })
+    .set(animated.value?.element, {
+      ...snappingPoints[1],
+    })
+    .to(animated.value?.element, {
+      top: () => (window.innerWidth < 768 ? "" : "-=100"),
+      left: () => (window.innerWidth < 768 ? "" : "+=100"),
+    })
+    .to(animated.value?.element, {
+      ...snappingPoints[2],
+      onComplete() {
+        step.value = 2;
+      },
+    });
 
-  // gsap.timeline({}).fromTo(animated, secondFeaturedPosition, {
-  //   ...thirdFeaturedPosition,
-  //   scrollTrigger: {
-  //     trigger: thirdFeatured,
-  //     start: "top center",
-  //     end: "20% center",
-  //     toggleActions: "play pause resume reset",
-  //     scrub: 0.5,
-  //     markers: false,
-  //   },
-  //   onComplete: () => {
-  //     this.step = 3;
-  //   },
-  //   onReverseComplete: () => {
-  //     this.step = 2;
-  //   },
-  // });
+  // 3rd step
+  gsap
+    .timeline({
+      scrollTrigger: {
+        trigger: steps[3].value.background,
+        start: "0% 55%",
+        end: "50% 80%",
+        scrub: 1,
+        toggleActions: "play pause resume reset",
+      },
+    })
+    .set(animated.value?.element, {
+      ...snappingPoints[2],
+    })
+    .to(animated.value?.element, {
+      top: () => (window.innerWidth < 768 ? "" : "-=100"),
+      left: () => (window.innerWidth < 768 ? "" : "-=100"),
+    })
+    .to(animated.value?.element, {
+      ...snappingPoints[3],
+      onComplete() {
+        step.value = 3;
+      },
+    });
 });
 </script>
