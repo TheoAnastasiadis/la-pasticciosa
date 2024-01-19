@@ -9,7 +9,7 @@
       aria-hidden="true"
     />
     <nav
-      class="fixed z-20 w-[98%] bg-white/80 dark:bg-gray-900/80 backdrop-blur navbar shadow-2xl shadow-gray-600/5 border-b border-gray-100 dark:border-gray-800 peer-checked:navbar-active dark:shadow-none rounded-md top-2 mx-3 z-above"
+      class="fixed w-[98%] bg-white/80 dark:bg-gray-900/80 backdrop-blur navbar shadow-2xl shadow-gray-600/5 border-b border-gray-100 dark:border-gray-800 peer-checked:navbar-active dark:shadow-none rounded-md top-2 mx-3 z-above"
     >
       <div class="xl:container m-auto px-6 md:px-12 lg:px-6">
         <div
@@ -71,7 +71,7 @@
                     href="#"
                     class="block md:px-4 transition hover:text-primary dark:hover:text-primaryLight"
                   >
-                    <span>Home</span>
+                    <span>Πλεονεκτήματα</span>
                   </a>
                 </li>
                 <li>
@@ -79,7 +79,7 @@
                     href="#"
                     class="block md:px-4 transition hover:text-primary dark:hover:text-primaryLight"
                   >
-                    <span>Portfolio</span>
+                    <span>Κατάλογος</span>
                   </a>
                 </li>
                 <li>
@@ -87,7 +87,7 @@
                     href="#"
                     class="block md:px-4 transition hover:text-primary dark:hover:text-primaryLight"
                   >
-                    <span>Services</span>
+                    <span>Παραγγελίες</span>
                   </a>
                 </li>
               </ul>
@@ -98,20 +98,11 @@
             >
               <a
                 href="#"
-                class="relative flex h-9 ml-auto items-center justify-center sm:px-6 before:absolute before:inset-0 before:rounded-full focus:before:bg-sky-600/10 dark:focus:before:bg-sky-400/10 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95"
-              >
-                <span
-                  class="relative text-sm font-semibold text-primary dark:text-primaryLight"
-                  >Sign Up</span
-                >
-              </a>
-              <a
-                href="#"
-                class="relative flex h-9 ml-auto items-center justify-center sm:px-6 before:absolute before:inset-0 before:rounded-full before:bg-sky-600 dark:before:bg-sky-400 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95"
+                class="relative flex h-9 ml-auto items-center justify-center sm:px-6 before:absolute before:inset-0 before:rounded-md before:bg-primary-600 before:transition before:duration-300 hover:before:scale-105 active:duration-75 active:before:scale-95"
               >
                 <span
                   class="relative text-sm font-semibold text-white dark:text-gray-900"
-                  >Login</span
+                  >Σύνδεση</span
                 >
               </a>
             </div>
