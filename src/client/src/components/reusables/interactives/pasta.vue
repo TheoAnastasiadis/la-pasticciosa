@@ -1,9 +1,9 @@
 <template>
   <div
     ref="animated"
-    class="fixed md:absolute top-[calc(50vh-100px)] md:top-[calc(50vh-200px)] left-0 z-10"
+    class="absolute top-[calc(50vh-100px)] md:top-[calc(50vh-200px)] left-0 z-10"
   >
-    <div class="relative top-0 left-0 w-[200px] md:w-[400px] aspect-square">
+    <div class="relative top-0 left-0 w-[200px] xl:w-[300px] aspect-square">
       <canvas width="100%" height="100%" ref="canvas"></canvas>
     </div>
   </div>
@@ -24,6 +24,7 @@ onMounted(async () => {
   const spline = new Application(canvas.value);
   await spline.load(
     "https://prod.spline.design/fgM-dsEgPqlVVRXh/scene.splinecode",
+    {},
   );
   const pasta = spline.findObjectById(
     "806f3f16-5bc8-4ae2-8b4b-3531be43a40c",
