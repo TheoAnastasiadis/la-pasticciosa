@@ -1,9 +1,8 @@
 <template>
-  <div
-    ref="animated"
-    class="absolute top-[calc(50vh-100px)] md:top-[calc(50vh-200px)] left-0 z-10"
-  >
-    <div class="relative top-0 left-0 w-[200px] xl:w-[300px] aspect-square">
+  <div ref="animated" class="absolute z-10">
+    <div
+      class="relative top-0 left-0 w-[200px] xl:w-[300px] aspect-square rounded-full overflow-hidden"
+    >
       <canvas width="100%" height="100%" ref="canvas"></canvas>
     </div>
   </div>
