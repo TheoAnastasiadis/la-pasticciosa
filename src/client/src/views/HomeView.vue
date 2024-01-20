@@ -68,7 +68,7 @@ onMounted(() => {
   );
 
   // 0th step
-  gsap.set(animated.value?.element, {
+  gsap.timeline({}).set(animated.value?.element, {
     ...snappingPoints[0],
   });
 
