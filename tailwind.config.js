@@ -35,7 +35,7 @@ module.exports = {
       },
       // custom font
       fontFamily: {
-        sans: [/*'"My Font Family"',*/ ...defaultTheme.fontFamily.sans],
+        quicksand: ['"Quicksand"', ...defaultTheme.fontFamily.mono],
       },
       // custom container
       container: {
