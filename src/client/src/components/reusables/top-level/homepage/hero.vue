@@ -2,7 +2,7 @@
   <div class="relative overflow-hidden -mt-5 z-[9]" ref="hero">
     <!-- weel -->
     <div
-      class="rounded-full bg-slate-400 bg-opacity-50 w-[200px] md:w-[400px] aspect-square z-above absolute bottom-8 mb-12 md:top-1/4 left-[25%] md:left-[20%]"
+      class="rounded-full bg-slate-400 bg-opacity-50 w-[200px] xl:w-[400px] aspect-square z-above absolute bottom-8 mb-12 md:top-[calc(50vh-90px)] lg:top-1/3 xl:top-1/4 left-1/4 md:left-[100px] lg:left-[20%]"
       ref="background"
     >
       <svg
@@ -51,14 +51,14 @@
     <!-- content -->
     <div class="flex relative">
       <div
-        class="relative px-8 py-48 md:pt-52 md:pb-12 md:px-24 mb-[200px] md:mb-[130px] md:my-auto mx-auto md:mr-0 max-w-2xl text-white xt-links-inverse text-center md:text-right group"
+        class="relative px-8 py-48 md:pt-52 md:pb-12 md:pl-[30%] lg:px-24 mb-[200px] md:mb-[130px] md:my-auto mx-auto md:mr-5 max-w-2xl text-white xt-links-inverse text-center md:text-right group"
       >
-        <h2 class="xt-h1 normal-case drop-shadow-md">
+        <h2 class="xt-h2 xl:xt-h1 normal-case drop-shadow-md">
           Εξελίξτε το μενού σας με φρέσκα ζυμαρικά!
         </h2>
         <h3 class="xt-p drop-shadow-md text-lg tracking-normal">
           Με τα προϊόντα μας μπορείτε να δημιουργήσετε
-          <span class="bg-primary-400 px-3 font-semibold"
+          <span class="bg-primary-400 px-3 font-semibold whitespace-nowrap"
             >ευφάνταστα πιάτα 🍝</span
           >
           που θα προσελκύσουν νέους πελάτες αλλά θα κάνουν και τους υπάρχοντες

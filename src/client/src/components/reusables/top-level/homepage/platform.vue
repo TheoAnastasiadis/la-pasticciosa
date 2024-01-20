@@ -1,5 +1,5 @@
 <template>
-  <div class="block my-5 md:my-28 px-0 md:px-10">
+  <div class="block container">
     <div class="container bg-white rounded-none md:rounded-xl">
       <div class="overflow-hidden bg-white py-10 md:py-24">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
@@ -8,7 +8,7 @@
           >
             <div class="lg:pr-8 lg:pt-4">
               <div class="lg:max-w-lg">
-                <h2 class="text-base font-semibold leading-7 text-primary-600">
+                <h2 class="text-lg font-semibold leading-7 text-primary-600">
                   Σας αντιμετωπίζουμε σαν επαγγελματίες
                 </h2>
                 <p

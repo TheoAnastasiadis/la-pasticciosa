@@ -10,25 +10,25 @@
           </h5>
           <div class="mt-6 lg:mb-0 mb-6">
             <button
-              class="bg-white text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+              class="bg-white text-lightBlue-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 hover:bg-blue-400 hover:shadow-xl hover:text-white hover:font-extrabold"
               type="button"
             >
-              <i class="fab fa-twitter"></i></button
+              <i class="h h-facebook text-base"></i></button
             ><button
-              class="bg-white text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+              class="bg-white text-lightBlue-600 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 hover:bg-pink-400 hover:shadow-xl hover:text-white hover:font-extrabold"
               type="button"
             >
-              <i class="fab fa-facebook-square"></i></button
+              <i class="h h-instagram text-base"></i></button
             ><button
-              class="bg-white text-pink-400 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+              class="bg-white shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 hover:bg-green-400 hover:shadow-xl hover:text-white hover:font-extrabold"
               type="button"
             >
-              <i class="fab fa-dribbble"></i></button
+              <i class="h h-whatsapp text-base"></i></button
             ><button
-              class="bg-white text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2"
+              class="bg-white text-blueGray-800 shadow-lg font-normal h-10 w-10 items-center justify-center align-center rounded-full outline-none focus:outline-none mr-2 hover:bg-red-400 hover:shadow-xl hover:text-white hover:font-extrabold"
               type="button"
             >
-              <i class="fab fa-github"></i>
+              <i class="h h-email text-base"></i>
             </button>
           </div>
         </div>

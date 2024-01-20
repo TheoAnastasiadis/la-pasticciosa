@@ -48,7 +48,7 @@ onMounted(() => {
 
   const steps = [hero, ...featured.value?.steps];
 
-  const snappingPoints: { left: number; top: number }[] = steps.map(
+  const snappingPoints: { left: number; top: () => number }[] = steps.map(
     (step: Ref<{ background: HTMLElement }>, i) => ({
       left:
         window.innerWidth < 768
@@ -58,14 +58,12 @@ onMounted(() => {
               animated.value?.element.getBoundingClientRect().width) /
               2 +
             [0, 50, -50, 50][i],
-      top:
-        window.innerWidth < 768
-          ? window.innerHeight / 2
-          : window.scrollY +
-            step.value.background.getBoundingClientRect().y +
-            (step.value.background.getBoundingClientRect().height -
-              animated.value?.element.getBoundingClientRect().height) /
-              2,
+      top: () =>
+        window.scrollY +
+        step.value.background.getBoundingClientRect().y +
+        (step.value.background.getBoundingClientRect().height -
+          animated.value?.element.getBoundingClientRect().height) /
+          2,
     }),
   );
 
