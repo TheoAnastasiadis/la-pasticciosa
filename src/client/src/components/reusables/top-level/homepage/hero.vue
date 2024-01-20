@@ -1,57 +1,37 @@
 <template>
-  <div class="relative overflow-hidden -mt-5 z-[9]" ref="hero">
+  <div
+    class="relative -mt-5 mb-14 z-[9] flex flex-auto flex-wrap-reverse lg:h-[100vh] w-full overflow-hidden"
+    ref="hero"
+  >
     <!-- weel -->
     <div
-      class="rounded-full bg-slate-400 bg-opacity-50 w-[200px] xl:w-[400px] aspect-square z-above absolute bottom-8 mb-12 md:top-[calc(50vh-90px)] lg:top-1/3 xl:top-1/4 left-1/4 md:left-[100px] lg:left-[20%]"
-      ref="background"
+      class="w-full lg:w-1/2 h-full min-h-[50vh] flex justify-end items-center relative bg-transparent"
     >
-      <svg
-        viewBox="0 0 100 100"
-        xmlns="http://www.w3.org/2000/svg"
-        class="animate-spin-slow"
-      >
-        <path
-          id="circlePath"
-          fill="none"
-          stroke-width="0"
-          stroke="hsl(0 100% 50% / 0.5)"
-          d="
-          M 10, 50
-          a 40,40 0 1,1 80,0
-          a 40,40 0 1,1 -80,0
-        "
-        />
-        <text id="text" font-size="5" fill="white" method="stretch">
-          <textPath id="textPath" href="#circlePath">
-            Πραγματικά 3D Scans από το εργαστήριο μας!
-          </textPath>
-        </text>
-        <text id="text" font-size="5" fill="black" method="stretch">
-          <textPath id="textPath" href="#circlePath" startOffset="55%">
-            Εξερευνήστε τον κατάλογο μας.
-          </textPath>
-        </text>
-      </svg>
-    </div>
-    <!-- background -->
-    <div
-      class="xt-media-container bg-gray-200 w-full h-full absolute pb-48 md:pb-0"
-      id="hero_image"
-    >
-      <img
-        class="xt-media object-cover"
-        src="https://images.unsplash.com/photo-1565607052745-35f8c6ba59b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1864&q=80"
-        loading="lazy"
-        alt=""
-      />
       <div
-        class="absolute inset-0 bg-gradient-to-l from-primary-900 opacity-50"
+        class="absolute h-[100px] w-[100px] bg-[url(https://media.istockphoto.com/id/1295107021/vector/sketchy-background-with-brush-stroke-lines-waves-and-dots.jpg?s=612x612&w=0&k=20&c=-xZpXoXEDSqt2WJn-VGsBPK9IESa-bFx1dWe4ZJbCN8=)] rounded-2xl z-below"
+        ref="block"
+      ></div>
+      <div class="absolute w-[100px] h-[100px] bg-white rounded-xl" ref="img1">
+        <img
+          src="https://houseofnasheats.com/wp-content/uploads/2023/07/How-to-Make-Homemade-Pasta-Square-2.jpg"
+          class="w-full h-full translate-y-2.5 -translate-x-2.5 border border-green-50 rounded-xl object-cover drop-shadow-sm"
+        />
+      </div>
+      <div class="absolute w-[100px] h-[100px] bg-white rounded-xl" ref="img2">
+        <img
+          src="https://assets.bonappetit.com/photos/62e8025f029c78e6c977d32c/1:1/w_2560%2Cc_limit/2022-VG-BA-PASTA-Buttered-Tomatoes-12671.jpg"
+          class="w-full h-full -translate-y-2.5 translate-x-2.5 border border-green-50 rounded-xl object-cover drop-shadow-sm"
+        />
+      </div>
+      <div
+        class="absolute w-[200px] h-[200px] border-red-500"
+        ref="background"
       ></div>
     </div>
     <!-- content -->
-    <div class="flex relative">
+    <div class="flex relative w-full lg:w-1/2 h-full">
       <div
-        class="relative px-8 py-48 md:pt-52 md:pb-12 md:pl-[30%] lg:px-24 mb-[200px] md:mb-[130px] md:my-auto mx-auto md:mr-5 max-w-2xl text-white xt-links-inverse text-center md:text-right group"
+        class="relative px-8 py-48 md:pt-52 md:pb-12 md:pl-[30%] lg:px-24 md:my-auto mx-auto md:mr-5 max-w-2xl text-black xt-links-inverse text-center md:text-right group"
       >
         <h2 class="xt-h2 xl:xt-h1 normal-case drop-shadow-md">
           Εξελίξτε το μενού σας με φρέσκα ζυμαρικά!
@@ -95,8 +75,33 @@
 </style>
 
 <script setup lang="ts">
-import { ref, type Ref } from "vue";
+import { onMounted, ref, type Ref } from "vue";
+import gsap from "gsap";
+
 const background = ref<HTMLDivElement>() as Ref<HTMLDivElement>;
+const block = ref<HTMLDivElement>() as Ref<HTMLDivElement>;
+const img1 = ref<HTMLDivElement>() as Ref<HTMLDivElement>;
+const img2 = ref<HTMLDivElement>() as Ref<HTMLDivElement>;
+
+onMounted(() => {
+  if (window.innerWidth < 768) {
+  } else if (window.innerWidth >= 1024) {
+    gsap
+      .timeline()
+      .set(block.value, { height: 500, width: 400, top: 100, right: -20 })
+      .set(img1.value, { height: 250, width: 400, top: 120, right: -150 })
+      .set(img2.value, { height: 400, width: 300, top: 300, right: 300 })
+      .set(background.value, { top: "+=150", right: "+=150" });
+
+    // gsap
+    //   .timeline({ repeat: -1, defaults: { duration: 10 } })
+    //   .fromTo(img1.value, { x: "-=20" }, { x: "+=20" }, 0)
+    //   .to(img1.value, { x: "-=20" }, 1)
+    //   .fromTo(img2.value, { y: "+=20" }, { y: "-=20" }, 0)
+    //   .to(img2.value, { y: "+=20" }, 1);
+  } else {
+  }
+});
 
 defineExpose({ background });
 </script>
