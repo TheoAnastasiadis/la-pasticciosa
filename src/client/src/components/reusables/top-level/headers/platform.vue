@@ -4,8 +4,8 @@
     class="xt-list xt-list-2 mx-auto w-11/12 flex max-w-10xl items-center justify-between mb-5 md:mb-10 container"
   >
     <div class="flex items-baseline">
-      <h2 class="text-xl font-bold md:text-2xl">
-        La Pasticciosa
+      <h2 class="text-xl font-quicksand font-bold md:text-2xl tracking-tight">
+        la pasticciosa
         <div
           class="align-middle py-2 px-2.5 text-xs rounded-xl text-gray-900 font-medium leading-snug tracking-wider uppercase bg-primary-200 hidden sm:inline-block shadow-sm"
         >
