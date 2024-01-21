@@ -14,14 +14,17 @@
                 Περιγράψτε τις ανάγκες σας.
               </div>
             </div>
-            <div class="flex flex-col md:flex-row mt-10" ref="catalogueExplore">
+            <div
+              class="flex flex-col md:flex-row mt-10 items-center align-middle"
+            >
               <div class="w-full md:w-6/12 mb-8 md:mb-0">
                 <div
-                  class="m-auto rounded-full w-[80%] md:w-[50%] aspect-square bg-white shadow-xl shadow-slate-200"
-                  ref="stage"
+                  class="m-auto rounded-full w-[80%] md:w-[50%] aspect-square bg-[url(/plate.jpg)] bg-cover bg-center shadow-lg shadow-slate-700"
                 >
-                  <div class="relative top-full w-full text-center py-2">
-                    Περιγραφή
+                  <div
+                    class="relative top-full w-full text-center pb-2 pt-4 text-lg"
+                  >
+                    Penne alla Portofino
                   </div>
                 </div>
               </div>
