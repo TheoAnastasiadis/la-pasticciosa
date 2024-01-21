@@ -36,7 +36,7 @@
           <div class="flex flex-wrap items-top mb-6">
             <div class="w-full lg:w-4/12 px-4 ml-auto mb-3">
               <span class="block uppercase text-sm font-semibold mb-2"
-                >Χρήσιμοι Σύνδεσμοι</span
+                >Χρησιμοι Συνδεσμοι</span
               >
               <ul class="list-unstyled">
                 <li>
@@ -72,7 +72,7 @@
             <div class="w-full lg:w-4/12 px-4">
               <span
                 class="block uppercase text-blueGray-500 text-sm font-semibold mb-2"
-                >Περισσότερα</span
+                >Περισσοτερα</span
               >
               <ul class="list-unstyled">
                 <li>

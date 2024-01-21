@@ -90,7 +90,10 @@ const block = ref<HTMLDivElement>() as Ref<HTMLDivElement>;
 const img1 = ref<HTMLDivElement>() as Ref<HTMLDivElement>;
 const img2 = ref<HTMLDivElement>() as Ref<HTMLDivElement>;
 
-onMounted(() => {
+const setupCollection = () => {
+  gsap.set([block.value, img1.value, img2.value, background.value], {
+    clearProps: "all",
+  });
   if (window.innerWidth < 768) {
     gsap
       .timeline()
@@ -113,7 +116,10 @@ onMounted(() => {
       .set(img2.value, { height: 150, width: 250, bottom: 25, left: 10 })
       .set(background.value, { right: "+=250", top: "+=50" });
   }
-});
+};
+
+onMounted(setupCollection);
+window.addEventListener("resize", setupCollection);
 
 defineExpose({ background });
 </script>

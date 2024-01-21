@@ -25,29 +25,20 @@ const animated = ref<typeof Pasta>();
 const hero = ref<typeof Hero>();
 const featured = ref<typeof Featured>();
 
-onMounted(() => {
-  const lenis = new Lenis({
-    duration: 3,
-    easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
-    // @ts-expect-error type declarations are lacking
-    direction: "vertical",
-    gestureDirection: "vertical",
-    smooth: true,
-    smoothTouch: false,
-    touchMultiplier: 2,
-  });
-
-  function raf(time: any) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-  }
-
-  requestAnimationFrame(raf);
-
-  console.log(featured.value);
-
+const setupAnimation = () => {
+  // clear previous values
   const steps = [hero, ...featured.value?.steps];
+  gsap.set(
+    [
+      steps[0].value.background,
+      steps[1].value.background,
+      steps[2].value.background,
+      steps[3].value.background,
+    ],
+    { clearProps: "all" },
+  );
 
+  // calculate points
   const snappingPoints: { left: () => number; top: () => number }[] = steps.map(
     (step: Ref<{ background: HTMLElement }>, i) => ({
       left: () =>
@@ -142,5 +133,27 @@ onMounted(() => {
         step.value = 3;
       },
     });
+};
+
+onMounted(() => {
+  const lenis = new Lenis({
+    duration: 3,
+    easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -10 * t)),
+    // @ts-expect-error type declarations are lacking
+    direction: "vertical",
+    gestureDirection: "vertical",
+    smooth: true,
+    smoothTouch: false,
+    touchMultiplier: 2,
+  });
+
+  function raf(time: any) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+
+  requestAnimationFrame(raf);
+  setupAnimation();
+  window.addEventListener("resize", setupAnimation);
 });
 </script>
