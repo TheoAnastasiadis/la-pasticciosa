@@ -6,7 +6,7 @@
     >
       <img
         src="/whole.jpg"
-        class="w-full md:w-5/12 object-cover absolute top-0 lg:top-auto saturate-50 z-[9] rounded-xl pointer-events-none shadow-xl"
+        class="w-full md:w-5/12 object-cover absolute top-0 md:top-auto saturate-50 z-[9] rounded-xl pointer-events-none shadow-xl"
         :class="{ 'left-0': !invertOrder, 'right-0': invertOrder }"
         ref="backgroundBackdrop"
       />

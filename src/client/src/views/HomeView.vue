@@ -48,16 +48,13 @@ onMounted(() => {
 
   const steps = [hero, ...featured.value?.steps];
 
-  const snappingPoints: { left: number; top: () => number }[] = steps.map(
+  const snappingPoints: { left: () => number; top: () => number }[] = steps.map(
     (step: Ref<{ background: HTMLElement }>, i) => ({
-      left:
-        window.innerWidth < 768
-          ? animated.value?.element.getBoundingClientRect().width / 2
-          : step.value.background.getBoundingClientRect().left +
-            (step.value.background.getBoundingClientRect().width -
-              animated.value?.element.getBoundingClientRect().width) /
-              2 +
-            [0, 50, -50, 50][i],
+      left: () =>
+        step.value.background.getBoundingClientRect().x +
+        (step.value.background.getBoundingClientRect().width -
+          animated.value?.element.getBoundingClientRect().width) /
+          2,
       top: () =>
         window.scrollY +
         step.value.background.getBoundingClientRect().y +
@@ -68,7 +65,7 @@ onMounted(() => {
   );
 
   // 0th step
-  gsap.timeline({}).set(animated.value?.element, {
+  gsap.timeline().set(animated.value?.element, {
     ...snappingPoints[0],
   });
 
@@ -76,22 +73,25 @@ onMounted(() => {
   gsap
     .timeline({
       scrollTrigger: {
-        trigger: steps[1].value.background,
-        start: "0% bottom",
+        trigger: steps[0].value.background,
+        start: "0% 20%",
         end: "50% 80%",
         scrub: 1,
         toggleActions: "play pause resume reset",
       },
     })
-    .set(animated.value?.element, {
-      ...snappingPoints[0],
-    })
-    .to(animated.value?.element, {
-      ...snappingPoints[1],
-      onComplete() {
-        step.value = 1;
+    .fromTo(
+      animated.value?.element,
+      {
+        ...snappingPoints[0],
       },
-    });
+      {
+        ...snappingPoints[1],
+        onComplete() {
+          step.value = 1;
+        },
+      },
+    );
 
   // 2nd step
   gsap

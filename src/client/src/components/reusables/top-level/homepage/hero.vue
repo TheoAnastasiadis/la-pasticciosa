@@ -3,21 +3,27 @@
     class="relative -mt-5 mb-14 z-[9] flex flex-auto flex-wrap-reverse lg:h-[100vh] w-full overflow-hidden"
     ref="hero"
   >
-    <!-- weel -->
+    <!-- images -->
     <div
       class="w-full lg:w-1/2 h-full min-h-[50vh] flex justify-end items-center relative bg-transparent"
     >
       <div
-        class="absolute h-[100px] w-[100px] bg-[url(https://media.istockphoto.com/id/1295107021/vector/sketchy-background-with-brush-stroke-lines-waves-and-dots.jpg?s=612x612&w=0&k=20&c=-xZpXoXEDSqt2WJn-VGsBPK9IESa-bFx1dWe4ZJbCN8=)] rounded-2xl z-below"
+        class="absolute h-[100px] w-[100px] bg-[url(https://i.pinimg.com/474x/53/90/77/539077600d93d1c9aa7e4eb2bf7dacdd.jpg)] bg-blend-darken rounded-2xl z-below"
         ref="block"
       ></div>
-      <div class="absolute w-[100px] h-[100px] bg-white rounded-xl" ref="img1">
+      <div
+        class="absolute w-[100px] h-[100px] border-2 border-dashed border-primary-600 border-spacing-7 rounded-xl"
+        ref="img1"
+      >
         <img
           src="https://houseofnasheats.com/wp-content/uploads/2023/07/How-to-Make-Homemade-Pasta-Square-2.jpg"
-          class="w-full h-full translate-y-2.5 -translate-x-2.5 border border-green-50 rounded-xl object-cover drop-shadow-sm"
+          class="w-full h-full translate-y-2.5 -translate-x-2.5 border border-green-50 rounded-xl object-cover drop-shadow-xl"
         />
       </div>
-      <div class="absolute w-[100px] h-[100px] bg-white rounded-xl" ref="img2">
+      <div
+        class="absolute w-[100px] h-[100px] border-2 border-dashed border-orange-400 rounded-xl"
+        ref="img2"
+      >
         <img
           src="https://assets.bonappetit.com/photos/62e8025f029c78e6c977d32c/1:1/w_2560%2Cc_limit/2022-VG-BA-PASTA-Buttered-Tomatoes-12671.jpg"
           class="w-full h-full -translate-y-2.5 translate-x-2.5 border border-green-50 rounded-xl object-cover drop-shadow-sm"
@@ -31,12 +37,12 @@
     <!-- content -->
     <div class="flex relative w-full lg:w-1/2 h-full">
       <div
-        class="relative px-8 py-48 md:pt-52 md:pb-12 md:pl-[30%] lg:px-24 md:my-auto mx-auto md:mr-5 max-w-2xl text-black xt-links-inverse text-center md:text-right group"
+        class="relative px-8 py-36 md:pt-44 md:pb-24 lg:pb-12 md:pl-[30%] lg:px-24 md:my-auto mx-auto md:mr-5 max-w-2xl text-black xt-links-inverse text-center md:text-right group"
       >
-        <h2 class="xt-h2 xl:xt-h1 normal-case drop-shadow-md">
+        <h2 class="text-4xl font-bold normal-case drop-shadow-sm mb-3">
           Εξελίξτε το μενού σας με φρέσκα ζυμαρικά!
         </h2>
-        <h3 class="xt-p drop-shadow-md text-lg tracking-normal">
+        <h3 class="xt-p drop-shadow-sm text-lg tracking-normal">
           Με τα προϊόντα μας μπορείτε να δημιουργήσετε
           <span class="bg-primary-400 px-3 font-semibold whitespace-nowrap"
             >ευφάνταστα πιάτα 🍝</span
@@ -46,12 +52,13 @@
             >να έρχονται συχνότερα 😋.</span
           >
         </h3>
-        <!-- <a
+        <button
           href="/"
-          class="xt-button py-2.5 px-3.5 text-xl rounded-lg font-extrabold leading-snug tracking-wider text-white drop-shadow-2xl underline hover:scale-110 transition-transform"
+          class="xt-button px-5 py-3 rounded-md border-2 font-bold text-primary-700 border-primary-700 shadow-sm hover:shadow-xl hover:bg-slate-100"
         >
-          Ζητήστε προσφορά!
-        </a> -->
+          Ζητήστε προσφορά!&nbsp;
+          <i class="h h-award text-lg"></i>
+        </button>
       </div>
     </div>
   </div>
@@ -85,21 +92,26 @@ const img2 = ref<HTMLDivElement>() as Ref<HTMLDivElement>;
 
 onMounted(() => {
   if (window.innerWidth < 768) {
+    gsap
+      .timeline()
+      .set(block.value, { height: 200, width: 300, top: 0, right: 30 })
+      .set(img1.value, { height: 150, width: 200, top: -100, right: 0 })
+      .set(img2.value, { height: 150, width: 200, top: 100, right: 150 })
+      .set(background.value, { top: "-=150", right: "+=150" });
   } else if (window.innerWidth >= 1024) {
     gsap
       .timeline()
       .set(block.value, { height: 500, width: 400, top: 100, right: -20 })
       .set(img1.value, { height: 250, width: 400, top: 120, right: -150 })
-      .set(img2.value, { height: 400, width: 300, top: 300, right: 300 })
-      .set(background.value, { top: "+=150", right: "+=150" });
-
-    // gsap
-    //   .timeline({ repeat: -1, defaults: { duration: 10 } })
-    //   .fromTo(img1.value, { x: "-=20" }, { x: "+=20" }, 0)
-    //   .to(img1.value, { x: "-=20" }, 1)
-    //   .fromTo(img2.value, { y: "+=20" }, { y: "-=20" }, 0)
-    //   .to(img2.value, { y: "+=20" }, 1);
+      .set(img2.value, { height: 400, width: 300, top: 250, right: 300 })
+      .set(background.value, { top: "+=200" });
   } else {
+    gsap
+      .timeline()
+      .set(block.value, { height: 300, width: 400, bottom: 10, left: 50 })
+      .set(img1.value, { height: 150, width: 250, top: -50, left: 150 })
+      .set(img2.value, { height: 150, width: 250, bottom: 25, left: 10 })
+      .set(background.value, { right: "+=250", top: "+=50" });
   }
 });
 
