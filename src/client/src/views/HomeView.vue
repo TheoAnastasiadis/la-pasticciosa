@@ -144,7 +144,6 @@ onMounted(() => {
     gestureDirection: "vertical",
     smooth: true,
     smoothTouch: false,
-    touchMultiplier: 2,
   });
 
   function raf(time: any) {
@@ -152,7 +151,9 @@ onMounted(() => {
     requestAnimationFrame(raf);
   }
 
-  requestAnimationFrame(raf);
+  if (window.innerWidth > 756) {
+    requestAnimationFrame(raf);
+  }
   setupAnimation();
   window.addEventListener("resize", setupAnimation);
 });
