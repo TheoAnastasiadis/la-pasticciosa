@@ -5,7 +5,7 @@
   >
     <!-- images -->
     <div
-      class="w-full lg:w-1/2 h-full min-h-[50vh] flex justify-end items-center relative bg-transparent"
+      class="w-full lg:w-1/2 self-center min-h-[50vh] flex justify-end items-center relative bg-transparent"
     >
       <div
         class="absolute h-[100px] w-[100px] bg-[url(https://i.pinimg.com/474x/53/90/77/539077600d93d1c9aa7e4eb2bf7dacdd.jpg)] bg-blend-darken rounded-2xl z-below"
@@ -99,14 +99,14 @@ const setupCollection = () => {
       .timeline()
       .set(block.value, { height: 200, width: 300, top: 0, right: 30 })
       .set(img1.value, { height: 150, width: 200, top: -100, right: 0 })
-      .set(img2.value, { height: 150, width: 200, top: 100, right: 150 })
-      .set(background.value, { top: "-=150", right: "+=150" });
+      .set(img2.value, { height: 150, width: 200, top: 150, right: 150 })
+      .set(background.value, { top: "-=100", right: "+=150" });
   } else if (window.innerWidth >= 1024) {
     gsap
       .timeline()
-      .set(block.value, { height: 500, width: 400, top: 100, right: -20 })
-      .set(img1.value, { height: 250, width: 400, top: 120, right: -150 })
-      .set(img2.value, { height: 400, width: 300, top: 250, right: 300 })
+      .set(block.value, { height: 500, width: 400, top: -50, right: -20 })
+      .set(img1.value, { height: 250, width: 400, top: -30, right: -150 })
+      .set(img2.value, { height: 400, width: 300, top: 100, right: 300 })
       .set(background.value, { top: "+=200" });
   } else {
     gsap
