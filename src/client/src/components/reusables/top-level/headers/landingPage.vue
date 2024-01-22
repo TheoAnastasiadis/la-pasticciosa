@@ -9,7 +9,7 @@
       aria-hidden="true"
     />
     <nav
-      class="fixed w-[98vw] bg-white/80 dark:bg-gray-900/80 backdrop-blur navbar shadow-2xl shadow-gray-600/5 border-b border-gray-100 dark:border-gray-800 peer-checked:navbar-active dark:shadow-none rounded-md top-2 mx-[1vw] z-above"
+      class="fixed w-[98vw] bg-white/80 backdrop-blur navbar shadow-2xl shadow-gray-600/5 border-b border-gray-100 peer-checked:navbar-active rounded-md top-1 mx-[1vw] z-above"
     >
       <div class="xl:container m-auto px-8 md:px-9 lg:px-4">
         <div
@@ -38,9 +38,9 @@
             </label>
           </div>
           <div
-            class="navmenu hidden w-full flex-wrap justify-end items-center mb-16 space-y-8 p-6 border border-gray-100 rounded-3xl shadow-2xl shadow-gray-300/20 bg-white dark:bg-gray-800 lg:space-y-0 lg:p-0 lg:m-0 lg:flex md:flex-nowrap lg:bg-transparent lg:w-7/12 lg:shadow-none dark:shadow-none dark:border-gray-700 lg:border-0"
+            class="navmenu hidden w-full flex-wrap justify-end items-center mb-16 space-y-8 p-6 border border-gray-100 rounded-3xl shadow-2xl shadow-gray-300/20 bg-white lg:space-y-0 lg:p-0 lg:m-0 lg:flex md:flex-nowrap lg:bg-transparent lg:w-7/12 lg:shadow-none lg:border-0"
           >
-            <div class="text-gray-600 dark:text-gray-300 lg:pr-4">
+            <div class="text-gray-600 lg:pr-4">
               <ul
                 class="space-y-6 tracking-wide font-medium text-base lg:text-sm lg:flex lg:space-y-0 text-black"
               >
@@ -72,7 +72,7 @@
             </div>
 
             <div
-              class="w-full space-y-2 border-primary/10 dark:border-gray-700 flex flex-col -ml-1 sm:flex-row lg:space-y-0 md:w-max lg:border-l"
+              class="w-full space-y-2 border-primary/10 flex flex-col -ml-1 sm:flex-row lg:space-y-0 md:w-max lg:border-l"
             >
               <RouterLink
                 to="/login"
@@ -105,5 +105,4 @@
 
 <script setup lang="ts">
 import Drop from "../../interactives/drop.vue";
-import Button from "../../interact";
 </script>
