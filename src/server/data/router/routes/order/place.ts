@@ -59,6 +59,15 @@ export const placeOrder = procedure
 
     // update the db and return result as response
     const order = await AppDataSource.manager.transaction(async (manager) => {
+      const orderQuantities = await Promise.all(
+        quantities.map(
+          async ({ item, value }) =>
+            await manager
+              .create(Quantity, { item, value })
+              .save({ reload: true }),
+        ),
+      );
+
       return await manager
         .create(Order, {
           total,
@@ -66,9 +75,7 @@ export const placeOrder = procedure
           status: OrderStatus.PENDING,
           user,
           delivery,
-          quantities: quantities.map(({ item, value }) =>
-            manager.create(Quantity, { item, value }),
-          ),
+          quantities: orderQuantities,
         })
         .save();
     });
