@@ -1,60 +1,72 @@
-<p align="center" width="100%">
+<div align="center">
 
-![Static Badge](https://img.shields.io/badge/coverage-82%25-blue)
+[![Code Coverage](https://img.shields.io/badge/Code_Coverage-85%25-yellow.svg)](link-to-code-coverage)
+[![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)](link-to-build-status)
+[![Live Status](https://img.shields.io/badge/Status-Online-blue.svg)](link-to-live-status)
 
-![Static Badge](https://img.shields.io/badge/status-passing-s)
+</div>
 
-</p>
+# Custom CRM for B2B eCommerce
 
-# 👩‍💻 La Pasticciosa B2B CRM: business automation and growth with a custom CRM!
+![Landing Page Screenshot](./src/client/src/assets/screenshot1.jpg)
 
-![order page screenshot](./src/client/src/assets/full.png)
+Welcome to this fully-fledged Custom CRM for B2B companies! 🚀 This professional **production-ready** tool is actively utilized by the company that commissioned it. It's been designed and developed as s customized CRM platform for a fresh pasta company, featuring tailor-made customer acceptance procedures and custom UI elements for a succesfull and smooth transition from manual to online order placement.
 
-Custom B2B CRM developed for a fresh pasta lab. Achievements; stramlined operations, efficient customer management, and accelerated business growth! [Check out the live result!](https://b2b.lapasticciosa.gr)
+## Features
 
-## 🚀 Features That Might Interest You:
+1. **Client Vetting and Onboarding 🛡️**. Custom procedure for thorough client vetting and seamless onboarding.
 
-### Custom Customer Vetting Procedures 🧐
+2. **Dashboard 📊**. Fully developed dashboard for viewing, editing, and submitting orders.
 
-- **Exclusive Validation:** Tailored vetting procedures ensure that your business engages with only the most delectable clients.
-- **Compartmentalized Data:** Each user is concerned and has access to the information relevant to their level of priviledge.
+3. **Authentication 🔒**. Secure authentication system to control access and ensure data integrity.
 
-### Intuitive User Interface 🎨
+4. **Business Logic 🧠.** Robust business logic to streamline processes and enhance efficiency.
 
-- **Simplicity at its Best:** The UI is as smooth as al dente pasta, providing a user-friendly experience for _single-step order placement_.
-- **Anytime, Anywhere Access:** Responsive design lets you manage your inventory from the kitchen, the office, or on the go.
+5. **Promotional Features 🌟**. Innovative promotional features to boost client engagement and satisfaction.
 
-![Responsive Design Mockup](./src/client/src/assets/mockup_2.jpg)
+![Mobile Page Screenshot](./src/client/src/assets/screenshot2.jpg)
 
-### Reporting and Analytics 📈
+### Experimental Work-in-Progress Features
 
-- **Data Delights:** Turn data into money with built-in reporting tools for informed business decisions.
-- **Your Recipe, Your Reports:** Customize reports to your business flavor, revealing insights into customer tastes and market trends.
+1. **3D Curated Landing Page 🌐**. Cutting-edge 3D landing page to provide a visually immersive user experience.
 
-## ☔ Under the hood:
+2. **Custom Chat System powered by Google's PaLM 💬**.Experimental chat system leveraging Google's PaLM for enhanced communication capabilities.
 
-1. **Backend:** TypeORM powered backend fueled by PostgressSQL CockroachDB. Typesafe _remote procedure calling_ developed with tRPC. ExpressJS server running on Firebase Functions instances.
+## Under the Hood
 
-2. **Frontend:** Personalized UI developed with TailwindCSS powered by VueJS as a SPA. 3D graphics created with SplineJS.
+### a) Node.js Backend 🚂
 
-3. **CDN:** Static asset hosting and delivery through Firebase Hosting.
+- Built with Node.js and written in TypeScript.
+- Utilizes tRPC for type-safe remote procedure calls.
 
-4. **Natural Language (WIP):** Order parsing with Google's `bison-chat@latest` model. Data retrieval through a mixture of elastic and PaLM embeddings.
+### b) PostgreSQL Database 🐘
 
-## 🌟 Experimental Features `WIP`
+- Powered by CockroachDB for a scalable and resilient database solution.
+- Deployed on Google Cloud Platform (GCP) via Firebase Functions.
 
-1. **Generative AI Chatbot:** Transition customers to online order placements through a hybrid chat-bot experiences available through SMS, Viber and WhatsAPP channels.
+### c) Vue.js 3 Frontend 🖌️
 
-2. **3D Presentations:** Guide prospective clients through the process of pasta making via a custom 3D landing page experience. [Read more about how I plan on developing this with the help of Spline 3D and Stable Diffusion XL](https://medium.com/@theoanastasiadis98).
+- Developed with Vue.js 3, XtendUI, and Tailwind CSS.
+- Provides a modern and responsive user interface.
 
-![3d landing page](./src/client/src/assets/mockup_1.jpg)
+## Live Demo
 
-## 📜 Further Enquiries
+Explore the live production version of the CRM [here](https://b2b.lapasticciosa.gr).
 
-La Pasticciosa B2B CRM is served under the [MIT License](LICENSE.md). Your ticket to further CRM developement is just a `git clone` away!
+![Landing Page Screenshot](./src/client/src/assets/screenshot3.jpg)
 
-### Teo Anastasiadis 👩‍💻
+## Contact Information
 
-- 🌎Portfolio Website: https://teoanastasiadis.com
-- 📧Business Email: theoanastasiadis98@gmail.com
-- 📱 Reach Me: [(+30) 6946605411 (EET hours)](tel:00306946605411)
+For further inquiries or if you are interested in joining our development team, please feel free to reach out:
+
+- **Email:** [theoanastasiadis98@gmail.com](mailto:theoanastasiadis98@gmail.com)
+- **LinkedIn:** [Teo Anastasiadis](https://www.linkedin.com/in/teo-anastasiadis/)
+- **Phone:** (+30) 6946605411
+
+I appreciate your interest in my project and look forward to potential collaborations! 🌐🚀
+
+## See More
+
+- **[tRPC](https://github.com/trpc/trpc)** Move fast and break nothing.
+  End-to-end typesafe APIs made easy.
+- **[Spline](https://spline.design/)**, a place to design and colaborate in 3D
