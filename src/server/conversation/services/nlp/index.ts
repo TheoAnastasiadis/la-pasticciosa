@@ -31,13 +31,5 @@ export default async function parseOrder(
   // place order from generated data
   const connection = await OrderService.authenticate();
   const orderId = await connection.placeOrder(data, user);
-  if (typeof data.deliveryDate !== "undefined")
-    await connection
-      .updateOrderEstimate(orderId, data.deliveryDate)
-      .catch(() => {
-        console.error(
-          "order was placed, but date was not succesfully altered.",
-        );
-      });
   return orderId;
 }
