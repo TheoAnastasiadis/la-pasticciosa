@@ -9,7 +9,6 @@ import { User, UserType } from "../../../entities/user";
 import { Session } from "../../../entities/session";
 import type { z } from "zod";
 import type schema from "../nlp/schema";
-import assert from "assert";
 
 export default class OrderService {
   private readonly _client!: CreateTRPCProxyClient<AppRouter>;
@@ -46,18 +45,5 @@ export default class OrderService {
     });
 
     return order.id;
-  }
-
-  async updateOrderEstimate(orderId: string, timestamp: Date): Promise<string> {
-    const order = await this._client.updateOrderEstimate.mutate({
-      id: orderId,
-      day: timestamp.getDate(),
-      month: timestamp.getMonth(),
-      year: timestamp.getFullYear(),
-    });
-
-    assert(order.estimatedDelivery);
-
-    return order.estimatedDelivery;
   }
 }
