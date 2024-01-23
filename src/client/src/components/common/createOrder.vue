@@ -4,8 +4,8 @@
   >
     <Loader :loading="loading" />
     <div class="xt-row xt-row-2">
-      <div class="xt-h5 text-primary-500 w-full">
-        Δημιουργήστε την παραγγελία σας!
+      <div class="xt-h5 text-primary-500 w-full px-1.5">
+        Δημιουργήστε μια παραγγελία.
       </div>
       <label
         class="block mb-3 font-medium text-gray-700"
@@ -16,7 +16,7 @@
       <select
         v-if="userStore?.user?.type === 'admin'"
         v-model="selectedUser"
-        class="block w-full xt-select rounded-md py-2.5 px-3.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none max-w-xs mb-3"
+        class="block w-full xt-select rounded-md py-2.5 px-3.5 mx-2.5 text-gray-900 placeholder-black placeholder-opacity-75 bg-gray-100 transition focus:bg-gray-200 focus:outline-none max-w-xs mb-3"
         aria-label="Select"
       >
         <option selected :value="undefined">Επιλέξτε έναν χρήστη</option>

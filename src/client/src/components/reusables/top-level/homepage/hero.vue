@@ -1,43 +1,14 @@
 <template>
   <div
-    class="relative -mt-5 mb-14 z-[9] flex flex-auto flex-wrap-reverse lg:h-[100vh] w-full overflow-hidden"
+    class="relative -mt-5 pt-28 lg:pt-0 mb-14 z-[9] flex flex-auto flex-wrap lg:flex-row-reverse w-full lg:min-h-screen overflow-hidden"
     ref="hero"
   >
-    <!-- images -->
+    <!-- content -->
     <div
-      class="w-full lg:w-1/2 self-center min-h-[50vh] flex justify-end items-center relative bg-transparent"
+      class="flex relative w-full lg:w-1/2 self-center px-10 md:px-20 mb-36 md:mb-36 lg:mb-0 lg:-order-1"
     >
       <div
-        class="absolute h-[100px] w-[100px] bg-[url(https://i.pinimg.com/474x/53/90/77/539077600d93d1c9aa7e4eb2bf7dacdd.jpg)] bg-blend-darken rounded-2xl z-below"
-        ref="block"
-      ></div>
-      <div
-        class="absolute w-[100px] h-[100px] border-2 border-dashed border-primary-600 border-spacing-7 rounded-xl"
-        ref="img1"
-      >
-        <img
-          src="https://houseofnasheats.com/wp-content/uploads/2023/07/How-to-Make-Homemade-Pasta-Square-2.jpg"
-          class="w-full h-full translate-y-2.5 -translate-x-2.5 border border-green-50 rounded-xl object-cover drop-shadow-xl"
-        />
-      </div>
-      <div
-        class="absolute w-[100px] h-[100px] border-2 border-dashed border-orange-400 rounded-xl"
-        ref="img2"
-      >
-        <img
-          src="https://assets.bonappetit.com/photos/62e8025f029c78e6c977d32c/1:1/w_2560%2Cc_limit/2022-VG-BA-PASTA-Buttered-Tomatoes-12671.jpg"
-          class="w-full h-full -translate-y-2.5 translate-x-2.5 border border-green-50 rounded-xl object-cover drop-shadow-sm"
-        />
-      </div>
-      <div
-        class="absolute w-[200px] h-[200px] border-red-500"
-        ref="background"
-      ></div>
-    </div>
-    <!-- content -->
-    <div class="flex relative w-full lg:w-1/2 h-full">
-      <div
-        class="relative px-8 py-36 md:pt-44 md:pb-24 lg:pb-12 md:pl-[30%] lg:px-24 md:my-auto mx-auto md:mr-5 max-w-2xl text-black xt-links-inverse text-center md:text-right group"
+        class="relative text-black xt-links-inverse text-center md:text-right group"
       >
         <h2 class="text-4xl font-bold normal-case drop-shadow-sm mb-3">
           Εξελίξτε το μενού σας με φρέσκα ζυμαρικά!
@@ -60,6 +31,37 @@
           <i class="h h-award text-lg"></i>
         </button>
       </div>
+    </div>
+    <!-- images -->
+    <div
+      class="w-full lg:w-1/2 self-center min-h-[50vh] flex justify-end items-center relative bg-transparent"
+    >
+      <div
+        class="absolute h-[100px] w-[100px] bg-[url(https://i.pinimg.com/474x/53/90/77/539077600d93d1c9aa7e4eb2bf7dacdd.jpg)] bg-blend-darken rounded-2xl z-below"
+        ref="block"
+      ></div>
+      <div
+        class="absolute w-[100px] h-[100px] border-2 border-dashed border-primary-600 border-spacing-7 rounded-xl"
+        ref="img1"
+      >
+        <img
+          src="/hero/1.jpg"
+          class="w-full h-full translate-y-2.5 -translate-x-2.5 border border-green-50 rounded-xl object-cover drop-shadow-xl"
+        />
+      </div>
+      <div
+        class="absolute w-[100px] h-[100px] border-2 border-dashed border-orange-400 rounded-xl"
+        ref="img2"
+      >
+        <img
+          src="/hero/2.jpg"
+          class="w-full h-full -translate-y-2.5 translate-x-2.5 border border-green-50 rounded-xl object-cover drop-shadow-sm"
+        />
+      </div>
+      <div
+        class="absolute w-[200px] h-[200px] border-red-500"
+        ref="background"
+      ></div>
     </div>
   </div>
 </template>
@@ -98,16 +100,16 @@ const setupCollection = () => {
     gsap
       .timeline()
       .set(block.value, { height: 200, width: 300, top: 0, right: 30 })
-      .set(img1.value, { height: 150, width: 200, top: -100, right: 0 })
-      .set(img2.value, { height: 150, width: 200, top: 150, right: 150 })
+      .set(img1.value, { height: 150, width: 200, top: -100, right: 10 })
+      .set(img2.value, { height: 150, width: 200, top: 150, right: 170 })
       .set(background.value, { top: "-=100", right: "+=150" });
   } else if (window.innerWidth >= 1024) {
     gsap
       .timeline()
-      .set(block.value, { height: 500, width: 400, top: -50, right: -20 })
-      .set(img1.value, { height: 250, width: 400, top: -30, right: -150 })
-      .set(img2.value, { height: 400, width: 300, top: 100, right: 300 })
-      .set(background.value, { top: "+=200" });
+      .set(block.value, { height: 500, width: 400, top: -50, right: "10%" })
+      .set(img1.value, { height: 200, width: 300, top: -50, right: -50 })
+      .set(img2.value, { height: 300, width: 200, top: 130, left: 30 })
+      .set(background.value, { top: "+=130", right: "+=30" });
   } else {
     gsap
       .timeline()

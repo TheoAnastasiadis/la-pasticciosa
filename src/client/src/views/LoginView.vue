@@ -73,13 +73,11 @@
   <h6 class="mx-auto md:w-6/12 myb-3 mt-5 text-center">
     Ή επιλέξτε ένα από τα παρακάτω
   </h6>
-  <div
-    class="p-4 grid grid-cols-1 md:grid-cols-2 w-12/12 md:w-6/12 mx-auto space-x-0 md:space-x-2 space-y-4 md:space-y-0"
-  >
+  <div class="p-4 grid grid-cols-1 w-12/12 md:w-6/12 mx-auto space-y-4">
     <div class="rounded-md w-full">
       <a
         href="/auth/login/google"
-        class="px-4 py-2 flex gap-2 border-slate-200 rounded-lg text-slate-700 hover:text-slate-900 hover:shadow transition ease-in w-full justify-center bg-slate-100 hover:bg-slate-200 cursor-pointer"
+        class="px-4 py-2 flex gap-2 border-slate-300 rounded-lg text-slate-700 hover:text-slate-900 hover:shadow transition ease-in w-full justify-center bg-slate-100 hover:bg-slate-200 cursor-pointer border"
       >
         <img
           class="w-6 h-6"
@@ -94,7 +92,7 @@
       <a
         type="button"
         href="/auth/login/facebook"
-        class="py-2 px-4 max-w-md flex justify-center items-center hover:bg-[#3b5998] bg-[#4267B3] focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg hover:shadow cursor-pointer"
+        class="py-2 px-4 flex justify-center items-center hover:bg-[#3b5998] border-slate-300 bg-[#4267B3] focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg hover:shadow cursor-pointer"
       >
         <svg
           width="20"
@@ -129,6 +127,7 @@
 
 <script setup lang="ts">
 import { Field, Form, ErrorMessage } from "vee-validate";
+// @ts-expect-error implicit any todo:fix
 import loader from "../components/reusables/loaders/buttonLoader.vue";
 import { useLogin } from "../composables/auth/login";
 import { useLoginForm } from "../composables/forms/login";

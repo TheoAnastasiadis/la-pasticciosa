@@ -30,7 +30,7 @@
               </div>
               <div class="w-full md:w-6/12">
                 <div
-                  class="xt-card rounded-2xl text-gray-900 xt-links-default bg-gray-100 my-10 md:my-auto"
+                  class="xt-card rounded-2xl text-gray-900 xt-links-default bg-white my-10 md:my-auto"
                 >
                   <Form class="p-7 sm:p-9 text-base">
                     <div class="xt-h3">Επιλογές</div>

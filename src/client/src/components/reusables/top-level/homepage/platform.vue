@@ -1,6 +1,6 @@
 <template>
   <div class="block container">
-    <div class="container bg-white rounded-none md:rounded-xl">
+    <div class="container bg-white rounded-xl">
       <div class="overflow-hidden bg-white py-10 md:py-24">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
           <div
@@ -95,7 +95,7 @@
               </div>
             </div>
             <img
-              src="https://tailwindui.com/img/component-images/dark-project-app-screenshot.png"
+              src="/platform.png"
               alt="Product screenshot"
               class="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
               width="2432"

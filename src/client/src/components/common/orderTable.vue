@@ -29,7 +29,7 @@
         <td
           class="py-2 px-4 text-sm align-top leading-snug border border-gray-200"
         >
-          {{ quantity.value }} {{ quantity.item.unit }}
+          {{ quantity.value }} &times; {{ quantity.item.unit }}
         </td>
         <td
           class="py-2 px-4 text-sm align-top leading-snug border border-gray-200"

@@ -1,6 +1,6 @@
 <template>
-  <div class="max-w-7xl md:mx-auto mx-2.5 my-0">
-    <div class="xt-row xt-row-2 md:xt-row-8">
+  <div class="max-w-7xl md:mx-auto px-3 mx-2.5 my-0">
+    <div class="xt-row xt-row-2 md:xt-row-5">
       <!-- Drawer -->
       <div
         class="w-full md:w-3/12 order-last md:order-first fixed z-above bottom-2 right-2 md:static"
