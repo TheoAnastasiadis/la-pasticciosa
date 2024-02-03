@@ -1,6 +1,6 @@
 <template>
   <div
-    class="xt-card rounded-2xl px-2 md:px-4 py-6 text-sm text-gray-900 xt-links-default bg-white"
+    class="xt-card rounded-2xl px-3 md:px-4 py-6 text-sm text-gray-900 xt-links-default bg-white shadow-xl"
   >
     <Loader :loading="loading" />
     <div class="xt-list flex-col xt-list-1">
@@ -17,7 +17,7 @@
       <button
         @click="placingOrder = !placingOrder"
         type="button"
-        class="xt-button py-2.5 px-3.5 text-sm text-white xt-links-inverse rounded-md font-medium leading-snug tracking-wider uppercase bg-primary-500 transition hover:bg-primary-600 active:bg-primary-600 on:bg-primary-600 my-2 mb-5 md:max-w-fit"
+        class="xt-button py-2.5 px-3.5 text-sm text-white xt-links-inverse rounded-md font-medium leading-snug tracking-wider uppercase bg-primary-500 transition hover:bg-primary-600 active:bg-primary-600 on:bg-primary-600 my-2 mb-5 md:max-w-fit shadow-md"
       >
         Nεα παραγγελια
         <i
