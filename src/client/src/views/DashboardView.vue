@@ -4,8 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted } from "vue";
-import Nav from "../components/reusables/top-level/navigation.vue";
+import Nav from "../components/reusables/top-level/navigation2.vue";
 import { useUserStore } from "../stores/user";
 
 const userStore = useUserStore();
@@ -19,12 +18,6 @@ const adminHeader = [
     icon: "navigator-2",
     hash: "deliveries",
   },
-  { title: "Προφίλ", icon: "user", hash: "profile" },
-  {
-    title: "Βοήθεια",
-    icon: "book",
-    hash: "help",
-  },
 ];
 const userHeader = [
   { title: "Παραγγελίες", icon: "truck", hash: "orders" },
@@ -33,12 +26,6 @@ const userHeader = [
     title: "Τοποθεσίες Παράδοσης",
     icon: "navigator-2",
     hash: "locations",
-  },
-  { title: "Προφίλ", icon: "user", hash: "profile" },
-  {
-    title: "Βοήθεια",
-    icon: "book",
-    hash: "help",
   },
 ];
 </script>
