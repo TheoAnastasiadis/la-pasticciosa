@@ -1,14 +1,14 @@
 <template>
-  <tr ref="main" class="block md:table-row mb-3 md:mb-0">
+  <tr ref="main">
     <th
-      class="py-2 px-4 text-xs align-top font-medium leading-snug tracking-wider uppercase text-left border border-gray-300 md:border-gray-200 transition bg-slate-100 md:bg-white block md:table-cell text-primary-600 md:text-black"
+      class="p-4 border-b border-t md:border-t-0 border-blue-gray-50 block md:table-cell mt-4 md:mt-0 text-primary-500 md:text-black"
     >
       <slot name="head"></slot>
     </th>
     <slot></slot>
     <td
       v-if="$slots.drawer"
-      class="text-sm align-middle leading-snug relative top-0 right-8 w-0"
+      class="text-sm align-middle leading-snug relative top-0 right-8 w-0 hidden md:table-cell"
     >
       <button
         class="shadow-lg shadow-white bg-transparent"
@@ -24,7 +24,7 @@
   <TransitionExpand appear>
     <tr v-if="$slots.drawer && drawer">
       <td
-        class="py-2 px-4 text-xs align-top font-medium leading-snug tracking-wider uppercase text-left border border-gray-200 transition-all bg-slate-100 delay-200"
+        class="p-4 border-b border-blue-gray-50 transition-all bg-slate-100 delay-200"
         :colspan="colspan"
       >
         <slot name="drawer"></slot>
