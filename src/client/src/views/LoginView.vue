@@ -1,7 +1,7 @@
 <template>
   <div class="mx-2.5 mt-4">
     <div
-      class="xt-card flex-auto w-12/12 md:w-6/12 mx-auto p-4 md:p-7 sm:p-9 text-base rounded-2xl text-white xt-links-inverse bg-primary-500"
+      class="xt-card flex-auto w-12/12 md:w-6/12 mx-auto p-4 md:p-7 sm:p-9 text-base rounded-2xl text-white xt-links-inverse bg-primary-500 shadow-xl"
     >
       <h3 class="text-xl md:text-2xl font-bold pb-4 text-center md:text-left">
         Συμπληρώστε τα στοιχεία σας
@@ -77,7 +77,7 @@
     <div class="rounded-md w-full">
       <a
         href="/auth/login/google"
-        class="px-4 py-2 flex gap-2 border-slate-300 rounded-lg text-slate-700 hover:text-slate-900 hover:shadow transition ease-in w-full justify-center bg-slate-100 hover:bg-slate-200 cursor-pointer border"
+        class="px-4 py-2 flex gap-2 border-slate-300 rounded-lg text-slate-700 hover:text-slate-900 hover:shadow transition ease-in w-full justify-center bg-slate-100 hover:bg-slate-200 cursor-pointer border shadow-md"
       >
         <img
           class="w-6 h-6"
@@ -92,7 +92,7 @@
       <a
         type="button"
         href="/auth/login/facebook"
-        class="py-2 px-4 flex justify-center items-center hover:bg-[#3b5998] border-slate-300 bg-[#4267B3] focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg hover:shadow cursor-pointer"
+        class="py-2 px-4 flex justify-center items-center hover:bg-[#3b5998] border-slate-300 bg-[#4267B3] focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in text-center text-base font-semibold focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-lg hover:shadow cursor-pointer shadow-md"
       >
         <svg
           width="20"
