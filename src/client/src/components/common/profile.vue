@@ -1,8 +1,8 @@
 <template>
   <div
-    class="xt-card rounded-2xl p-4 text-sm text-gray-900 xt-links-default bg-white"
+    class="xt-card rounded-2xl px-3 md:px-4 text-sm text-gray-900 xt-links-default bg-white"
   >
-    <div class="xt-list xt-list-1 p-4">
+    <div class="xt-list xt-list-1 py-4">
       <h3>Προφίλ Χρήστη</h3>
       <p>
         Για περισσότερες πληροφορίες επισκεφθείτε τις σελιδές σχετικά με την
@@ -13,8 +13,10 @@
     <div
       class="flex flex-col md:flex-row flex-nowrap md:space-y-0 md:space-x-2 space-y-2"
     >
-      <div class="w-full md:w-6/12">
-        <div class="xt-card w-full shadow-md rounded-md p-4">
+      <div class="w-full md:w-6/12 mb-4">
+        <div
+          class="xt-card w-full shadow-md rounded-md p-4 border border-slate-400"
+        >
           <h6>Αλλαγή Κωδικού Πρόσβασης</h6>
           <Form
             class="text-sm"
@@ -94,8 +96,8 @@
         </div>
       </div>
       <div class="w-full md:w-6/12">
-        <div class="w-full p-4">
-          <h6>Στοιχεία Τιμολόγησης</h6>
+        <details class="w-full p-4" open>
+          <summary class="xt-h6">Στοιχεία Τιμολόγησης</summary>
           <Table :include-index="false" :columns="['στοιχεια', 'πληροφοριες']">
             <Row>
               <template #head>ονομα χρηστη</template>
@@ -122,11 +124,12 @@
               <Cell>{{ userStore.user?.vat }}</Cell>
             </Row>
           </Table>
-        </div>
+        </details>
       </div>
     </div>
   </div>
 </template>
+
 <script lang="ts">
 import { mapStores } from "pinia";
 import { ClientError, OutputTypes, backend } from "../../services/data";
