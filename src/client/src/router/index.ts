@@ -20,9 +20,7 @@ const router = createRouter({
       components: {
         default: async () => await import("../views/LoginView.vue"),
         header: async () =>
-          await import(
-            "../components/reusables/top-level/headers/platform.vue"
-          ),
+          await import("../components/reusables/top-level/headers/login.vue"),
       },
     },
     {
@@ -31,9 +29,7 @@ const router = createRouter({
       components: {
         default: async () => await import("../views/SignupView.vue"),
         header: async () =>
-          await import(
-            "../components/reusables/top-level/headers/platform.vue"
-          ),
+          await import("../components/reusables/top-level/headers/login.vue"),
       },
     },
     {
@@ -43,7 +39,7 @@ const router = createRouter({
       components: {
         header: async () =>
           await import(
-            "../components/reusables/top-level/headers/platform.vue"
+            "../components/reusables/top-level/headers/platform2.vue"
           ),
         default: async () => await import("../views/DashboardView.vue"),
       },
