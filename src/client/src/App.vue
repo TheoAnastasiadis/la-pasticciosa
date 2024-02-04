@@ -13,7 +13,7 @@ import "xtendui/src/overlay";
 import "xtendui/src/textareaautosize";
 import "xtendui/src/tooltip";
 
-import Footer from "./components/common/footer.vue";
+import Footer from "./components/reusables/footers/footer.vue";
 
 export default {
   components: { Footer },

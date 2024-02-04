@@ -105,9 +105,9 @@
 
 <script lang="ts">
 import { useToast, TYPE } from "vue-toastification";
-import { backend, OutputTypes } from "../../services/data";
-import Loader from "../reusables/loaders/buttonLoader.vue";
-import ContainerLoader from "../reusables/loaders/containerLoader.vue";
+import { backend, OutputTypes } from "@/services/data";
+import Loader from "@/components/reusables/loaders/buttonLoader.vue";
+import ContainerLoader from "@/components/reusables/loaders/containerLoader.vue";
 import Overlay from "../reusables/interactives/overlay.vue";
 import OrderTable from "./orderTable.vue";
 
