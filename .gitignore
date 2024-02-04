@@ -23,7 +23,7 @@ src/client/.env.staging
 .DS_Store
 dist
 dist-ssr
-coverage
+coverage*
 *.local
 
 /cypress/videos/
