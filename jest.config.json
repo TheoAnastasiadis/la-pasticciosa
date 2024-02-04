@@ -1,6 +1,8 @@
 {
-  "rootDir": "test",
+  "rootDir": ".",
   "preset": "ts-jest",
+  "collectCoverageFrom": ["<rootDir>/src/server/**/*.{js,jsx,ts,tsx}"],
+  "coverageDirectory": "./coverage/server",
   "transform": {
     "^.+\\.[tj]sx?$": [
       "ts-jest",
