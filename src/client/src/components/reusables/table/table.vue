@@ -1,5 +1,5 @@
 <template>
-  <div class="xt-overflow-sub overflow-y-hidden overflow-x-hidden">
+  <div class="xt-overflow-sub overflow-y-hidden overflow-x-scroll max-w-[85vw]">
     <table class="w-full min-w-max table-auto text-left">
       <thead class="hidden md:table-header-group">
         <tr>
