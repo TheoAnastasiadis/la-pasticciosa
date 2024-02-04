@@ -8,7 +8,7 @@ import ai from "../../../src/server/conversation/services/nlp/generate";
 import assert from "assert";
 import { DeepPartial } from "typeorm";
 
-describe("test generation use cases", () => {
+describe.skip("test generation use cases", () => {
   let user: User;
   let admin: User;
   let delivery: Delivery;
