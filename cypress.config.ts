@@ -7,7 +7,7 @@ export default defineConfig({
   e2e: {
     experimentalStudio: true,
     defaultCommandTimeout: 10000,
-    baseUrl: appConfig.getStagingUrl(),
+    baseUrl: "http://localhost:5173/",
     setupNodeEvents(on, config) {
       on("task", {
         async setup() {
@@ -25,8 +25,8 @@ export default defineConfig({
             await teardown();
           } finally {
             await AppDataSource.destroy();
+            return null;
           }
-          return null;
         },
       });
     },
