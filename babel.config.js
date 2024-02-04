@@ -8,4 +8,5 @@ module.exports = {
       },
     ],
   ],
+  plugins: ["babel-plugin-istanbul", { extensions: [".ts", ".vue"] }],
 };

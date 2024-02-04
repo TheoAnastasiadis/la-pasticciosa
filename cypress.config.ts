@@ -2,6 +2,7 @@ import { defineConfig } from "cypress";
 import { setup, teardown } from "./cypress/seed";
 import { AppDataSource } from "./src/server/database";
 import appConfig from "./src/server/config/app.config";
+import Task from "@cypress/code-coverage/task";
 
 export default defineConfig({
   e2e: {
@@ -9,6 +10,7 @@ export default defineConfig({
     defaultCommandTimeout: 10000,
     baseUrl: appConfig.getStagingUrl(),
     setupNodeEvents(on, config) {
+      Task(on, config);
       on("task", {
         async setup() {
           await AppDataSource.initialize();
@@ -29,6 +31,7 @@ export default defineConfig({
           }
         },
       });
+      return config;
     },
   },
 });
