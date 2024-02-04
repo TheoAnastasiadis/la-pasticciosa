@@ -9,9 +9,7 @@ const router = createRouter({
       components: {
         default: async () => await import("../views/HomeView.vue"),
         header: async () =>
-          await import(
-            "../components/reusables/top-level/headers/landingPage.vue"
-          ),
+          await import("../components/reusables/headers/landingPage.vue"),
       },
     },
     {
@@ -20,7 +18,7 @@ const router = createRouter({
       components: {
         default: async () => await import("../views/LoginView.vue"),
         header: async () =>
-          await import("../components/reusables/top-level/headers/login.vue"),
+          await import("../components/reusables/headers/login.vue"),
       },
     },
     {
@@ -29,7 +27,7 @@ const router = createRouter({
       components: {
         default: async () => await import("../views/SignupView.vue"),
         header: async () =>
-          await import("../components/reusables/top-level/headers/login.vue"),
+          await import("../components/reusables/headers/login.vue"),
       },
     },
     {
@@ -38,9 +36,7 @@ const router = createRouter({
       redirect: (to) => "dashboard/orders",
       components: {
         header: async () =>
-          await import(
-            "../components/reusables/top-level/headers/platform2.vue"
-          ),
+          await import("../components/reusables/headers/platform2.vue"),
         default: async () => await import("../views/DashboardView.vue"),
       },
       children: [

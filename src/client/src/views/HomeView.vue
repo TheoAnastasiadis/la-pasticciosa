@@ -12,11 +12,11 @@ import Pasta from "../components/reusables/interactives/pasta.vue";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/all";
 import Lenis from "@studio-freight/lenis";
-import Hero from "../components/reusables/top-level/homepage/hero.vue";
-import Featured from "../components/reusables/top-level/homepage/featured.vue";
-import Catalogue from "../components/reusables/top-level/homepage/catalogue.vue";
-import Platform from "../components/reusables/top-level/homepage/platform.vue";
-import Contact from "../components/reusables/top-level/homepage/contact.vue";
+import Hero from "@/components/common/homepage/hero.vue";
+import Featured from "@/components/common/homepage/featured.vue";
+import Catalogue from "@/components/common/homepage/catalogue.vue";
+import Platform from "@/components/common/homepage/platform.vue";
+import Contact from "@/components/common/homepage/contact.vue";
 import { onMounted, ref, type Ref } from "vue";
 
 gsap.registerPlugin(ScrollTrigger);

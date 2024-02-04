@@ -4,7 +4,7 @@
 </template>
 
 <script setup lang="ts">
-import Nav from "../components/reusables/top-level/navigation2.vue";
+import Nav from "@/components/reusables/navigation/navigation.vue";
 import { useUserStore } from "../stores/user";
 
 const userStore = useUserStore();
