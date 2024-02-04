@@ -7,7 +7,7 @@ export default defineConfig({
   e2e: {
     experimentalStudio: true,
     defaultCommandTimeout: 10000,
-    baseUrl: "http://localhost:5173/",
+    baseUrl: appConfig.getStagingUrl(),
     setupNodeEvents(on, config) {
       on("task", {
         async setup() {
