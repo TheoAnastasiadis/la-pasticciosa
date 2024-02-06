@@ -1,14 +1,13 @@
 import { defineConfig } from "cypress";
 import { setup, teardown } from "./cypress/seed";
 import { AppDataSource } from "./src/server/database";
-import appConfig from "./src/server/config/app.config";
 import Task from "@cypress/code-coverage/task";
 
 export default defineConfig({
   e2e: {
     experimentalStudio: true,
     defaultCommandTimeout: 10000,
-    baseUrl: appConfig.getStagingUrl(),
+    baseUrl: "http://localhost:5173",
     setupNodeEvents(on, config) {
       Task(on, config);
       on("task", {
