@@ -1,8 +1,8 @@
 describe("pagination tests", () => {
-  it("orders pagination", () => {
+  it.skip("orders pagination", () => {
     throw new Error("Not Implemented Yet");
   });
-  it("items pagination", () => {
+  it.skip("items pagination", () => {
     throw new Error("Not Implemented Yet");
   });
 });
