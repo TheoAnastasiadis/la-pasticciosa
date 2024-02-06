@@ -24,7 +24,7 @@ src/client/.env.staging
 dist
 dist-ssr
 coverage*
-.nyc*
+.nyc_*
 *.local
 
 /cypress/videos/
