@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: test_server
     env:
-      GCP_SA_KEY: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
     steps:
       - uses: actions/download-artifact@master
         with:
@@ -40,4 +40,4 @@ jobs:
           path: build
       - uses: w9jds/firebase-action@master
         with:
-          args: deploy --only functions:auth,functions:data --project ${{ secrets.FIREBASE_PROJECT_ID }}
+          args: deploy --only functions:auth,functions:data
