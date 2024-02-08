@@ -1,4 +1,5 @@
-import { TRPCError } from "@trpc/server";
+import type { z } from "zod";
+import { type Session } from "../../../../entities/session";
 import { userWNoPasswordOrCatalogue } from "../../../../validators";
 import authenticate from "../../middleware/authenticate";
 import authorize from "../../middleware/authorize";
@@ -10,7 +11,7 @@ export const profile = procedure
   .use(authorize)
   .output(userWNoPasswordOrCatalogue)
   .query(({ ctx }) => {
-    if (typeof ctx?.session?.user === "undefined")
-      throw new TRPCError({ code: "BAD_REQUEST" });
-    return ctx.session.user;
+    return (ctx.session as Session).user as z.TypeOf<
+      typeof userWNoPasswordOrCatalogue
+    >;
   });
