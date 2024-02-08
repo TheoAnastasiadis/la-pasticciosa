@@ -2,7 +2,15 @@
   "rootDir": ".",
   "preset": "ts-jest",
   "collectCoverageFrom": ["<rootDir>/src/server/**/*.{js,jsx,ts,tsx}"],
+  "coveragePathIgnorePatterns": [
+    "<rootDir>/src/server/conversation",
+    "<rootDir>/src/server/email",
+    "<rootDir>/src/server/config"
+  ],
   "coverageDirectory": "./coverage/server",
+  "coverageThreshold": {
+    "global": { "statements": 98 }
+  },
   "transform": {
     "^.+\\.[tj]sx?$": [
       "ts-jest",
