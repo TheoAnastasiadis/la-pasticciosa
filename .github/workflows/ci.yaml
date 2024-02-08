@@ -21,6 +21,10 @@ jobs:
       - run: echo "${{ secrets.ENV_FILE }}" > .env
       - run: npm run lint
       - run: npm run test:unit
+      - uses: codecov/codecov-action@v4
+        with:
+          file: ./coverage/server/clover.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   deploy_server:
     runs-on: ubuntu-latest
@@ -35,5 +39,5 @@ jobs:
       - run: npm ci
       - run: echo "${{ secrets.ENV_FILE }}" > .env
       - run: npm run build:server
-      - run: echo ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }} > google-application-credentials.json"
+      - run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > google-application-credentials.json
       - run: firebase deploy --only functions:auth,functions:data
