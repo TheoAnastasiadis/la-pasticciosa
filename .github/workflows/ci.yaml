@@ -25,8 +25,8 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
       - uses: actions/upload-artifact@master
         with:
-          name: dist
-          path: dist
+          name: build
+          path: build
 
   deploy_server:
     runs-on: ubuntu-latest
@@ -36,8 +36,8 @@ jobs:
     steps:
       - uses: actions/download-artifact@master
         with:
-          name: dist
-          path: dist
+          name: build
+          path: build
       - uses: w9jds/firebase-action@master
         with:
           args: deploy --only functions:auth,functions:data --project {{ secrets.FIREBASE_PROJECT_ID }}
