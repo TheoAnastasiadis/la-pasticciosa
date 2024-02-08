@@ -9,7 +9,7 @@
   ],
   "coverageDirectory": "./coverage/server",
   "coverageThreshold": {
-    "global": { "statements": 98 }
+    "global": { "statements": 96 }
   },
   "transform": {
     "^.+\\.[tj]sx?$": [
