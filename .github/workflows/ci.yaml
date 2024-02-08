@@ -40,4 +40,4 @@ jobs:
           path: build
       - uses: w9jds/firebase-action@master
         with:
-          args: deploy --only functions:auth,functions:data --project {{ secrets.FIREBASE_PROJECT_ID }}
+          args: deploy --only functions:auth,functions:data --project ${{ secrets.FIREBASE_PROJECT_ID }}
