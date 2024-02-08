@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env: 
+      NODE_ENV: development
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      DEV_DATABASE_URL: ${{ secrets.DEV_DATABASE_URL }}
+      SALT_ROUNDS: ${{ secrets.SALT_ROUNDS }}
+      DEV_SALT_ROUNDS: ${{ secrets.DEV_SALT_ROUNDS }}
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      FACEBOOK_APP_ID: ${{ secrets.FACEBOOK_APP_ID }}
+      FACEBOOK_APP_SECRET: ${{ secrets.FACEBOOK_APP_SECRET }}
+      VIBER_BOT_SECRET: ${{ secrets.VIBER_BOT_SECRET }}
+    steps:
+    - uses: actions/checkout@v3
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run lint
+    - run: npm run test:e2e
