@@ -29,14 +29,14 @@ jobs:
     needs: test_server
     env:
       GOOGLE_APPLICATION_CREDENTIALS: google-application-credentials.json
+      GCP_SA_KEY: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
     steps:
       - uses: actions/checkout@v3
         with:
           node-version: 18
           cache: "npm"
       - run: npm ci
-      - run: npm install -g firebase-tools
-      - run: echo "${{ secrets.ENV_FILE }}" > .env
       - run: npm run build:server
-      - run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > google-application-credentials.json
-      - run: firebase deploy --only functions:auth,functions:data --project ${{ secrets.FIREBASE_PROJECT_ID }}
+      - uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only functions:auth,functions:data --project {{ secrets.FIREBASE_PROJECT_ID }}
