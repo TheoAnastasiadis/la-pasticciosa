@@ -6,7 +6,10 @@ import assert from "assert";
 export default middleware(async ({ ctx, meta, next, rawInput }) => {
   const { session } = ctx;
 
-  assert(meta);
+  assert(
+    typeof meta?.secure !== "undefined" &&
+      typeof meta.adminOnly !== "undefined",
+  );
 
   // in insecure contexts, onBehalf will be undefined.
   if (!meta.secure) return await next({ ctx: { ...ctx, onBehalf: undefined } });
