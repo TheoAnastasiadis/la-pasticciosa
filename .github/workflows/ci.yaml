@@ -23,6 +23,7 @@ jobs:
         with:
           file: ./coverage/server/clover.xml
           token: ${{ secrets.CODECOV_TOKEN }}
+      - run: npm run build:server
       - uses: actions/upload-artifact@master
         with:
           name: build
