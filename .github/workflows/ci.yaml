@@ -23,6 +23,10 @@ jobs:
         with:
           file: ./coverage/server/clover.xml
           token: ${{ secrets.CODECOV_TOKEN }}
+      - uses: actions/upload-artifact@master
+        with:
+          name: dist
+          path: dist
 
   deploy_server:
     runs-on: ubuntu-latest
@@ -30,12 +34,10 @@ jobs:
     env:
       GCP_SA_KEY: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@master
         with:
-          node-version: 18
-          cache: "npm"
-      - run: npm ci
-      - run: npm run build:server
+          name: dist
+          path: dist
       - uses: w9jds/firebase-action@master
         with:
           args: deploy --only functions:auth,functions:data --project {{ secrets.FIREBASE_PROJECT_ID }}
