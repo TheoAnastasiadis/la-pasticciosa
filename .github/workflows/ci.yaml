@@ -37,8 +37,8 @@ jobs:
           node-version: 18
           cache: "npm"
       - run: npm ci
-      - run: npm install -g firebase
+      - run: npm install -g firebase-tools
       - run: echo "${{ secrets.ENV_FILE }}" > .env
       - run: npm run build:server
       - run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > google-application-credentials.json
-      - run: npx firebase deploy --only functions:auth,functions:data
+      - run: firebase deploy --only functions:auth,functions:data
