@@ -16,10 +16,14 @@
   },
   "overrides": [
     {
-      "files": ["src/server/**"],
+      "files": ["src/server/**", "test/server/**"],
       "parserOptions": {
         "project": "tsconfig.json"
       }
+    },
+    {
+      "files": ["src/client/**"],
+      "parserOptions": { "project": "src/client/tsconfig.json" }
     }
   ]
 }

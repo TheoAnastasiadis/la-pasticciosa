@@ -1,2 +1,2 @@
 #! /bin/bash
-npx eslint \"src/**\" --fix --ignore-path .gitignore
+npx eslint --fix --ignore-path .gitignore
