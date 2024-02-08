@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import express from "express";
 import login from "./routes/login";
 import logout from "./routes/logout";
