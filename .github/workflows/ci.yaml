@@ -3,8 +3,6 @@ name: CI
 on:
   push:
     branches: ["main"]
-  pull_request:
-    branches: ["main"]
 
 jobs:
   test_server:
@@ -41,4 +39,4 @@ jobs:
       - run: echo "${{ secrets.ENV_FILE }}" > .env
       - run: npm run build:server
       - run: echo "${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}" > google-application-credentials.json
-      - run: firebase deploy --only functions:auth,functions:data
+      - run: firebase deploy --only functions:auth,functions:data --project ${{ secrets.FIREBASE_PROJECT_ID }}
