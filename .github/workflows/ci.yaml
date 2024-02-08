@@ -28,7 +28,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: test_server
     env:
-      GOOGLE_APPLICATION_CREDENTIALS: google-application-credentials.json
       GCP_SA_KEY: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
     steps:
       - uses: actions/checkout@v3
