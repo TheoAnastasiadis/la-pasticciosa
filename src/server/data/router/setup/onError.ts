@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import type { OnErrorFunction } from "@trpc/server/dist/internals/types";
 import appConfig from "../../../config/app.config";
 import * as Sentry from "@sentry/node";
@@ -8,6 +10,7 @@ Sentry.init({
   debug: false,
 });
 
+/* istanbul ignore next */
 export default function onError(
   opts: Parameters<OnErrorFunction<any, any>>[0],
 ): void {

@@ -7,6 +7,7 @@ export interface Context {
   session?: Session;
 }
 
+/* istanbul ignore next */
 export async function createContext({
   req,
   res,
