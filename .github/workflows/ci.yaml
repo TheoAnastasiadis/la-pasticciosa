@@ -18,9 +18,7 @@ jobs:
           node-version: 18
           cache: "npm"
       - run: npm ci
-      - run: |
-        touch .env
-        echo "${{ secrets.ENV_FILE }}" > .env
+      - run: echo "${{ secrets.ENV_FILE }}" > .env
       - run: npm run lint
       - run: npm run test:unit
 
