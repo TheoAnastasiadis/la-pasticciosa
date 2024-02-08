@@ -39,6 +39,15 @@ describe("local strategy", () => {
     verify("user@email.com", "veryStrongPassword", doneVerifying);
   });
 
+  test("does not log in if user not found", (done) => {
+    const doneVerifying = (error: any, user: any) => {
+      expect(error).not.toBeNull();
+      expect(user).toBeFalsy();
+      done();
+    };
+    verify("non_existent@email.com", "randomPassword", doneVerifying);
+  });
+
   test("does not log in with invalid credentials", (done) => {
     const doneVerifying = (error: any, user: any) => {
       expect(error).not.toBeNull();
