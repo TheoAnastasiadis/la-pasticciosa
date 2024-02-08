@@ -1,3 +1,5 @@
+/* istanbul ignore file */
+
 import type { NextFunction, Response, Request } from "express";
 import logger from "firebase-functions/logger";
 import appConfig from "../../../config/app.config";

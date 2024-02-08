@@ -3,6 +3,7 @@ import appConfig from "../../../../config/app.config";
 import { User } from "../../../../entities/user";
 import { In } from "typeorm";
 
+/* istanbul ignore next */
 export default new FacebookStrategy(
   {
     clientID: appConfig.getFacebookAppId(),

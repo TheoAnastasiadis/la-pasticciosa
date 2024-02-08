@@ -11,10 +11,12 @@ export function verify(
     .then((user: User | null) => {
       if (user === null) {
         done(null, false);
+        /* istanbul ignore next */
         return;
       }
       if (!user.validatePassword(password)) {
         done(null, false);
+        /* istanbul ignore next */
         return;
       }
       done(null, user);

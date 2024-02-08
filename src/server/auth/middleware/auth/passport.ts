@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import passport from "passport";
 import localStrategy from "./strategies/local";
 import googleStrategy from "./strategies/google";

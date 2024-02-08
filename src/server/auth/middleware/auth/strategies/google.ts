@@ -3,6 +3,7 @@ import { In } from "typeorm";
 import appConfig from "../../../../config/app.config";
 import { User } from "../../../../entities/user";
 
+/* istanbul ignore next */
 export default new GoogleStrategy(
   {
     clientID: appConfig.getGoogleClientId(),

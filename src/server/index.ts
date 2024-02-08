@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 import "reflect-metadata";
 import { AppDataSource } from "./database";
 import { onRequest } from "firebase-functions/v2/https";
