@@ -1,5 +1,5 @@
 <template>
-  <div class="block my-5 mb-10 md:my-20 md:mb-40 relative z-[9]">
+  <div class="block my-5 mb-10 md:my-20 md:mb-32 relative z-[9]">
     <div class="container">
       <div class="xt-row items-center">
         <div class="w-full z-10">
