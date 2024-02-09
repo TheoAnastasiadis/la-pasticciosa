@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[96vw] mx-[2vw] rounded-2xl overflow-clip">
+  <div class="w-[96vw] mx-[2vw] rounded-2xl overflow-clip shadow-xl">
     <div
       class="w-full h-10 bg-[url(/bg.jpg)] brightness-110 relative z-[9] -my-10 drop-shadow-[0_20px_20px_rgba(0,0,0,0.15)]"
     ></div>
