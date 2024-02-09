@@ -18,7 +18,7 @@
         "
         :class="{
           '-translate-x-10': plate.id == 1,
-          'bg-primary-400': plate.active,
+          'bg-primary-400 shadow-primary-400': plate.active,
           'bg-white': !plate.active,
         }"
       >
