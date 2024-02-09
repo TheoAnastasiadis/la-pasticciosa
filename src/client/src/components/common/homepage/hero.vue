@@ -1,67 +1,91 @@
 <template>
   <div
-    class="relative -mt-5 pt-28 lg:pt-0 mb-14 z-[9] flex flex-auto flex-wrap lg:flex-row-reverse w-full lg:min-h-screen overflow-hidden"
-    ref="hero"
+    class="w-screen min-h-screen flex flex-col-reverse md:flex-row justify-evenly items-center pt-28 md:pt-0 space-y-6 md:space-y-0"
   >
-    <!-- content -->
     <div
-      class="flex relative w-full lg:w-1/2 self-center px-10 md:px-20 mb-36 md:mb-36 lg:mb-0 lg:-order-1"
+      class="w-full md:w-4/12 xl:w-3/12 flex flex-col md:min-h-screen justify-start md:justify-center space-y-5 pr-10 md:pr-0 py-16 md:py-0"
     >
-      <div
-        class="relative text-black xt-links-inverse text-center md:text-right group"
+      <button
+        href="#"
+        v-for="plate in previewPlates"
+        :key="plate.id"
+        class="block rounded-r-full h-28 shadow-2xl relative hover:-translate-y-5 transition-all cursor-pointer"
+        @click="
+          previewPlates = previewPlates.map((p) => {
+            p.id == plate.id ? (p.active = true) : (p.active = false);
+            return p;
+          })
+        "
+        :class="{
+          '-translate-x-10': plate.id == 1,
+          'bg-primary-400': plate.active,
+          'bg-white': !plate.active,
+        }"
       >
-        <h2 class="text-4xl font-bold normal-case drop-shadow-sm mb-3">
-          Εξελίξτε το μενού σας με φρέσκα ζυμαρικά!
-        </h2>
-        <h3 class="xt-p drop-shadow-sm text-lg tracking-normal">
-          Με τα προϊόντα μας μπορείτε να δημιουργήσετε
-          <span class="bg-primary-400 px-3 font-semibold whitespace-nowrap"
-            >ευφάνταστα πιάτα 🍝</span
-          >
-          που θα προσελκύσουν νέους πελάτες αλλά θα κάνουν και τους υπάρχοντες
-          <span class="bg-primary-400 px-3 whitespace-nowrap font-semibold"
-            >να έρχονται συχνότερα 😋.</span
-          >
-        </h3>
-        <button
-          href="/"
-          class="xt-button px-5 py-3 rounded-md border-2 font-bold text-primary-700 border-primary-700 shadow-sm hover:shadow-xl hover:bg-slate-100"
+        <div
+          class="absolute top-0 left-0 w-1/2 py-3 px-4 xl:px-2 xl:pl-4 h-full flex flex-row items-center"
+          :class="{ 'translate-x-10': plate.id == 1 }"
         >
-          Ζητήστε προσφορά!&nbsp;
-          <i class="h h-award text-lg"></i>
+          <p
+            class="text-base xl:text-lg tracking-tight leading-tight text-start"
+          >
+            {{ plate.title }}
+          </p>
+        </div>
+        <img
+          :src="plate.image"
+          :alt="plate.title"
+          class="absolute right-3 top-1.5 h-[6.25rem] aspect-square rounded-full border-2 object-cover"
+          :class="{
+            'border-white': plate.active,
+            'border-primary-400': !plate.active,
+          }"
+        />
+      </button>
+    </div>
+    <div
+      class="w-full md:w-4/12 flex flex-col justify-center items-center relative"
+    >
+      <img
+        :src="previewPlates.filter((p) => p.active)[0].image"
+        :alt="previewPlates.filter((p) => p.active)[0].title"
+        class="aspect-square w-[85%] rounded-full shadow-2xl shadow-primary-600 object-cover"
+      />
+      <div
+        ref="background"
+        class="absolute bottom-10 right-[15%] border-red-600 w-[100px] h-[100px]"
+      ></div>
+    </div>
+    <div class="w-full md:w-4/12 xl:w-5/12 pl-6 pr-10 xl:px-10">
+      <sup
+        class="md:hidden m-0 text-slate-500 bold tracking-widest text-center uppercase w-full inline-block"
+        >La Pasticciosa</sup
+      >
+      <h1
+        class="normal-case xt-h1 text-4xl md:text-3xl xl:text-5xl text-center md:text-left mt-0 md:mt-auto"
+      >
+        Εξελίξτε το μενού σας με φρέσκα ζυμαρικά!
+      </h1>
+      <sub class="text-base xl:text-lg"
+        >Με τα προϊόντα μας μπορείτε να δημιουργήσετε ευφάνταστα πιάτα 🍝 που θα
+        προσελκύσουν νέους πελάτες αλλά θα κάνουν και τους υπάρχοντες να
+        έρχονται συχνότερα 😋.</sub
+      >
+      <div
+        class="flex flex-col xl:flex-row xl:space-x-5 space-y-5 xl:space-y-0 pt-10"
+      >
+        <button
+          class="bg-primary-500 text-base xl:text-lg rounded-2xl border-2 border-primary-600 text-white px-4 py-2 text-bold hover:shadow-2xl hover:scale-105 shadow-xl transition-transform"
+        >
+          Ζητήστε Προσφορά
+          <i class="h h-cake text-lg" />
+        </button>
+        <button
+          class="text-base xl:text-lg rounded-2xl border-2 border-slate-700 text-slate-800 px-4 py-2 hover:shadow-2xl hover:scale-105 shadow-xl transition-transform mt-0 ml-0"
+        >
+          Μάθετε Περισσότερα
         </button>
       </div>
-    </div>
-    <!-- images -->
-    <div
-      class="w-full lg:w-1/2 self-center min-h-[50vh] flex justify-end items-center relative bg-transparent"
-    >
-      <div
-        class="absolute h-[100px] w-[100px] bg-[url(https://i.pinimg.com/474x/53/90/77/539077600d93d1c9aa7e4eb2bf7dacdd.jpg)] bg-blend-darken rounded-2xl z-below"
-        ref="block"
-      ></div>
-      <div
-        class="absolute w-[100px] h-[100px] border-2 border-dashed border-primary-600 border-spacing-7 rounded-xl"
-        ref="img1"
-      >
-        <img
-          src="/hero/1.jpg"
-          class="w-full h-full translate-y-2.5 -translate-x-2.5 border border-green-50 rounded-xl object-cover drop-shadow-xl"
-        />
-      </div>
-      <div
-        class="absolute w-[100px] h-[100px] border-2 border-dashed border-orange-400 rounded-xl"
-        ref="img2"
-      >
-        <img
-          src="/hero/2.jpg"
-          class="w-full h-full -translate-y-2.5 translate-x-2.5 border border-green-50 rounded-xl object-cover drop-shadow-sm"
-        />
-      </div>
-      <div
-        class="absolute w-[200px] h-[200px] border-red-500"
-        ref="background"
-      ></div>
     </div>
   </div>
 </template>
@@ -84,44 +108,32 @@
 </style>
 
 <script setup lang="ts">
-import { onMounted, ref, type Ref } from "vue";
-import gsap from "gsap";
+import { ref } from "vue";
 
-const background = ref<HTMLDivElement>() as Ref<HTMLDivElement>;
-const block = ref<HTMLDivElement>() as Ref<HTMLDivElement>;
-const img1 = ref<HTMLDivElement>() as Ref<HTMLDivElement>;
-const img2 = ref<HTMLDivElement>() as Ref<HTMLDivElement>;
-
-const setupCollection = () => {
-  gsap.set([block.value, img1.value, img2.value, background.value], {
-    clearProps: "all",
-  });
-  if (window.innerWidth < 768) {
-    gsap
-      .timeline()
-      .set(block.value, { height: 200, width: 300, top: 0, right: 30 })
-      .set(img1.value, { height: 150, width: 200, top: -100, right: 10 })
-      .set(img2.value, { height: 150, width: 200, top: 150, right: 170 })
-      .set(background.value, { top: "-=100", right: "+=150" });
-  } else if (window.innerWidth >= 1024) {
-    gsap
-      .timeline()
-      .set(block.value, { height: 500, width: 400, top: -50, right: "10%" })
-      .set(img1.value, { height: 200, width: 300, top: -50, right: -50 })
-      .set(img2.value, { height: 300, width: 200, top: 130, left: 30 })
-      .set(background.value, { top: "+=130", right: "+=30" });
-  } else {
-    gsap
-      .timeline()
-      .set(block.value, { height: 300, width: 400, bottom: 10, left: 50 })
-      .set(img1.value, { height: 150, width: 250, top: -50, left: 150 })
-      .set(img2.value, { height: 150, width: 250, bottom: 25, left: 10 })
-      .set(background.value, { right: "+=250", top: "+=50" });
-  }
-};
-
-onMounted(setupCollection);
-window.addEventListener("resize", setupCollection);
+const previewPlates = ref([
+  {
+    id: 0,
+    title: "Fagottini με κατσικίσιο τυρί",
+    active: true,
+    image:
+      "https://www.the-pasta-project.com/wp-content/uploads/Homemade-fagottini-pasta-2-ways-8.jpg",
+  },
+  {
+    id: 1,
+    title: "Παπαρδέλες, κομμένες στο χέρι",
+    active: false,
+    image:
+      "https://vikalinka.com/wp-content/uploads/2023/03/Tuscan-ragu-12-Edit.jpg",
+  },
+  {
+    id: 2,
+    title: "Ravioli με κολοκύθα και πικραμύγδαλο",
+    active: false,
+    image:
+      "https://cucinapro.com/cdn/shop/products/RD-CCP-135-10-49_1800x1800.jpg?v=1654032923",
+  },
+]);
+const background = ref<HTMLDivElement>();
 
 defineExpose({ background });
 </script>
