@@ -7,13 +7,13 @@
         <ul class="flex flex-wrap gap-4 text-xs mb-5 md:mb-0">
           <li>
             <a href="#" class="text-gray-500 transition hover:opacity-75">
-              Terms & Conditions
+              Όροι & Προϋποθέσεις
             </a>
           </li>
 
           <li>
             <a href="#" class="text-gray-500 transition hover:opacity-75">
-              Privacy Policy
+              Πολιτική Απορρήτου
             </a>
           </li>
 
@@ -23,6 +23,17 @@
             </a>
           </li>
         </ul>
+
+        <p class="text-xs text-gray-500">
+          <i class="h h-layout text-base"></i>
+          Platform Developed by
+          <a
+            href="https://www.teoanastasiadis.com"
+            alt="Teo Anastasiadis"
+            target="_blank"
+            >Teo Anastasiadis</a
+          >
+        </p>
 
         <p class="text-xs text-gray-500">
           &copy; {{ new Date().getFullYear() }}. La Pasticciosa. All rights
