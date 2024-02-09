@@ -40,31 +40,23 @@
               >
               <ul class="list-unstyled">
                 <li>
-                  <a
-                    class="pb-2 text-sm hover:text-primary-500"
-                    href="https://www.creative-tim.com/presentation?ref=njs-profile"
-                    >About Us</a
+                  <a class="pb-2 text-sm hover:text-primary-500" href="#"
+                    >Πως λειτουργεί</a
                   >
                 </li>
                 <li>
-                  <a
-                    class="pb-2 text-sm hover:text-primary-500"
-                    href="https://www.creative-tim.com/presentation?ref=njs-profile"
-                    >About Us</a
+                  <a class="pb-2 text-sm hover:text-primary-500" href="#"
+                    >Σχετικά με εμάς</a
                   >
                 </li>
                 <li>
-                  <a
-                    class="pb-2 text-sm hover:text-primary-500"
-                    href="https://www.creative-tim.com/presentation?ref=njs-profile"
-                    >About Us</a
+                  <a class="pb-2 text-sm hover:text-primary-500" href="#"
+                    >Πολιτική δεδομένων</a
                   >
                 </li>
                 <li>
-                  <a
-                    class="pb-2 text-sm hover:text-primary-500"
-                    href="https://www.creative-tim.com/presentation?ref=njs-profile"
-                    >About Us</a
+                  <a class="pb-2 text-sm hover:text-primary-500" href="#"
+                    >Επικοινωνία</a
                   >
                 </li>
               </ul>
@@ -76,31 +68,23 @@
               >
               <ul class="list-unstyled">
                 <li>
-                  <a
-                    class="pb-2 text-sm hover:text-primary-500"
-                    href="https://www.creative-tim.com/presentation?ref=njs-profile"
-                    >About Us</a
+                  <a class="pb-2 text-sm hover:text-primary-500" href="#"
+                    >Συχνές ερωτήσεις</a
                   >
                 </li>
                 <li>
-                  <a
-                    class="pb-2 text-sm hover:text-primary-500"
-                    href="https://www.creative-tim.com/presentation?ref=njs-profile"
-                    >About Us</a
+                  <a class="pb-2 text-sm hover:text-primary-500" href="#"
+                    >Εκδηλώσεις</a
                   >
                 </li>
                 <li>
-                  <a
-                    class="pb-2 text-sm hover:text-primary-500"
-                    href="https://www.creative-tim.com/presentation?ref=njs-profile"
-                    >About Us</a
+                  <a class="pb-2 text-sm hover:text-primary-500" href="#"
+                    >Λένε για εμάς</a
                   >
                 </li>
                 <li>
-                  <a
-                    class="pb-2 text-sm hover:text-primary-500"
-                    href="https://www.creative-tim.com/presentation?ref=njs-profile"
-                    >About Us</a
+                  <a class="pb-2 text-sm hover:text-primary-500" href="#"
+                    >Blog</a
                   >
                 </li>
               </ul>
