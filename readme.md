@@ -1,7 +1,7 @@
 <div align="center">
 
-[![Code Coverage](https://img.shields.io/badge/Code_Coverage-85%25-yellow.svg)](link-to-code-coverage)
-[![Build Status](https://img.shields.io/badge/Build-Passing-brightgreen.svg)](link-to-build-status)
+[![codecov](https://codecov.io/github/TheoAnastasiadis/la-pasticciosa/graph/badge.svg?token=1PNKQ0MFMW)](https://codecov.io/github/TheoAnastasiadis/la-pasticciosa)
+[![CI](https://github.com/TheoAnastasiadis/la-pasticciosa/actions/workflows/ci.yaml/badge.svg?branch=main)](https://github.com/TheoAnastasiadis/la-pasticciosa/actions/workflows/ci.yaml)
 [![Live Status](https://img.shields.io/badge/Status-Online-blue.svg)](link-to-live-status)
 
 </div>
