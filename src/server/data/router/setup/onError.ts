@@ -1,6 +1,5 @@
 /* istanbul ignore file */
 
-import type { OnErrorFunction } from "@trpc/server/dist/internals/types";
 import appConfig from "../../../config/app.config";
 import * as Sentry from "@sentry/node";
 import logger from "firebase-functions/logger";
@@ -11,9 +10,14 @@ Sentry.init({
 });
 
 /* istanbul ignore next */
-export default function onError(
-  opts: Parameters<OnErrorFunction<any, any>>[0],
-): void {
+export default function onError(opts: {
+  error: any;
+  type: any;
+  path: any;
+  input: any;
+  ctx: any;
+  req: any;
+}): void {
   const { error, type, path, input, ctx, req } = opts;
 
   // log error
