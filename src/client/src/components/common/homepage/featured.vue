@@ -37,11 +37,10 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineExpose } from "vue";
-// @ts-expect-error todo: troubleshoot
+import { ref } from "vue";
 import featuredPart from "./featuredPart.vue";
 
-const featured = ref({} as HTMLDivElement);
+const featured = ref({} as unknown as HTMLDivElement);
 const first = ref<typeof featuredPart>();
 const second = ref<typeof featuredPart>();
 const third = ref<typeof featuredPart>();
