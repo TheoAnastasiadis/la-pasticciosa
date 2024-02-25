@@ -2,7 +2,7 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "noEmit": false,
-    "target": "es5",
+    "target": "ESNext",
     "sourceMap": true,
     "experimentalDecorators": true
   }
