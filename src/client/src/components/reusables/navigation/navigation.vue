@@ -1,11 +1,11 @@
 <template>
-  <div class="flex">
+  <div class="flex justify-center">
     <!-- Desktop Nav -->
     <div class="relative hidden h-screen my-4 ml-4 mr-2 lg:block w-80">
       <div class="h-full bg-white rounded-2xl shadow-lg">
         <div class="flex items-center justify-center pt-6">
-          <a
-            href="#"
+          <RouterLink
+            to="/placeorder"
             class="absolute -top-6 left-1/2 flex h-14 w-14 -translate-x-1/2 items-center justify-center rounded-3xl bg-primary-500 text-white shadow-lg transition duration-100 hover:bg-primary-600 sm:h-16 sm:w-16"
           >
             <svg
@@ -20,7 +20,7 @@
                 clip-rule="evenodd"
               />
             </svg>
-          </a>
+          </RouterLink>
         </div>
         <nav class="mt-6">
           <div>
@@ -45,7 +45,11 @@
       <!-- Main -->
       <RouterView v-slot="{ Component, route }">
         <TransitionExpand appear>
-          <component :is="Component" :key="route.path" />
+          <div
+            class="xt-card rounded-2xl px-3 md:px-5 py-7 text-sm text-gray-900 xt-links-default bg-white shadow-lg"
+          >
+            <component :is="Component" :key="route.path" />
+          </div>
         </TransitionExpand>
       </RouterView>
     </div>
@@ -54,8 +58,8 @@
   <nav
     class="fixed bottom-0 mx-auto sm:left-[calc((100vw-28rem)/2)] flex w-full justify-between gap-8 border-t bg-white px-10 py-4 text-xs sm:max-w-md sm:rounded-t-xl sm:border-transparent sm:text-sm sm:shadow-2xl lg:hidden [&>*:nth-child(3)]:mr-10"
   >
-    <a
-      href="#"
+    <RouterLink
+      to="/placeOrder"
       class="absolute -top-7 left-1/2 flex h-14 w-14 -translate-x-1/2 items-center justify-center rounded-3xl bg-primary-500 text-white shadow-lg transition duration-100 hover:bg-primary-600 sm:-top-8 sm:h-16 sm:w-16"
     >
       <svg
@@ -70,7 +74,7 @@
           clip-rule="evenodd"
         />
       </svg>
-    </a>
+    </RouterLink>
     <RouterLink
       v-for="item in header"
       :key="item.hash"
