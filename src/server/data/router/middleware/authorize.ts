@@ -40,7 +40,7 @@ export default middleware(async ({ ctx, meta, next, getRawInput }) => {
       .object({
         onBehalf: z.coerce.string().refine((uuid) => uuid !== "undefined"), // we have to coerce the parser to treat user ids as strings and not numbers. Unfortuantelly this will also coerce undefined to "undefined" so we have to explicitily check for that.
       })
-      .safeParse(getRawInput());
+      .safeParse(await getRawInput());
     if (input.success)
       return await next({ ctx: { ...ctx, onBehalf: input.data.onBehalf } });
   }
