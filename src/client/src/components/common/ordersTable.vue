@@ -1,7 +1,4 @@
 <template>
-  <div
-    class="xt-card rounded-2xl px-3 md:px-4 py-6 text-sm text-gray-900 xt-links-default bg-white shadow-xl"
-  >
     <Loader :loading="loading" />
     <div class="xt-list flex-col xt-list-1">
       <h3>Παραγγελίες</h3>
@@ -14,25 +11,24 @@
         χρόνο παράδοσης εξελίσονται κανονικά, και δεν χρειάζεται κάποια ενέργεια
         από την μεριά σας.
       </p>
-      <button
-        @click="placingOrder = !placingOrder"
+      <span class="inline-flex overflow-hidden rounded-md border bg-primary-500 shadow-sm w-max mb-5" @click="placingOrder = !placingOrder">
+        <RouterLink
+        to="/placeorder"
         type="button"
-        class="xt-button py-2.5 px-3.5 text-sm text-white xt-links-inverse rounded-md font-medium leading-snug tracking-wider uppercase bg-primary-500 transition hover:bg-primary-600 active:bg-primary-600 on:bg-primary-600 my-2 mb-5 md:max-w-fit shadow-md"
-      >
-        Nεα παραγγελια
-        <i
-          class="text-sm h"
-          :class="{
-            'h-plus': !placingOrder,
-            'h-chevron-up': placingOrder,
-          }"
-        ></i>
-      </button>
-      <TransitionExpand appear>
-        <div class="mb-5 mt-2" v-if="placingOrder">
-          <CreateOrder @order-placed="orderPlaced" ref="selectedUser" />
-        </div>
-      </TransitionExpand>
+          class="inline-block border-e px-4 py-3 text-sm font-medium text-white hover:bg-primary-600 focus:relative"
+        >
+          Νέα Παραγγελία
+      </RouterLink>
+
+        <RouterLink
+        to="/placeorder"
+        type="button"
+          class="inline-block px-4 py-2 text-white hover:bg-primary-600 focus:relative"
+          title="View Orders"
+        >
+         <i class="h h-plus text-lg"></i>
+    </RouterLink>
+      </span>
     </div>
 
     <Table :columns="columns" include-index>
@@ -95,7 +91,6 @@
         >
       </Row>
     </Table>
-  </div>
 </template>
 
 <style scoped>
@@ -105,7 +100,6 @@
 </style>
 
 <script setup lang="ts">
-import CreateOrder from "./createOrder.vue";
 import Table from "../reusables/table/table.vue";
 import Row from "../reusables/table/row.vue";
 import Cell from "../reusables/table/cell.vue";
@@ -125,14 +119,13 @@ import { useOrders } from "../../services/data/orders";
 
 type User = OutputTypes["viewUsers"][number]
 
-const placingOrder = ref(false);
 const userStore = useUserStore();
 const {page, watchPage, increment, decrement} = usePagination()
 
-const columns = userStore?.user?.type === "admin" ? ["Ημ/νια υποβολης", "χρηστης","συνολο", "κατασταση", "εκτ. παραδοση"] : ["Ημ/νια υποβολης",  "συνολο", "κατασταση",  "εκτ. παραδοση"]
+const columns = userStore?.user?.type === "admin" ? ["Ημ/νια Υποβολής", "Χρήστης","Σύνολο", "Κατάσταση", "Εκτ. Παράδοση"] : ["Ημ/νια Υποβολής",  "Σύνολο", "Κατάσταση",  "Εκτ. Παράδοση"]
 
 const selectedUser = ref<User>();
-const {orderUpdated, orderPlaced, orders, loadOrders, loading} = useOrders(selectedUser, placingOrder);
+const {orderUpdated, orderPlaced, orders, loadOrders, loading} = useOrders(selectedUser);
 
 loadOrders(page.value);
 watchPage(loadOrders);
