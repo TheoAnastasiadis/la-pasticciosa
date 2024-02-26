@@ -66,15 +66,14 @@
         <nav class="contents w-1/12">
           <ul class="ml-4 flex items-center justify-end">
             <li>
-              <span
-                class="block p-1 w-8 h-8 text-center text-white font-semibold rounded-full bg-slate-400 aspect-square"
-                >LP</span
-              >
+              <RouterLink to="/dashboard/profile" type="button">
+                <i class="h h-user text-2xl text-green-600"></i>
+              </RouterLink>
             </li>
             <li class="ml-2 lg:ml-4 relative inline-block">
-              <a href="#" @click.prevent="auth.logout()">
+              <button href="#" @click.prevent="auth.logout()">
                 <i class="h h-logout text-2xl text-red-600"></i>
-              </a>
+              </button>
             </li>
           </ul>
         </nav>
