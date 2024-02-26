@@ -27,5 +27,6 @@ const userHeader = [
     icon: "navigator-2",
     hash: "locations",
   },
+  { title: "Προφίλ", icon: "user", hash: "profile" },
 ];
 </script>
