@@ -31,6 +31,15 @@ const router = createRouter({
       },
     },
     {
+      path: "/placeOrder",
+      name: "placeorder",
+      components: {
+        default: async () => await import("../views/PlaceOrderView.vue"),
+        header: async () =>
+          await import("../components/reusables/headers/login.vue"),
+      },
+    },
+    {
       path: "/dashboard",
       name: "dashboard",
       redirect: (to) => "dashboard/orders",
