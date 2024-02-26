@@ -7,9 +7,9 @@
       <h2 class="text-xl font-quicksand font-bold md:text-2xl tracking-tight">
         <i class="h h-unlocked-2 text-lg"></i>la pasticciosa
         <div
-          class="align-middle py-2 px-2.5 text-xs rounded-xl text-gray-900 font-medium leading-snug tracking-wider uppercase bg-primary-500 hidden sm:inline-block shadow-sm"
+          class="align-middle py-2 px-2.5 text-xs rounded-xl text-gray-900 font-medium leading-snug tracking-wider uppercase bg-primary-400 hidden sm:inline-block shadow-sm"
         >
-          B2B Portal
+          B2B Portal - Secure Page
         </div>
       </h2>
     </div>
