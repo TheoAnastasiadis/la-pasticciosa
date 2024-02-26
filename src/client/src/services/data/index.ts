@@ -1,12 +1,8 @@
-import {
-  TRPCClientError,
-  createTRPCProxyClient,
-  httpBatchLink,
-} from "@trpc/client";
+import { TRPCClientError, createTRPCClient, httpBatchLink } from "@trpc/client";
 import type { AppRouter } from "../../../../server/data/router";
 import { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 
-export const backend = createTRPCProxyClient<AppRouter>({
+export const backend = createTRPCClient<AppRouter>({
   links: [
     httpBatchLink({
       url: import.meta.env.VITE_BASE_URL + "data",

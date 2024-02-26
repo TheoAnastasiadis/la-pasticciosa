@@ -7,7 +7,7 @@ type Order = OutputTypes["viewOrders"][number];
 
 export function useOrders(
   user: Ref<User | undefined>,
-  placingOrder: Ref<boolean>,
+  placingOrder: Ref<boolean> = ref(false),
 ) {
   const orders = ref<Order[]>([]);
   const loading = ref(false);
