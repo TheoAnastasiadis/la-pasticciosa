@@ -1,6 +1,6 @@
 <template>
   <span
-    class="xt-spinner absolute inset-0 m-auto w-6 h-6 text-primary-500"
+    class="xt-spinner absolute inset-0 m-auto w-6 h-6 text-white-500"
     v-if="loading"
   >
     <svg
