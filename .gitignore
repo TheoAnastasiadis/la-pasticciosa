@@ -38,7 +38,8 @@ coverage*
 *.njsproj
 *.sln
 *.sw?
-.inkline
+*.inkline
+*.Identifier
 
 ## Maizzle
 build_local
