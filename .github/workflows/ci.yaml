@@ -28,10 +28,6 @@ jobs:
         with:
           name: build
           path: build
-      - uses: actions/upload-artifact@master
-        with:
-          name: firebase_json
-          path: firebase.json
 
   deploy_server:
     runs-on: ubuntu-latest
@@ -39,14 +35,15 @@ jobs:
     env:
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
     steps:
-      - uses: actions/download-artifact@master
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Download Build Folder
+        uses: actions/download-artifact@master
         with:
           name: build
           path: build
-      - uses: actions/download-artifact@master
+      - run: npm ci
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
         with:
-          name: firebase_json
-          path: firebase.json
-      - uses: w9jds/firebase-action@master
-        with:
-          args: deploy --only functions:auth,functions:data
+          args: deploy --only functions:auth,functions:data --project ${{ secrets.FIREBASE_PROJECT_ID }}
