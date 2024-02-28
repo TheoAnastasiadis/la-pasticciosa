@@ -46,7 +46,7 @@ jobs:
         with:
           name: build
           path: build
-      - run: ls
+      - run: npm ci
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
