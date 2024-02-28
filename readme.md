@@ -6,31 +6,31 @@
 
 </div>
 
-# Custom CRM for B2B eCommerce
+# Custom B2B Order Management System
 
-![Landing Page Screenshot](./src/client/src/assets/screenshot1.jpg)
+![Landing Page Screenshot](./src/client/src/assets/github/screenshot_1.png)
 
-Welcome to this fully-fledged Custom CRM for B2B companies! 🚀 This professional **production-ready** tool is actively utilized by the company that commissioned it. It's been designed and developed as s customized CRM platform for a fresh pasta company, featuring tailor-made customer acceptance procedures and custom UI elements for a succesfull and smooth transition from manual to online order placement.
+Welcome to our Custom B2B Order Management System! This tool is currently in use and was specifically designed for a fresh pasta company, it offers tailored customer acceptance procedures and intuitive UI elements, facilitating a seamless transition from manual to online order placement.
 
 ## Features
 
-1. **Client Vetting and Onboarding 🛡️**. Custom procedure for thorough client vetting and seamless onboarding.
+1. **Client Vetting and Onboarding 🛡️**. Custom procedures ensure thorough client vetting and smooth onboarding experiences.
 
-2. **Dashboard 📊**. Fully developed dashboard for viewing, editing, and submitting orders.
+2. **Dashboard 📊**. Access a fully developed dashboard for order management, providing easy viewing, editing, and submission functionalities.
 
-3. **Authentication 🔒**. Secure authentication system to control access and ensure data integrity.
+3. **Authentication 🔒**. A secure authentication system regulates access, guaranteeing data integrity.
 
-4. **Business Logic 🧠.** Robust business logic to streamline processes and enhance efficiency.
+4. **Business Logic 🧠**. Robust business logic is implemented to streamline operations and enhance efficiency.
 
-5. **Promotional Features 🌟**. Innovative promotional features to boost client engagement and satisfaction.
+5. **Promotional Features 🌟**. Innovative promotional tools are integrated to enhance client engagement and satisfaction.
 
-![Mobile Page Screenshot](./src/client/src/assets/screenshot2.jpg)
+![Landing Page Screenshot](./src/client/src/assets/github/group.png)
 
 ### Experimental Work-in-Progress Features
 
-1. **3D Curated Landing Page 🌐**. Cutting-edge 3D landing page to provide a visually immersive user experience.
+1. **3D Enabled Landing Page 🌐**. Cutting-edge 3D landing page aims to provide a visually immersive user experience.
 
-2. **Custom Chat System powered by Google's PaLM 💬**.Experimental chat system leveraging Google's PaLM for enhanced communication capabilities.
+2. **Custom Chat System powered by Google's PaLM 💬**. Experimental chat system, leveraging Google's PaLM for enhanced communication capabilities.
 
 ## Under the Hood
 
@@ -41,19 +41,19 @@ Welcome to this fully-fledged Custom CRM for B2B companies! 🚀 This profession
 
 ### b) PostgreSQL Database 🐘
 
-- Powered by CockroachDB for a scalable and resilient database solution.
+- Powered by CockroachDB for scalability and resilience.
 - Deployed on Google Cloud Platform (GCP) via Firebase Functions.
 
 ### c) Vue.js 3 Frontend 🖌️
 
 - Developed with Vue.js 3, XtendUI, and Tailwind CSS.
-- Provides a modern and responsive user interface.
+- Offers a modern, responsive user interface.
 
 ## Live Demo
 
-Explore the live production version of the CRM [here](https://b2b.lapasticciosa.gr).
+Explore the live production version of the B2B Order Management System here; [https://b2b.lapasticciosa.gr](https://b2b.lapasticciosa.gr).
 
-![Landing Page Screenshot](./src/client/src/assets/screenshot3.jpg)
+![Landing Page Screenshot](./src/client/src/assets/github/screenshot_8.png)
 
 ## Contact Information
 
@@ -63,10 +63,11 @@ For further inquiries or if you are interested in joining our development team, 
 - **LinkedIn:** [Teo Anastasiadis](https://www.linkedin.com/in/teo-anastasiadis/)
 - **Phone:** (+30) 6946605411
 
-I appreciate your interest in my project and look forward to potential collaborations! 🌐🚀
+Thank you for your interest in our project! We welcome potential collaborations and look forward to hearing from you.
+
+![Landing Page Screenshot](./src/client/src/assets/github/screenshot_2.png)
 
 ## See More
 
-- **[tRPC](https://github.com/trpc/trpc)** Move fast and break nothing.
-  End-to-end typesafe APIs made easy.
-- **[Spline](https://spline.design/)**, a place to design and colaborate in 3D
+- **[tRPC](https://github.com/trpc/trpc)**: Move fast and break nothing with end-to-end typesafe APIs.
+- **[Spline](https://spline.design/)**: Explore Spline, a platform for designing and collaborating in 3D.
