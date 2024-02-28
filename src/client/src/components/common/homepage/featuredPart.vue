@@ -1,70 +1,52 @@
 <template>
-  <div class="container py-8 lg:py-14">
+  <section class="mb-5">
     <div
-      class="xt-row items-center relative"
-      :class="{ 'flex-row-reverse': invertOrder }"
+      class="flex flex-col md:flex-row items-center px-5 py-8 mx-auto max-w-7xl sm:px-6 lg:px-8"
+      :class="{ 'md:flex-row-reverse': invertOrder }"
     >
-      <img
-        src="/whole.jpg"
-        class="w-full md:w-5/12 object-cover absolute top-0 md:top-auto saturate-50 z-[9] rounded-xl pointer-events-none shadow-xl"
-        :class="{ 'left-0': !invertOrder, 'right-0': invertOrder }"
-        ref="backgroundBackdrop"
-      />
-      <img
-        src="/top_refined.png"
-        class="w-full md:w-5/12 object-cover rounded-2xl z-10 relative top-0 saturate-50"
+      <div
         ref="background"
-      />
-
-      <div class="w-full md:w-7/12 z-10">
-        <div class="featured-content pt-16 md:pt-0 lg:pl-12">
-          <div
-            class="xt-h2 xl:xt-h1 mb-6 text-center md:text-left"
-            :class="{
-              'md:-translate-x-32': !invertOrder,
-              'md:translate-x-52': invertOrder,
-            }"
-          >
-            {{ title }}
-          </div>
-          <div class="leading-relaxed p-8">
-            <p>
-              <strong>{{
-                content ? content.split(" ").splice(0, 2).join(" ") : ""
-              }}</strong>
-              {{ content ? content.split(" ").splice(2).join(" ") : "" }}
-            </p>
-            <div class="flex flex-col md:flex-row flex-wrap mb-2">
-              <div
-                v-for="keyword in keywords"
-                class="text-black bg-white rounded-sm px-2.5 py-0.5 font-semibold mr-3 mb-2 overflow-hidden text-sm lg:text-base max-w-min"
-              >
-                #{{ keyword.split(" ").join("_") }}
-              </div>
-            </div>
-            <a
-              class="xt-button button--line px-0 text-xs font-medium leading-snug tracking-wider uppercase"
+        class="rounded-xl h-56 xl:h-60 w-full md:w-7/12 overflow-hidden"
+      >
+        <img
+          :src="img"
+          :alt="title + ' φωογραφία'"
+          class="w-full h-full object-cover saturate-[80%]"
+        />
+      </div>
+      <div
+        class="flex flex-col w-full max-w-3xl mx-auto prose text-left prose-blue"
+        :class="{ 'md:mr-8': invertOrder, 'md:ml-8': !invertOrder }"
+      >
+        <div class="w-full mx-auto pt-3 md:pt-0">
+          <h2>{{ title }}</h2>
+          <p>
+            {{ content }}
+          </p>
+          <p class="flex flex-row flex-wrap w-full">
+            <span
+              v-for="keyword in keywords"
+              :key="keyword"
+              class="whitespace-nowrap rounded-full bg-primary-100 px-3 py-2 text-sm text-primary-700 font-semibold mr-3 mb-3"
             >
-              <span
-                class="button--line-design absolute left-0 w-4 border-t border-current opacity-50"
-              ></span>
-              <span class="button--line-content pl-8"> ΖΗΤΗΣΤΕ ΠΡΟΣΦΟΡΑ </span>
-            </a>
-          </div>
+              {{ keyword }}
+            </span>
+          </p>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <script setup lang="ts">
 import gsap from "gsap";
 import { onMounted, ref, type Ref } from "vue";
 
-const { title, content, keywords, invertOrder } = defineProps<{
+const { title, content, keywords, invertOrder, img } = defineProps<{
   title: string;
   content: string;
   keywords: string[];
+  img: string;
   invertOrder?: boolean;
 }>();
 
@@ -82,18 +64,8 @@ onMounted(() => {
           end: "center 75%",
         },
       })
-      .fromTo(
-        background.value,
-        { x: invertOrder ? 50 : -50 },
-        { x: invertOrder ? -50 : 50 },
-        0,
-      )
-      .fromTo(
-        backgroundBackdrop.value,
-        { x: invertOrder ? 50 : -50 },
-        { x: invertOrder ? -50 : 50 },
-        0,
-      );
+      .from(background.value, { x: invertOrder ? 50 : -50 }, 0)
+      .from(backgroundBackdrop.value, { x: invertOrder ? 50 : -50 }, 0);
   else
     gsap
       .timeline({
@@ -104,13 +76,8 @@ onMounted(() => {
           end: "top 30%",
         },
       })
-      .fromTo(background.value, { x: invertOrder ? 50 : -50 }, { x: 0 }, 0)
-      .fromTo(
-        backgroundBackdrop.value,
-        { x: invertOrder ? 50 : -50 },
-        { x: 0 },
-        0,
-      );
+      .from(background.value, { x: invertOrder ? 50 : -50 }, 0)
+      .from(backgroundBackdrop.value, { x: invertOrder ? 50 : -50 }, 0);
 });
 
 defineExpose({ background });
