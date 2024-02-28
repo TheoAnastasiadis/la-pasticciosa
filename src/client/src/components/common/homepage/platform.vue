@@ -1,8 +1,8 @@
 <template>
   <div class="block container">
     <div class="container px-0 bg-white rounded-xl shadow-md">
-      <div class="overflow-hidden py-10 md:py-16">
-        <div class="mx-auto max-w-7xl px-6 lg:px-8">
+      <div class="overflow-hidden py-10">
+        <div class="max-w-7xl px-5 md:px-10">
           <div
             class="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 sm:gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-2"
           >
