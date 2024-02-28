@@ -1,9 +1,11 @@
 <template>
+  <requestOffer :open="offerForm" @close="offerForm = false" />
   <Pasta :step="step" ref="animated" />
-  <Hero ref="hero" />
+  <Hero ref="hero" @requestOffer="offerForm = true" />
   <Featured ref="featured" />
-  <Catalogue />
+  <Catalogue @requestOffer="offerForm = true" />
   <Platform />
+  <Testimonials />
   <Contact />
 </template>
 
@@ -16,8 +18,12 @@ import Hero from "@/components/common/homepage/hero.vue";
 import Featured from "@/components/common/homepage/featured.vue";
 import Catalogue from "@/components/common/homepage/catalogue.vue";
 import Platform from "@/components/common/homepage/platform.vue";
+import Testimonials from "@/components/common/homepage/testimonials.vue";
 import Contact from "@/components/common/homepage/contact.vue";
+import RequestOffer from "@/components/common/homepage/requestOffer.vue";
 import { onMounted, ref, type Ref } from "vue";
+
+const offerForm = ref<boolean>(false);
 
 gsap.registerPlugin(ScrollTrigger);
 const step = ref(0);
@@ -39,8 +45,8 @@ const setupAnimation = () => {
   );
 
   // calculate points
-  const snappingPoints: { left: () => number; top: () => number }[] = steps.map(
-    (step: Ref<{ background: HTMLElement }>, i) => ({
+  const snappingPoints: Array<{ left: () => number; top: () => number }> =
+    steps.map((step: Ref<{ background: HTMLElement }>, i) => ({
       left: () =>
         step.value.background.getBoundingClientRect().x +
         (step.value.background.getBoundingClientRect().width -
@@ -52,8 +58,7 @@ const setupAnimation = () => {
         (step.value.background.getBoundingClientRect().height -
           animated.value?.element.getBoundingClientRect().height) /
           2,
-    }),
-  );
+    }));
 
   // 0th step
   gsap.timeline().set(animated.value?.element, {
