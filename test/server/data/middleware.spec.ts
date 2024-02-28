@@ -71,9 +71,14 @@ describe("authorize callback", () => {
     const ctx = {
       session: { user: { isAdmin: () => false, uuid: "user_uuid" } },
     };
-    await expect(middleware({ ctx, meta, next, rawInput })).rejects.toThrow(
-      AssertionError,
-    );
+    await expect(
+      middleware({
+        ctx,
+        meta,
+        next,
+        getRawInput: () => Promise.resolve(rawInput),
+      }),
+    ).rejects.toThrow(AssertionError);
     expect(next).not.toHaveBeenCalled();
   });
 
@@ -82,7 +87,12 @@ describe("authorize callback", () => {
     const ctx = {
       session: { user: { isAdmin: () => false, uuid: "user_uuid" } },
     };
-    await middleware({ ctx, meta, next, rawInput });
+    await middleware({
+      ctx,
+      meta,
+      next,
+      getRawInput: () => Promise.resolve(rawInput),
+    });
     expect(next).toHaveBeenCalledWith({ ctx: { ...ctx, onBehalf: undefined } });
   });
 
@@ -91,9 +101,14 @@ describe("authorize callback", () => {
     const ctx = {
       session: undefined,
     };
-    await expect(middleware({ ctx, meta, next, rawInput })).rejects.toThrow(
-      TRPCError,
-    );
+    await expect(
+      middleware({
+        ctx,
+        meta,
+        next,
+        getRawInput: () => Promise.resolve(rawInput),
+      }),
+    ).rejects.toThrow(TRPCError);
     expect(next).not.toHaveBeenCalled();
   });
 
@@ -102,9 +117,14 @@ describe("authorize callback", () => {
     const ctx = {
       session: { user: { isAdmin: () => false, uuid: "user_uuid" } },
     };
-    await expect(middleware({ ctx, meta, next, rawInput })).rejects.toThrow(
-      TRPCError,
-    );
+    await expect(
+      middleware({
+        ctx,
+        meta,
+        next,
+        getRawInput: () => Promise.resolve(rawInput),
+      }),
+    ).rejects.toThrow(TRPCError);
     expect(next).not.toHaveBeenCalled();
   });
 
@@ -114,7 +134,12 @@ describe("authorize callback", () => {
       session: { user: { isAdmin: () => true, uuid: "user_uuid" } },
     };
     const rawInput = { onBehalf: "other_user_uuid" };
-    await middleware({ ctx, meta, next, rawInput });
+    await middleware({
+      ctx,
+      meta,
+      next,
+      getRawInput: () => Promise.resolve(rawInput),
+    });
     expect(next).toHaveBeenCalledWith({
       ctx: { ...ctx, onBehalf: rawInput.onBehalf },
     });
@@ -126,7 +151,12 @@ describe("authorize callback", () => {
       session: { user: { isAdmin: () => true, uuid: "user_uuid" } },
     };
     const rawInput = { onBehalf: undefined };
-    await middleware({ ctx, meta, next, rawInput });
+    await middleware({
+      ctx,
+      meta,
+      next,
+      getRawInput: () => Promise.resolve(rawInput),
+    });
     expect(next).toHaveBeenCalledWith({
       ctx: { ...ctx, onBehalf: ctx.session.user.uuid },
     });
@@ -138,7 +168,12 @@ describe("authorize callback", () => {
       session: { user: { isAdmin: () => false, uuid: "user_uuid" } },
     };
     const rawInput = { onBehalf: "other_user_uuid" };
-    await middleware({ ctx, meta, next, rawInput });
+    await middleware({
+      ctx,
+      meta,
+      next,
+      getRawInput: () => Promise.resolve(rawInput),
+    });
     expect(next).toHaveBeenCalledWith({
       ctx: { ...ctx, onBehalf: ctx.session.user.uuid },
     });
