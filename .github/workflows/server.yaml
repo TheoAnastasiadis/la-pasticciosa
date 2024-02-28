@@ -1,8 +1,9 @@
-name: CI
+name: server_ci
 
 on:
   push:
     branches: ["main"]
+    paths: ['src/server/**', 'test/server/**', 'bin/**']
 
 jobs:
   test_server:

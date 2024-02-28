@@ -1,0 +1,55 @@
+name: client_ci
+
+on:
+  push:
+    branches: ["main"]
+    paths: ["src/client/**", "bin/**"]
+
+jobs:
+  test_client:
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: development
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "npm"
+      - run: npm ci
+      - run: echo "${{ secrets.ENV_FILE }}" > .env
+      - name: setup dev backend
+        run: curl -sL https://firebase.tools | bash
+      - run: npm run build:server
+      - run: cp .env ./build/.env
+      - run: firebase emulators:start --only functions -P default --token ${{ secrets.FIREBASE_TOKEN }} &
+      - name: setup dev server
+        run: npx vite --host
+      - uses: cypress-io/github-action@v6
+        with:
+          browser: chrome
+
+  deploy_client:
+    runs-on: ubuntu-latest
+    needs: test_client
+    env:
+      FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@master
+      - name: Build node v18
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "npm"
+      - run: npm ci
+      - name: Global environment
+        run: echo "${{ secrets.ENV_FILE }}" > .env
+      - name: vite dev environment
+        run: echo "VITE_BASE_URL="https://b2b.lapasticciosa.gr/" > src/client/.env.local
+      - name: Build Dist Folder
+        run: npm run build:client
+      - name: Deploy to Firebase
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting --project ${{ secrets.FIREBASE_PROJECT_ID }}
